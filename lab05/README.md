@@ -24,4 +24,4 @@ Estrutura de pastas:
 
 ## Arquivos Java sobre Mundo de Wumpus
 
-> [notebook](src/pt/c50task/l05wumpus/)
+> [notebook](src/pt/c40task/l05wumpus)
