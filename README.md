@@ -1,4 +1,4 @@
-# MC322
+# MC322 - A
 
 # Alunos
 * `Luigi Mello Rigato - RA:247248`
