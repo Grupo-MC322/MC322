@@ -7,66 +7,63 @@ public class Controle
     private int pontuacao = 0;
     private int posicaoX, posicaoY;
     private boolean achouOuro = false;
-    private String status;
+    private String info;
+    private char status;
     private Heroi heroi;
 
-    public void movimentosArquivo(Caverna caverna, String movimentos)
+    public void movimentosArquivo(Caverna caverna, String movimentos, int nMovimento)
     {
         this.movimentos = movimentos;
-        Componentes componenteAnterior;
-        for(int i = 0; i < movimentos.length(); i++)
-        {
-            if(posicaoX == 0 && posicaoY == 0 && achouOuro){
-                // ganhou FAZER
-            }
-            char movimentoAtual = movimentos.charAt(i);
-
-        
-            if(movimentoAtual == 'w' && posicaoY-1 >= 0)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX, posicaoY-1, caverna);
-                posicaoY = posicaoY-1;
-            } 
-            else if(movimentoAtual == 's' && posicaoY+1 < 4)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX, posicaoY+1, caverna);
-                posicaoY = posicaoY+1;
-            } 
-            else if(movimentoAtual == 'a' && posicaoX-1 >= 0)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX-1, posicaoY, caverna);
-                posicaoY = posicaoX-1;
-            }
-            else if(movimentoAtual == 'd' && posicaoX+1 < 4)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX+1, posicaoY, caverna);
-                posicaoY = posicaoX+1;
-            }
-
-            // definições da flecha
-            if(heroi.getFlechaEquipada()) // se a flecha estiver equipada, significa que ela não foi utilizada e foi perdida
-            {
-                heroi.setFlechaEquipada(false);
-            }
-
-            if(movimentoAtual == 'k')
-            {
-                if(heroi.getFlechaUsada()) // se a flecha já tiver sido utilizada
-                {
-                    System.out.println("A flecha já foi utilizada.");
-                }
-                else // equipa a flecha e muda para como sendo utilizada
-                {
-                    heroi.setFlechaEquipada(true);
-                    heroi.setFlechaUsada(true);
-                    pontuacao -= 100;
-                }
-            }
-
-            caverna.setTabuleiro(posicaoX, posicaoY-1, caverna.getComponente(posicaoX, posicaoY));
-
-            // write board FAZER
+        status = 'x';
+        if(posicaoX == 0 && posicaoY == 0 && achouOuro){
+            ganhou();
         }
+
+        char movimentoAtual = movimentos.charAt(nMovimento);
+
+        if(movimentoAtual == 'w' && posicaoY-1 >= 0)
+        {
+            movimentar(posicaoX, posicaoY, posicaoX, posicaoY-1, caverna);
+            posicaoY = posicaoY-1;
+        } 
+        else if(movimentoAtual == 's' && posicaoY+1 < 4)
+        {
+            movimentar(posicaoX, posicaoY, posicaoX, posicaoY+1, caverna);
+            posicaoY = posicaoY+1;
+        } 
+        else if(movimentoAtual == 'a' && posicaoX-1 >= 0)
+        {
+            movimentar(posicaoX, posicaoY, posicaoX-1, posicaoY, caverna);
+            posicaoY = posicaoX-1;
+        }
+        else if(movimentoAtual == 'd' && posicaoX+1 < 4)
+        {
+            movimentar(posicaoX, posicaoY, posicaoX+1, posicaoY, caverna);
+            posicaoY = posicaoX+1;
+        }
+
+        // definições da flecha
+        if(heroi.getFlechaEquipada()) // se a flecha estiver equipada, significa que ela não foi utilizada e foi perdida
+        {
+            heroi.setFlechaEquipada(false);
+        }
+
+        if(movimentoAtual == 'k')
+        {
+            if(heroi.getFlechaUsada()) // se a flecha já tiver sido utilizada
+            {
+                System.out.println("A flecha já foi utilizada.");
+            }
+            else // equipa a flecha e muda para como sendo utilizada
+            {
+                heroi.setFlechaEquipada(true);
+                heroi.setFlechaUsada(true);
+                pontuacao -= 100;
+            }
+        }
+
+        caverna.setTabuleiro(posicaoX, posicaoY-1, caverna.getComponente(posicaoX, posicaoY));
+        pontuacao -= 15;
     }
 
     public void conectaHeroi(Heroi heroi)
@@ -90,19 +87,19 @@ public class Controle
                     else // se perder a batalha
                     {
                         pontuacao -= 1000;
-                        // perdeu jogo FAZER
+                        perdeu();
                     }
                 } 
                 else 
                 {
                     pontuacao -= 1000;
-                    // perdeu jogo FAZER
+                    perdeu();
                 }
                 break;
 
             case 'B':
                 pontuacao -= 1000;
-                // perdeu jogo FAZER
+                perdeu();
                 break;
 
             case 'O':
@@ -110,11 +107,11 @@ public class Controle
                 break;
 
             case 'b':
-                status = "Brisa";
+                info = "Brisa";
                 break;
             
             case 'f':
-                status = "Fedor";
+                info = "Fedor";
                 break;
             
             case '-':
@@ -135,6 +132,10 @@ public class Controle
         return true; // se o jogador ganhar
     }
 
+    public char getStatus() {
+        return status;
+    }
+
     public int getPontuacao()
     {
         return pontuacao;
@@ -142,11 +143,19 @@ public class Controle
 
     public void perdeu()
     {
-
+        status = 'n';
+        System.out.println("Voce perdeu =( !!!");
     }
     
     public void ganhou()
     {
+        status = 'w';
+        System.out.println("Voce ganhou =D !!!");
+    }
 
+    public void sair()
+    {
+        status = 'n';
+        System.out.println("Volte sempre !");
     }
 }
