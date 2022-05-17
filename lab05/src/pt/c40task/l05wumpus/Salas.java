@@ -16,7 +16,7 @@ public class Salas
         return componentes[4];
     }
 
-    public void setComponente(Componentes componente)
+    public void addComponente(Componentes componente)
     {
         switch (componente.getInfo())
         {
@@ -41,6 +41,18 @@ public class Salas
             case '-':
                 componentes[4] = componente;
                 break;
+        }
+    }
+
+    public void delComponente(Componentes componente)
+    {
+        if(componente.getInfo() == 'P')
+        {
+            componentes[1] = null;
+        }
+        else
+        {
+            componentes[0] = null;
         }
     }
 }

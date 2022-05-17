@@ -4,7 +4,7 @@ import java.util.Random;
 public class Controle 
 {
     private String movimentos;
-    private int pontuacao = 0;
+    private static int pontuacao = 0;
     private int posicaoX, posicaoY;
     private boolean achouOuro = false;
     private String status;
@@ -13,7 +13,6 @@ public class Controle
     public void movimentosArquivo(Caverna caverna, String movimentos)
     {
         this.movimentos = movimentos;
-        Componentes componenteAnterior;
         for(int i = 0; i < movimentos.length(); i++)
         {
             if(posicaoX == 0 && posicaoY == 0 && achouOuro){
@@ -26,7 +25,7 @@ public class Controle
             {
                 movimentar(posicaoX, posicaoY, posicaoX, posicaoY-1, caverna);
                 posicaoY = posicaoY-1;
-            } 
+            }
             else if(movimentoAtual == 's' && posicaoY+1 < 4)
             {
                 movimentar(posicaoX, posicaoY, posicaoX, posicaoY+1, caverna);
@@ -63,7 +62,7 @@ public class Controle
                 }
             }
 
-            caverna.setTabuleiro(posicaoX, posicaoY-1, caverna.getComponente(posicaoX, posicaoY));
+            pontuacao -= 15;
 
             // write board FAZER
         }
@@ -79,19 +78,10 @@ public class Controle
         switch(caverna.getInfo(xFim, yFim))
         {
             case 'W':
-                if(heroi.getFlechaEquipada()) // se a flecha estiver equipada
+                if(heroi.getFlechaEquipada() && ganharBatalha()) // se a flecha estiver equipada
                 {
-                    if(ganharBatalha()) // se o herói ganhar a batalha
-                    {
-                        pontuacao += 500;
-                        caverna.setTabuleiro(xFim, yFim, caverna.getComponente(xInicio, yInicio));
-                        heroi.setFlechaEquipada(false); 
-                    } 
-                    else // se perder a batalha
-                    {
-                        pontuacao -= 1000;
-                        // perdeu jogo FAZER
-                    }
+                    pontuacao += 500;
+                    heroi.setFlechaEquipada(false); 
                 } 
                 else 
                 {
@@ -116,13 +106,9 @@ public class Controle
             case 'f':
                 status = "Fedor";
                 break;
-            
-            case '-':
-                break;
-
-            default:
-                break;
         }
+
+        caverna.setTabuleiro(xFim, yFim, caverna.getComponente(xInicio, yInicio));
     }
     
     public boolean ganharBatalha()

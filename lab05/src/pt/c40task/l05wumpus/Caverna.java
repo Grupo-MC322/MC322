@@ -23,12 +23,17 @@ public class Caverna
 
     public void setTabuleiro(int linha, int coluna, Componentes componente)
     {
-        tabuleiro[linha][coluna].setComponente(componente);
+        tabuleiro[linha][coluna].addComponente(componente);
     }
 
     public Componentes getComponente(int linha, int coluna)
     {
         return tabuleiro[linha][coluna].getComponente();
+    }
+
+    public void delComponente(int linha, int coluna, Componentes componente)
+    {
+        tabuleiro[linha][coluna].delComponente(componente);
     }
 
     public char[][] apresentar()
