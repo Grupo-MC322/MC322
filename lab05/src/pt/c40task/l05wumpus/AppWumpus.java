@@ -61,4 +61,4 @@ public class AppWumpus {
 // organizar montador
 // fazer output
 // fazer controlador
-// fazer modos automático e com teclado
+// fazer modos automático e com teclado.
