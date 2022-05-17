@@ -56,7 +56,6 @@ public class AppWumpus {
 // fazer pontuações nos componentes e pontuacao do user no heroi?
 // fazer interações entre componentes (e tambem ver a sequencia de qual vai ser mostrado)
 // fazer probabilidade da flecha e implementar flecha e vidas e sla mais o q
-// fazer batalha do wumpus
 // resultados da partida e saídas
 // organizar montador
 // fazer output
