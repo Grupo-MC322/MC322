@@ -24,8 +24,26 @@ public class AppWumpus {
       String movements = tk.retrieveMovements();
       System.out.println("=== Movimentos");
       System.out.println(movements);
-      
+
       System.out.println("=== Caverna Intermediaria");
+
+      Caverna caverna = new Caverna();
+      Controle controleJogo = new Controle();
+
+      for(int i = 0; i < movements.length(); i++)
+      {
+         controleJogo.movimentosArquivo(caverna, movements, i);
+         if(controleJogo.getStatus() == 'n') // se o jogador perder
+         {
+            tk.writeBoard(caverna.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
+            break;
+         }
+         else
+         {
+            tk.writeBoard(caverna.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
+         }
+      }
+
       char partialCave[][] = {
          {'#', '#', 'b', '-'},
          {'#', 'b', '-', '-'},
@@ -54,10 +72,11 @@ public class AppWumpus {
 
 /*     -  Listinha de tarefas  -    */
 // fazer pontuações nos componentes e pontuacao do user no heroi?
-// fazer interações entre componentes (e tambem ver a sequencia de qual vai ser mostrado)
 // fazer probabilidade da flecha e implementar flecha e vidas e sla mais o q
 // resultados da partida e saídas
 // organizar montador
 // fazer output
 // fazer controlador
 // fazer modos automático e com teclado.
+
+// falta fazer a habilidade de pegar o ouro no controle
