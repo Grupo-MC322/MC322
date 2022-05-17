@@ -2,7 +2,7 @@ package pt.c40task.l05wumpus;
 
 public class Montador
 {
-    public Montador(String[][] instrucoes)
+    public Montador(String[][] instrucoes, Heroi heroi)
     {
         Caverna caverna = new Caverna();
         
@@ -12,19 +12,22 @@ public class Montador
             {
                 switch (instrucoes[l][c]) {
                     case "P":
-                        Componentes heroi = new Heroi();
+                        caverna.setTabuleiro(l, c, heroi);
                         break;
                     case "W":
-                        Componentes wumpus = new Wumpus();
+                        caverna.setTabuleiro(l, c, new Wumpus(l, c, caverna));
+                        break;
+                    case "B":
+                        caverna.setTabuleiro(l, c, new Buraco(l, c, caverna));
+                        break;
+                    case "O":
+                        caverna.setTabuleiro(l, c, new Ouro());
                         break;
                 }
+                
+                // toda sala é iniciada com um espaço vazio que fica com a menor prioridade dentro dela
+                caverna.setTabuleiro(l, c, new Vazio());
             }
         }
-
-        //if(string == "buraco"){
-            //     Buraco buraco = new Buraco();
-            //     caverna1.setTabuleiro(x, y, buraco);
-            //     buraco.colocarBrisas(caverna1);
-            // }
     }
 }
