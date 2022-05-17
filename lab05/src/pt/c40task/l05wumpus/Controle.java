@@ -16,6 +16,9 @@ public class Controle
         Componentes componenteAnterior;
         for(int i = 0; i < movimentos.length(); i++)
         {
+            if(posicaoX == 0 && posicaoY == 0 && achouOuro){
+                // ganhou FAZER
+            }
             char movimentoAtual = movimentos.charAt(i);
 
         
