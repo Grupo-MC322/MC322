@@ -2,23 +2,44 @@ package pt.c40task.l05wumpus;
 
 public class Salas
 {
-    private int coordX, coordY;
-    private Componentes componente = null;
-  
-    public Salas(int coordX, int coordY)
+    private Componentes[] componentes = new Componentes[5];
+
+    public Componentes getComponente()
     {
-        this.coordX = coordX;
-        this.coordY = coordY;
+        for(int i = 0; i < 4; i++)
+        {
+            if(componentes[i] != null)
+            {
+                return componentes[i];
+            }
+        }
+        return componentes[4];
     }
 
-    public void recebe_componentes(Componentes componente)
+    public void setComponente(Componentes componente)
     {
-        this.componente = componente;
-        componente.setCoord(coordX, coordY);
-    }
-
-    public char getInfo()
-    {
-        return componente.getInfo();
+        switch (componente.getInfo()) {
+            case 'O':
+                componentes[0] = componente;
+                break;
+            case 'W':
+                componentes[0] = componente;
+                break;
+            case 'B':
+                componentes[0] = componente;
+                break;
+            case 'P':
+                componentes[1] = componente;
+                break;
+            case 'f':
+                componentes[2] = componente;
+                break;
+            case 'b':
+                componentes[3] = componente;
+                break;
+            case '-':
+                componentes[4] = componente;
+                break;
+        }
     }
 }

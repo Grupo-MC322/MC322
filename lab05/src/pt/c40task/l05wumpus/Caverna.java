@@ -11,19 +11,24 @@ public class Caverna
         {
             for(int j = 0; j < 4; j++)
             {
-                tabuleiro[i][j] = new Salas(i, j);
+                tabuleiro[i][j] = new Salas();
             }
         }
     }
 
     public char getInfo(int linha, int coluna)
     {
-        return tabuleiro[linha][coluna].getInfo();
+        return tabuleiro[linha][coluna].getComponente().getInfo();
     }
 
     public void setTabuleiro(int linha, int coluna, Componentes componente)
     {
-        tabuleiro[linha][coluna].recebe_componentes(componente);
+        tabuleiro[linha][coluna].setComponente(componente);
+    }
+
+    public Componentes getComponente(int linha, int coluna)
+    {
+        return tabuleiro[linha][coluna].getComponente();
     }
 
     public char[][] apresentar()
@@ -32,7 +37,7 @@ public class Caverna
         {
             for(int j = 0; j < 4; j++)
             {
-                cave[i][j] = tabuleiro[i][j].getInfo();
+                cave[i][j] = tabuleiro[i][j].getComponente().getInfo();
             }
         }
         return cave;
