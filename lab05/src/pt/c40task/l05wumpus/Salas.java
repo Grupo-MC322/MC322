@@ -18,7 +18,8 @@ public class Salas
 
     public void setComponente(Componentes componente)
     {
-        switch (componente.getInfo()) {
+        switch (componente.getInfo())
+        {
             case 'O':
                 componentes[0] = componente;
                 break;
