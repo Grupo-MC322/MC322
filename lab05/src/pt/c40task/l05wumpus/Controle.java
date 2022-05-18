@@ -39,16 +39,18 @@ public class Controle
             movimentar(posicaoX, posicaoY, posicaoX+1, posicaoY, caverna);
             posicaoY = posicaoX+1;
         }
-
-        // definições da flecha
-        if(heroi.getFlechaEquipada()) // se a flecha estiver equipada, significa que ela não foi utilizada e foi perdida
+        else if (movimentoAtual == 'c' && caverna.getComponente(posicaoX, posicaoY).getInfo() == 'O')
         {
-            heroi.setFlechaEquipada(false);
+            achouOuro = true;
+            caverna.delComponente(posicaoX, posicaoY, caverna.getComponente(posicaoX, posicaoY));
         }
-
-        if(movimentoAtual == 'k')
+        else if (movimentoAtual == 'q')
         {
-            if(heroi.getFlechaUsada()) // se a flecha já tiver sido utilizada
+            sair();
+        }
+        else if(movimentoAtual == 'k')
+        {
+            if(heroi.getFlechaUsada())
             {
                 System.out.println("A flecha já foi utilizada.");
             }
@@ -58,6 +60,12 @@ public class Controle
                 heroi.setFlechaUsada(true);
                 pontuacao -= 100;
             }
+        }
+
+        // definições da flecha
+        if(heroi.getFlechaEquipada()) // se a flecha ainda estiver equipada, o monstro ainda não foi morto e perdeu-se a flecha
+        {
+            heroi.setFlechaEquipada(false);
         }
 
         pontuacao -= 15;
@@ -73,9 +81,20 @@ public class Controle
         switch(caverna.getInfo(xFim, yFim))
         {
             case 'W':
-                if(heroi.getFlechaEquipada() && ganharBatalha()) // se a flecha estiver equipada
+                if(heroi.getFlechaEquipada() && ganharBatalha())
                 {
                     pontuacao += 500;
+                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim));
+
+                    if(xFim-1 >= 0)
+                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim-1, yFim));
+                    if(xFim+1 < 4)
+                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim+1, yFim));
+                    if(yFim-1 >= 0)
+                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim, yFim-1));
+                    if(yFim-1 < 4)
+                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim, yFim+1));
+
                     heroi.setFlechaEquipada(false); 
                 } 
                 else 
@@ -90,16 +109,15 @@ public class Controle
                 perdeu();
                 break;
 
-            case 'O':
-                achouOuro = true;
-                break;
-
             case 'b':
                 info = "Brisa";
                 break;
             
             case 'f':
                 info = "Fedor";
+                break;
+            case '-':
+                // tem que mudar pra #!!
                 break;
         }
 

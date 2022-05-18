@@ -21,17 +21,16 @@ public class Salas
         return componentes[1];
     }
 
+    public Componentes getFedor()
+    {
+        return componentes[2];
+    }
+
     public void addComponente(Componentes componente)
     {
         switch (componente.getInfo())
         {
-            case 'O':
-                componentes[0] = componente;
-                break;
-            case 'W':
-                componentes[0] = componente;
-                break;
-            case 'B':
+            case 'O', 'W', 'B':
                 componentes[0] = componente;
                 break;
             case 'P':
@@ -51,13 +50,17 @@ public class Salas
 
     public void delComponente(Componentes componente)
     {
-        if(componente.getInfo() == 'P')
+        switch (componente.getInfo())
         {
-            componentes[1] = null;
-        }
-        else
-        {
-            componentes[0] = null;
+            case 'O', 'W':
+                componentes[0] = componente;
+                break;
+            case 'P':
+                componentes[1] = componente;
+                break;
+            case 'f':
+                componentes[2] = componente;
+                break;
         }
     }
 }

@@ -41,6 +41,11 @@ public class Caverna
         return tabuleiro[linha][coluna].getHeroi();
     }
 
+    public Componentes getFedor(int linha, int coluna)
+    {
+        return tabuleiro[linha][coluna].getFedor();
+    }
+
     public char[][] apresentar()
     {
         for(int i = 0; i < 4; i++)
