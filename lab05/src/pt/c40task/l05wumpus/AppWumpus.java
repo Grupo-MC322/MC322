@@ -30,7 +30,7 @@ public class AppWumpus {
       Heroi heroiJogo = new Heroi();
 
       Caverna cavernaJogo = new Caverna();
-      Montador montadorJogo = new Montador(cave, cavernaJogo, heroiJogo);
+      new Montador(cave, cavernaJogo, heroiJogo);
       Controle controleJogo = new Controle();
       controleJogo.conectaHeroi(heroiJogo);
 
