@@ -39,7 +39,7 @@ public class Controle
             movimentar(posicaoX, posicaoY, posicaoX+1, posicaoY, caverna);
             posicaoY = posicaoX+1;
         }
-        else if (movimentoAtual == 'c' && caverna.getComponenteSuper(posicaoX, posicaoY).getInfo() == 'O')
+        else if (movimentoAtual == 'c' && caverna.getComponente(posicaoX, posicaoY, 'O') != null)
         {
             achouOuro = true;
             caverna.delComponente(posicaoX, posicaoY, caverna.getComponente(posicaoX, posicaoY, 'O'));
@@ -61,14 +61,17 @@ public class Controle
                 pontuacao -= 100;
             }
         }
+        else
+        {
+            System.out.println("Caractere de entrada inválido.");
+            return;
+        }
 
         // definições da flecha
         if(heroi.getFlechaEquipada()) // se a flecha ainda estiver equipada, o monstro ainda não foi morto e perdeu-se a flecha
         {
             heroi.setFlechaEquipada(false);
         }
-
-        pontuacao -= 15;
     }
 
     public void conectaHeroi(Heroi heroi)
@@ -78,51 +81,51 @@ public class Controle
 
     public void movimentar(int xInicio, int yInicio, int xFim, int yFim, Caverna caverna)
     {
-        switch(caverna.getComponenteSuper(xFim, yFim).getInfo())
+        if(caverna.getComponente(xFim, yFim, 'W') != null)
         {
-            case 'W':
-                if(heroi.getFlechaEquipada() && ganharBatalha())
-                {
-                    pontuacao += 500;
-                    caverna.delComponente(xFim, yFim, caverna.getComponenteSuper(xFim, yFim));
+            if(heroi.getFlechaEquipada() && ganharBatalha())
+            {
+                pontuacao += 500;
+                caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim, 'W'));
 
-                    if(xFim-1 >= 0)
-                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim-1, yFim, 'f'));
-                    if(xFim+1 < 4)
-                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim+1, yFim, 'f'));
-                    if(yFim-1 >= 0)
-                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim-1, 'f'));
-                    if(yFim-1 < 4)
-                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim+1, 'f'));
+                if(xFim-1 >= 0)
+                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim-1, yFim, 'f'));
+                if(xFim+1 < 4)
+                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim+1, yFim, 'f'));
+                if(yFim-1 >= 0)
+                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim-1, 'f'));
+                if(yFim-1 < 4)
+                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim+1, 'f'));
 
-                    heroi.setFlechaEquipada(false); 
-                } 
-                else 
-                {
-                    pontuacao -= 1000;
-                    perdeu();
-                }
-                break;
-
-            case 'B':
+                heroi.setFlechaEquipada(false); 
+            } 
+            else 
+            {
                 pontuacao -= 1000;
                 perdeu();
-                break;
-
-            case 'b':
-                alerta = "Brisa";
-                break;
-            
-            case 'f':
-                alerta = "Fedor";
-                break;
-            case '-':
-                caverna.addComponente(xFim, yFim, new Visitado());
-                break;
+            }
+        }
+        if(caverna.getComponente(xFim, yFim, 'B') != null)
+        {
+            pontuacao -= 1000;
+            perdeu();
+        }
+        if(caverna.getComponente(xFim, yFim, 'b') != null)
+        {
+            alerta = "Brisa";
+        }            
+        if (caverna.getComponente(xFim, yFim, 'f') != null)
+        {
+            alerta = "Fedor";
+        }
+        if (caverna.getComponente(xFim, yFim, '-') != null)
+        {
+            caverna.addComponente(xFim, yFim, new Visitado());
         }
 
         caverna.addComponente(xFim, yFim, caverna.getComponente(xInicio, yInicio, 'P'));
         caverna.delComponente(xInicio, yInicio, caverna.getComponente(xInicio, yInicio, 'P'));
+        pontuacao -= 15;
     }
     
     public boolean ganharBatalha()

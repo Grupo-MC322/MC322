@@ -11,6 +11,10 @@ public class Montador
         {
             posicaoX = Integer.parseInt(instrucoes[i][0]);
             posicaoY = Integer.parseInt(instrucoes[i][1]);
+            if(posicaoX < 1 || posicaoX > 4 || posicaoY < 1 || posicaoY > 4)
+            {
+                System.out.println("Foi inserida uma posição fora do tabuleiro.");
+            }
 
             switch (instrucoes[i][2])
             {

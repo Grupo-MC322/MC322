@@ -3,18 +3,7 @@ package pt.c40task.l05wumpus;
 public class Salas
 {
     private Componentes[] componentes = new Componentes[6];
-
-    public Componentes getComponenteSuper()
-    {
-        for(int i = 0; i < 5; i++)
-        {
-            if(componentes[i] != null)
-            {
-                return componentes[i];
-            }
-        }
-        return componentes[5];
-    }
+    private String erro;
 
     public Componentes getComponente(char info)
     {
@@ -36,12 +25,15 @@ public class Salas
         return null;
     }
 
-    public void addComponente(Componentes componente)
-    {
+    public String addComponente(Componentes componente)
+    {       
         switch (componente.getInfo())
         {
             case 'O', 'W', 'B':
-                componentes[0] = componente;
+                if(componentes[0] == null)
+                    componentes[0] = componente;
+                else
+                    erro = "Esse componente não pode ser inserido aqui.";
                 break;
             case 'P':
                 componentes[1] = componente;
@@ -59,6 +51,7 @@ public class Salas
                 componentes[5] = componente;
                 break;
         }
+        return erro;
     }
 
     public void delComponente(Componentes componente)
@@ -66,13 +59,13 @@ public class Salas
         switch (componente.getInfo())
         {
             case 'O', 'W':
-                componentes[0] = componente;
+                componentes[0] = null;
                 break;
             case 'P':
-                componentes[1] = componente;
+                componentes[1] = null;
                 break;
             case 'f':
-                componentes[2] = componente;
+                componentes[2] = null;
                 break;
         }
     }

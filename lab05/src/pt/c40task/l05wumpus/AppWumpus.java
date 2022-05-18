@@ -75,12 +75,16 @@ public class AppWumpus {
 }
 
 /*     -  Listinha de tarefas  -    */
-// fazer pontuações nos componentes e pontuacao do user no heroi?
-// fazer probabilidade da flecha e implementar flecha e vidas e sla mais o q
-// resultados da partida e saídas
-// organizar montador
-// fazer output
-// fazer controlador
-// fazer modos automático e com teclado.
 
-// falta fazer a habilidade de pegar o ouro no controle
+// sair da caverna, e se chegar na sala (1, 1) para sair, verificar se ele está com o ouro (necessário)
+// resultados da partida e saídas
+// fazer modos automático e com teclado.
+// a caverna vai sendo revelada à medida que o jogador se movimenta
+// implementar quit() forçado/bonitinho
+// cada user tem nome? tem que alterar o toolkit
+// verificar condições da caverna, 2 a 3 buracos...
+// os componentes têm referência para a caverna
+// quem aciona a leitura do arquivo é o montador
+// quando dá erros, sair do jogo
+// heroi indica para a caverna quais os movimentos a serem feitos
+// status como L, P, L ou n, x, w

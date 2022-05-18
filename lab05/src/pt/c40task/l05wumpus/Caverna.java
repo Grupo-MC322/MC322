@@ -21,11 +21,6 @@ public class Caverna
         tabuleiro[linha][coluna].addComponente(componente);
     }
 
-    public Componentes getComponenteSuper(int linha, int coluna)
-    {
-        return tabuleiro[linha][coluna].getComponenteSuper();
-    }
-
     public void delComponente(int linha, int coluna, Componentes componente)
     {
         tabuleiro[linha][coluna].delComponente(componente);
@@ -42,7 +37,22 @@ public class Caverna
         {
             for(int j = 0; j < 4; j++)
             {
-                cave[i][j] = tabuleiro[i][j].getComponenteSuper().getInfo();
+                if(tabuleiro[i][j].getComponente('W') != null)
+                    cave[i][j] = 'W';
+                else if(tabuleiro[i][j].getComponente('O') != null)
+                    cave[i][j] = 'O';
+                else if(tabuleiro[i][j].getComponente('B') != null)
+                    cave[i][j] = 'B';
+                else if(tabuleiro[i][j].getComponente('P') != null)
+                    cave[i][j] = 'P';
+                else if(tabuleiro[i][j].getComponente('f') != null)
+                    cave[i][j] = 'f';
+                else if(tabuleiro[i][j].getComponente('b') != null)
+                    cave[i][j] = 'b';
+                else if(tabuleiro[i][j].getComponente('#') != null)
+                    cave[i][j] = '#';
+                else
+                    cave[i][j] = '-';
             }
         }
         return cave;
