@@ -26,21 +26,25 @@ public class AppWumpus {
       System.out.println(movements);
 
       System.out.println("=== Caverna Intermediaria");
+      
+      Heroi heroiJogo = new Heroi();
 
-      Caverna caverna = new Caverna();
+      Caverna cavernaJogo = new Caverna();
+      Montador montadorJogo = new Montador(cave, cavernaJogo, heroiJogo);
       Controle controleJogo = new Controle();
+      controleJogo.conectaHeroi(heroiJogo);
 
       for(int i = 0; i < movements.length(); i++)
       {
-         controleJogo.movimentosArquivo(caverna, movements, i);
+         controleJogo.movimentosArquivo(cavernaJogo, movements, i);
          if(controleJogo.getStatus() == 'n') // se o jogador perder
          {
-            tk.writeBoard(caverna.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
+            tk.writeBoard(cavernaJogo.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
             break;
          }
          else
          {
-            tk.writeBoard(caverna.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
+            tk.writeBoard(cavernaJogo.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
          }
       }
 

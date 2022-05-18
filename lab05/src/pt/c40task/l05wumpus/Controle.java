@@ -117,7 +117,7 @@ public class Controle
                 info = "Fedor";
                 break;
             case '-':
-                caverna.setInfo(xFim, yFim, '#');
+                caverna.addComponente(xFim, yFim, new Visitado());
                 break;
         }
 
@@ -161,4 +161,5 @@ public class Controle
         status = 'n';
         System.out.println("Volte sempre !");
     }
+    
 }

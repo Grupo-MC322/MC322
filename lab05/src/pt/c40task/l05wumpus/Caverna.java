@@ -16,11 +16,6 @@ public class Caverna
         }
     }
 
-    public void setInfo(int linha, int coluna, char info)
-    {
-        tabuleiro[linha][coluna].getComponente('-').setInfo('#');
-    }
-
     public void addComponente(int linha, int coluna, Componentes componente)
     {
         tabuleiro[linha][coluna].addComponente(componente);
@@ -38,7 +33,7 @@ public class Caverna
 
     public Componentes getComponente(int linha, int coluna, char info)
     {
-        return tabuleiro[linha][coluna].getComponente('P');
+        return tabuleiro[linha][coluna].getComponente(info);
     }
 
     public char[][] apresentar()

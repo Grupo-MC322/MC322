@@ -2,10 +2,9 @@ package pt.c40task.l05wumpus;
 
 public class Montador
 {
-    public Montador(String[][] instrucoes, Heroi heroi)
-    {
-        Caverna caverna = new Caverna();
-        
+
+    public Montador(String[][] instrucoes, Caverna caverna, Heroi heroi)
+    {  
         for(int l = 0; l < instrucoes.length; l++)
         {
             for(int c = 0; c < instrucoes[l].length; c++)

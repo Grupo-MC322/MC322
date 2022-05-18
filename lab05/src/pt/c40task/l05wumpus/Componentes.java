@@ -8,9 +8,4 @@ public abstract class Componentes
     {
         return info;
     }
-
-    public void setInfo(char info)
-    {
-        this.info = info;
-    }
 }
