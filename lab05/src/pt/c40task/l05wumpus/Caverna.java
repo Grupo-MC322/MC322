@@ -16,14 +16,9 @@ public class Caverna
         }
     }
 
-    public char getInfo(int linha, int coluna)
-    {
-        return tabuleiro[linha][coluna].getComponente().getInfo();
-    }
-
     public void setInfo(int linha, int coluna, char info)
     {
-        tabuleiro[linha][coluna].getVazio().setInfo('#');
+        tabuleiro[linha][coluna].getComponente('-').setInfo('#');
     }
 
     public void addComponente(int linha, int coluna, Componentes componente)
@@ -31,9 +26,9 @@ public class Caverna
         tabuleiro[linha][coluna].addComponente(componente);
     }
 
-    public Componentes getComponente(int linha, int coluna)
+    public Componentes getComponenteSuper(int linha, int coluna)
     {
-        return tabuleiro[linha][coluna].getComponente();
+        return tabuleiro[linha][coluna].getComponenteSuper();
     }
 
     public void delComponente(int linha, int coluna, Componentes componente)
@@ -41,14 +36,9 @@ public class Caverna
         tabuleiro[linha][coluna].delComponente(componente);
     }
 
-    public Componentes getHeroi(int linha, int coluna)
+    public Componentes getComponente(int linha, int coluna, char info)
     {
-        return tabuleiro[linha][coluna].getHeroi();
-    }
-
-    public Componentes getFedor(int linha, int coluna)
-    {
-        return tabuleiro[linha][coluna].getFedor();
+        return tabuleiro[linha][coluna].getComponente('P');
     }
 
     public char[][] apresentar()
@@ -57,7 +47,7 @@ public class Caverna
         {
             for(int j = 0; j < 4; j++)
             {
-                cave[i][j] = tabuleiro[i][j].getComponente().getInfo();
+                cave[i][j] = tabuleiro[i][j].getComponenteSuper().getInfo();
             }
         }
         return cave;

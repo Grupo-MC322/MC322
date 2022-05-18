@@ -4,7 +4,7 @@ public class Salas
 {
     private Componentes[] componentes = new Componentes[5];
 
-    public Componentes getComponente()
+    public Componentes getComponenteSuper()
     {
         for(int i = 0; i < 4; i++)
         {
@@ -16,19 +16,26 @@ public class Salas
         return componentes[4];
     }
 
-    public Componentes getHeroi()
+    public Componentes getComponente(char info)
     {
-        return componentes[1];
-    }
-
-    public Componentes getFedor()
-    {
-        return componentes[2];
-    }
-
-    public Componentes getVazio()
-    {
-        return componentes[4];
+        switch (info)
+        {
+            case 'O', 'W', 'B':
+                return componentes[0];
+                break;
+            case 'P':
+                return componentes[1];
+                break;
+            case 'f':
+                return componentes[2];
+                break;
+            case 'b':
+                return componentes[3];
+                break;
+            case '-':
+                return componentes[4];
+                break;
+        }
     }
 
     public void addComponente(Componentes componente)

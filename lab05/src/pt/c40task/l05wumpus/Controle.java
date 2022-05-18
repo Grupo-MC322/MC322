@@ -39,10 +39,10 @@ public class Controle
             movimentar(posicaoX, posicaoY, posicaoX+1, posicaoY, caverna);
             posicaoY = posicaoX+1;
         }
-        else if (movimentoAtual == 'c' && caverna.getComponente(posicaoX, posicaoY).getInfo() == 'O')
+        else if (movimentoAtual == 'c' && caverna.getComponenteSuper(posicaoX, posicaoY).getInfo() == 'O')
         {
             achouOuro = true;
-            caverna.delComponente(posicaoX, posicaoY, caverna.getComponente(posicaoX, posicaoY));
+            caverna.delComponente(posicaoX, posicaoY, caverna.getComponente(posicaoX, posicaoY, 'O'));
         }
         else if (movimentoAtual == 'q')
         {
@@ -78,22 +78,22 @@ public class Controle
 
     public void movimentar(int xInicio, int yInicio, int xFim, int yFim, Caverna caverna)
     {
-        switch(caverna.getInfo(xFim, yFim))
+        switch(caverna.getComponenteSuper(xFim, yFim).getInfo())
         {
             case 'W':
                 if(heroi.getFlechaEquipada() && ganharBatalha())
                 {
                     pontuacao += 500;
-                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim));
+                    caverna.delComponente(xFim, yFim, caverna.getComponenteSuper(xFim, yFim));
 
                     if(xFim-1 >= 0)
-                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim-1, yFim));
+                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim-1, yFim, 'f'));
                     if(xFim+1 < 4)
-                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim+1, yFim));
+                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim+1, yFim, 'f'));
                     if(yFim-1 >= 0)
-                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim, yFim-1));
+                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim-1, 'f'));
                     if(yFim-1 < 4)
-                        caverna.delComponente(xFim, yFim, caverna.getFedor(xFim, yFim+1));
+                        caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim+1, 'f'));
 
                     heroi.setFlechaEquipada(false); 
                 } 
@@ -121,8 +121,8 @@ public class Controle
                 break;
         }
 
-        caverna.addComponente(xFim, yFim, caverna.getHeroi(xInicio, yInicio));
-        caverna.delComponente(xInicio, yInicio, caverna.getHeroi(xInicio, yInicio));
+        caverna.addComponente(xFim, yFim, caverna.getComponente(xInicio, yInicio, 'P'));
+        caverna.delComponente(xInicio, yInicio, caverna.getComponente(xInicio, yInicio, 'P'));
     }
     
     public boolean ganharBatalha()
