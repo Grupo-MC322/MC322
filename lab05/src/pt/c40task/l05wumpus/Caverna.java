@@ -21,6 +21,11 @@ public class Caverna
         return tabuleiro[linha][coluna].getComponente().getInfo();
     }
 
+    public void setInfo(int linha, int coluna, char info)
+    {
+        tabuleiro[linha][coluna].getVazio().setInfo('#');
+    }
+
     public void addComponente(int linha, int coluna, Componentes componente)
     {
         tabuleiro[linha][coluna].addComponente(componente);

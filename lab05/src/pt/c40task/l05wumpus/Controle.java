@@ -117,7 +117,7 @@ public class Controle
                 info = "Fedor";
                 break;
             case '-':
-                // tem que mudar pra #!!
+                caverna.setInfo(xFim, yFim, '#');
                 break;
         }
 

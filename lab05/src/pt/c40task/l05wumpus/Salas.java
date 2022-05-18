@@ -26,6 +26,11 @@ public class Salas
         return componentes[2];
     }
 
+    public Componentes getVazio()
+    {
+        return componentes[4];
+    }
+
     public void addComponente(Componentes componente)
     {
         switch (componente.getInfo())
