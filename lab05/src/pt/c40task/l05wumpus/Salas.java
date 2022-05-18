@@ -22,26 +22,18 @@ public class Salas
         {
             case 'O', 'W', 'B':
                 return componentes[0];
-                break;
             case 'P':
                 return componentes[1];
-                break;
             case 'f':
                 return componentes[2];
-                break;
             case 'b':
                 return componentes[3];
-                break;
             case '#':
                 return componentes[4];
-                break;
             case '-':
                 return componentes[5];
-                break;
-            default:
-                return null;
-                break;
         }
+        return null;
     }
 
     public void addComponente(Componentes componente)
