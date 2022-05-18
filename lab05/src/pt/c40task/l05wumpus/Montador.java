@@ -2,31 +2,34 @@ package pt.c40task.l05wumpus;
 
 public class Montador
 {
+    private int posicaoX, posicaoY;
 
     public Montador(String[][] instrucoes, Caverna caverna, Heroi heroi)
-    {  
-        for(int l = 0; l < instrucoes.length; l++)
+    { 
+        
+        for(int i = 0; i < instrucoes.length; i++)
         {
-            for(int c = 0; c < instrucoes[l].length; c++)
+            posicaoX = Integer.parseInt(instrucoes[i][0]);
+            posicaoY = Integer.parseInt(instrucoes[i][1]);
+
+            switch (instrucoes[i][2])
             {
-                switch (instrucoes[l][c]) {
-                    case "P":
-                        caverna.addComponente(l, c, heroi);
-                        break;
-                    case "W":
-                        caverna.addComponente(l, c, new Wumpus(l, c, caverna));
-                        break;
-                    case "B":
-                        caverna.addComponente(l, c, new Buraco(l, c, caverna));
-                        break;
-                    case "O":
-                        caverna.addComponente(l, c, new Ouro());
-                        break;
-                }
-                
-                // toda sala é iniciada com um espaço vazio que fica com a menor prioridade dentro dela
-                caverna.addComponente(l, c, new Vazio());
+                case "P":
+                    caverna.addComponente(posicaoX, posicaoY, heroi);
+                    break;
+                case "W":
+                    caverna.addComponente(posicaoX, posicaoY, new Wumpus(posicaoX, posicaoY, caverna));
+                    break;
+                case "B":
+                    caverna.addComponente(posicaoX, posicaoY, new Buraco(posicaoX, posicaoY, caverna));
+                    break;
+                case "O":
+                    caverna.addComponente(posicaoX, posicaoY, new Ouro());
+                    break;
             }
+            
+            // toda sala é iniciada com um espaço vazio que fica com a menor prioridade dentro dela
+            caverna.addComponente(posicaoX, posicaoY, new Vazio());
         }
     }
 }

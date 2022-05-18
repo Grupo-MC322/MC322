@@ -4,17 +4,17 @@ public class Wumpus extends Componentes
 {
     protected char info = 'W';
 
-    public Wumpus(int coordX, int coordY, Caverna caverna)
+    public Wumpus(int posicaoX, int posicaoY, Caverna caverna)
     {
         // posicionamento dos fedores em volta do wumpus
-        if(coordX-1 >= 0)
-            caverna.addComponente(coordX-1, coordY, new Fedor());
-        if(coordY-1 >= 0)
-            caverna.addComponente(coordX, coordY-1, new Fedor());
-        if(coordX+1 < 4)
-            caverna.addComponente(coordX+1, coordY, new Fedor());
-        if(coordY+1 < 4)
-            caverna.addComponente(coordX, coordY+1, new Fedor());
+        if(posicaoX-1 >= 0)
+            caverna.addComponente(posicaoX-1, posicaoY, new Fedor());
+        if(posicaoY-1 >= 0)
+            caverna.addComponente(posicaoX, posicaoY-1, new Fedor());
+        if(posicaoX+1 < 4)
+            caverna.addComponente(posicaoX+1, posicaoY, new Fedor());
+        if(posicaoY+1 < 4)
+            caverna.addComponente(posicaoX, posicaoY+1, new Fedor());
 
     }
 }

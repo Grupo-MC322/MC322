@@ -6,7 +6,7 @@ public class Controle
     private static int pontuacao = 0;
     private int posicaoX, posicaoY;
     private boolean achouOuro = false;
-    private String info;
+    private String alerta;
     private char status;
     private Heroi heroi;
 
@@ -110,11 +110,11 @@ public class Controle
                 break;
 
             case 'b':
-                info = "Brisa";
+                alerta = "Brisa";
                 break;
             
             case 'f':
-                info = "Fedor";
+                alerta = "Fedor";
                 break;
             case '-':
                 caverna.addComponente(xFim, yFim, new Visitado());
@@ -142,6 +142,11 @@ public class Controle
     public int getPontuacao()
     {
         return pontuacao;
+    }
+
+    public String getAlerta()
+    {
+        return alerta;
     }
 
     public void perdeu()
