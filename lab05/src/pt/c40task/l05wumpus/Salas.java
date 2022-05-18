@@ -16,6 +16,11 @@ public class Salas
         return componentes[4];
     }
 
+    public Componentes getHeroi()
+    {
+        return componentes[1];
+    }
+
     public void addComponente(Componentes componente)
     {
         switch (componente.getInfo())

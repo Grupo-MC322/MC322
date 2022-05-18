@@ -6,10 +6,6 @@ public class Heroi extends Componentes
     private boolean flechaUsada = false;
     private boolean flechaEquipada = false;
 
-    public char getInfo() {
-        return info;
-    }
-
     public boolean getFlechaUsada()
     {
         return flechaUsada;

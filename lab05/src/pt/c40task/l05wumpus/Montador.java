@@ -12,21 +12,21 @@ public class Montador
             {
                 switch (instrucoes[l][c]) {
                     case "P":
-                        caverna.setTabuleiro(l, c, heroi);
+                        caverna.addComponente(l, c, heroi);
                         break;
                     case "W":
-                        caverna.setTabuleiro(l, c, new Wumpus(l, c, caverna));
+                        caverna.addComponente(l, c, new Wumpus(l, c, caverna));
                         break;
                     case "B":
-                        caverna.setTabuleiro(l, c, new Buraco(l, c, caverna));
+                        caverna.addComponente(l, c, new Buraco(l, c, caverna));
                         break;
                     case "O":
-                        caverna.setTabuleiro(l, c, new Ouro());
+                        caverna.addComponente(l, c, new Ouro());
                         break;
                 }
                 
                 // toda sala é iniciada com um espaço vazio que fica com a menor prioridade dentro dela
-                caverna.setTabuleiro(l, c, new Vazio());
+                caverna.addComponente(l, c, new Vazio());
             }
         }
     }
