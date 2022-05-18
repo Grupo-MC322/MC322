@@ -9,9 +9,9 @@ public class Montador
         
         for(int i = 0; i < instrucoes.length; i++)
         {
-            posicaoX = Integer.parseInt(instrucoes[i][0]);
-            posicaoY = Integer.parseInt(instrucoes[i][1]);
-            if(posicaoX < 1 || posicaoX > 4 || posicaoY < 1 || posicaoY > 4)
+            posicaoX = Integer.parseInt(instrucoes[i][0]) - 1;
+            posicaoY = Integer.parseInt(instrucoes[i][1]) - 1;
+            if(posicaoX < 0 || posicaoX > 3 || posicaoY < 0 || posicaoY > 3)
             {
                 System.out.println("Foi inserida uma posição fora do tabuleiro.");
             }
