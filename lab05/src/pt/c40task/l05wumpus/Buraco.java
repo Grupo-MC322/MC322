@@ -2,7 +2,7 @@ package pt.c40task.l05wumpus;
 
 public class Buraco extends Componentes 
 {
-    private char info = 'B';
+    protected char info = 'B';
 
     public Buraco(int coordX, int coordY, Caverna caverna)
     {

@@ -2,5 +2,5 @@ package pt.c40task.l05wumpus;
 
 public class Ouro extends Componentes
 {
-    private char info = 'O';
+    protected char info = 'O';
 }

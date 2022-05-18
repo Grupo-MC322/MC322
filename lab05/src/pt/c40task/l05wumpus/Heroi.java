@@ -2,7 +2,7 @@ package pt.c40task.l05wumpus;
 
 public class Heroi extends Componentes
 {
-    private char info = 'P';
+    protected char info = 'P';
     private boolean flechaUsada = false;
     private boolean flechaEquipada = false;
 
