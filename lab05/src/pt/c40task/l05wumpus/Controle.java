@@ -3,7 +3,6 @@ import java.util.Random;
 
 public class Controle 
 {
-    private String movimentos;
     private static int pontuacao = 0;
     private int posicaoX, posicaoY;
     private boolean achouOuro = false;
@@ -13,10 +12,6 @@ public class Controle
 
     public void movimentosArquivo(Caverna caverna, String movimentos, int nMovimento)
     {
-        this.movimentos = movimentos;
-<<<<<<< HEAD
-        for(int i = 0; i < movimentos.length(); i++)
-=======
         status = 'x';
         if(posicaoX == 0 && posicaoY == 0 && achouOuro){
             ganhou();
@@ -25,7 +20,6 @@ public class Controle
         char movimentoAtual = movimentos.charAt(nMovimento);
 
         if(movimentoAtual == 'w' && posicaoY-1 >= 0)
->>>>>>> e1b443d3df78fc5bedfe3c0e10a8e647c85df000
         {
             movimentar(posicaoX, posicaoY, posicaoX, posicaoY-1, caverna);
             posicaoY = posicaoY-1;
@@ -46,35 +40,11 @@ public class Controle
             posicaoY = posicaoX+1;
         }
 
-<<<<<<< HEAD
-        
-            if(movimentoAtual == 'w' && posicaoY-1 >= 0)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX, posicaoY-1, caverna);
-                posicaoY = posicaoY-1;
-            }
-            else if(movimentoAtual == 's' && posicaoY+1 < 4)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX, posicaoY+1, caverna);
-                posicaoY = posicaoY+1;
-            } 
-            else if(movimentoAtual == 'a' && posicaoX-1 >= 0)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX-1, posicaoY, caverna);
-                posicaoY = posicaoX-1;
-            }
-            else if(movimentoAtual == 'd' && posicaoX+1 < 4)
-            {
-                movimentar(posicaoX, posicaoY, posicaoX+1, posicaoY, caverna);
-                posicaoY = posicaoX+1;
-            }
-=======
         // definições da flecha
         if(heroi.getFlechaEquipada()) // se a flecha estiver equipada, significa que ela não foi utilizada e foi perdida
         {
             heroi.setFlechaEquipada(false);
         }
->>>>>>> e1b443d3df78fc5bedfe3c0e10a8e647c85df000
 
         if(movimentoAtual == 'k')
         {
@@ -88,16 +58,8 @@ public class Controle
                 heroi.setFlechaUsada(true);
                 pontuacao -= 100;
             }
-<<<<<<< HEAD
-
-            pontuacao -= 15;
-
-            // write board FAZER
-=======
->>>>>>> e1b443d3df78fc5bedfe3c0e10a8e647c85df000
         }
 
-        caverna.setTabuleiro(posicaoX, posicaoY-1, caverna.getComponente(posicaoX, posicaoY));
         pontuacao -= 15;
     }
 
@@ -113,22 +75,8 @@ public class Controle
             case 'W':
                 if(heroi.getFlechaEquipada() && ganharBatalha()) // se a flecha estiver equipada
                 {
-<<<<<<< HEAD
                     pontuacao += 500;
                     heroi.setFlechaEquipada(false); 
-=======
-                    if(ganharBatalha()) // se o herói ganhar a batalha
-                    {
-                        pontuacao += 500;
-                        caverna.setTabuleiro(xFim, yFim, caverna.getComponente(xInicio, yInicio));
-                        heroi.setFlechaEquipada(false); 
-                    } 
-                    else // se perder a batalha
-                    {
-                        pontuacao -= 1000;
-                        perdeu();
-                    }
->>>>>>> e1b443d3df78fc5bedfe3c0e10a8e647c85df000
                 } 
                 else 
                 {
@@ -155,7 +103,8 @@ public class Controle
                 break;
         }
 
-        caverna.setTabuleiro(xFim, yFim, caverna.getComponente(xInicio, yInicio));
+        caverna.addComponente(xFim, yFim, caverna.getHeroi(xInicio, yInicio));
+        caverna.delComponente(xInicio, yInicio, caverna.getHeroi(xInicio, yInicio));
     }
     
     public boolean ganharBatalha()
