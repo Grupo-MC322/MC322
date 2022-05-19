@@ -12,6 +12,7 @@ public class AppWumpus {
             (args.length > 2) ? args[2] : null);
    }
    
+   // imprime tabuleiro no terminal
    public static void imprimeJogo(Caverna cavernaJogo, String nome, Controle controleJogo)
    {
       char[][] board = cavernaJogo.apresentar();
@@ -33,17 +34,21 @@ public class AppWumpus {
    {
       Toolkit tk = Toolkit.start(arquivoCaverna, arquivoSaida, arquivoMovimentos);
 
-      String nome = "Alcebiades";
+      String nome = "Alcebiades"; // nome padrão que pode ser alterado caso o usuário queira jogar manualmente
       Heroi heroiJogo = new Heroi();
       Caverna cavernaJogo = new Caverna();
-      new Montador(tk, cavernaJogo, heroiJogo);
+      new Montador(tk, cavernaJogo, heroiJogo); // o montador é responsável pela leitura das instruções sobre o que deve ter na caverna, passando para tk
       Controle controleJogo = new Controle();
       
-      heroiJogo.conectaControle(controleJogo);
-      controleJogo.conectaHeroi(heroiJogo);
+      heroiJogo.conectaControle(controleJogo); // o heroi pode ter acesso aos métodos do controle, pois o herói é interessado pelos métodos de movimentos
+      controleJogo.conectaHeroi(heroiJogo); // o controle pode ter acesso aosmétodos do herói, pois o controle é interessado pelos métodos relativos à flecha
 
       String arquivoMovimentos2 = System.getProperty("user.dir")+"/src/pt/c40task/l05wumpus/"+"movements.csv";
       File file = new File(arquivoMovimentos2);
+
+      // é verificado se não foi informado um arquivo de movimento em args e se o arquivo predominante movements.csv está vazio
+      // se houver algo no arquivo movements.csv, essas informações serão consideradas no modo de jogo automático
+
       if(arquivoMovimentos == null && file.length() == 0L)
       // entrando no modo manual
       {
@@ -55,17 +60,19 @@ public class AppWumpus {
          
          imprimeJogo(cavernaJogo, nome, controleJogo);
 
-         while (controleJogo.getStatus() == 'P' )
+         while (controleJogo.getStatus() == 'P' ) // enquanto o jogo estiver sendo jogado (P de playing em inglês)
          {
             System.out.print("Digite seu movimento: ");
             String movimentoAtual = teclado.nextLine();
             System.out.println();
-            controleJogo.movimentosArquivo(cavernaJogo, movimentoAtual, 0);
+
+            controleJogo.movimentosArquivo(cavernaJogo, movimentoAtual, 0); // realiza-se o movimento único (posição 0) que o usuário digitou
+
             System.out.println();
             tk.writeBoard(cavernaJogo.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
             imprimeJogo(cavernaJogo, nome, controleJogo);
 
-            if (controleJogo.getAlerta() != null)
+            if (controleJogo.getAlerta() != null) // o alerta, quando existir, avisará a presença de brisas e fedores na sala do herói
             {
                System.out.println("Alerta: " + controleJogo.getAlerta());
             }
@@ -75,6 +82,7 @@ public class AppWumpus {
          teclado.close();
       }
       else
+      // entrando no modo automático, em que o tk sabe o arquivo relativos aos movimentos
       {         
          String movements = tk.retrieveMovements();
          System.out.println("=== Movimentos");
@@ -82,7 +90,7 @@ public class AppWumpus {
 
          for(int i = 0; i < movements.length(); i++)
          {
-            controleJogo.movimentosArquivo(cavernaJogo, movements, i);
+            controleJogo.movimentosArquivo(cavernaJogo, movements, i); //// realiza-se o movimento que está sendo lido (posição i) do arquivo
             if(controleJogo.getStatus() != 'P') // se o jogo acabar
             {
                tk.writeBoard(cavernaJogo.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
@@ -109,8 +117,6 @@ public class AppWumpus {
             break;
       }
       tk.writeBoard(cavernaJogo.apresentar(), controleJogo.getPontuacao(), controleJogo.getStatus());
-
-      
       tk.stop();
    }
 

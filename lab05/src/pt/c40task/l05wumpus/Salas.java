@@ -3,6 +3,8 @@ package pt.c40task.l05wumpus;
 public class Salas
 {
     private Componentes[] componentes = new Componentes[8];
+    // vetor dos 8 componentes possíveis: herói, brisa, fedor, wumpus, buraco, ouro, espaço vazio e o espaço vazio que já foi vistado
+    // o vetor contém o componente quando este se faz presente na sala
 
     public Componentes getComponente(char info)
     {
@@ -28,6 +30,7 @@ public class Salas
         return null;
     }
 
+    // adiciona a presença de certo componente no vetor da sala
     public void addComponente(Componentes componente)
     {   
         switch (componente.getInfo())
@@ -36,7 +39,7 @@ public class Salas
                 componentes[0] = componente;
                 break;
             case 'O':
-                if(componentes[2] == null && componentes[3] == null)
+                if(componentes[2] == null && componentes[3] == null) // não pode haver ouro, wumpus ou buraco em uma mesma sala
                     componentes[1] = componente;
                 else
                 {
@@ -77,6 +80,7 @@ public class Salas
         }
     }
 
+    // retira a presença do componente no vetor da sala
     public void delComponente(Componentes componente)
     {
         switch (componente.getInfo())

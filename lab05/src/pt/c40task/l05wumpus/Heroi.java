@@ -33,15 +33,17 @@ public class Heroi extends Componentes
         return info;
     }
 
+    // o herói fica responsável pelos movimentos, tendo referência para a caverna, e para o controle
     public void movimentar(int linhaInicio, int colunaInicio, int linhaFim, int colunaFim, Caverna caverna)
     {
-        if(caverna.getComponente(linhaFim, colunaFim, 'W') != null)
+        if(caverna.getComponente(linhaFim, colunaFim, 'W') != null) // se for wumpus
         {
             if(flechaEquipada && ganharBatalha())
             {
                 controle.atualizaPontuacao(500);
-                caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, 'W'));
+                caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, 'W')); // deleta o wumpus
 
+                // deletando os fedores
                 if(linhaFim-1 >= 0)
                     caverna.delComponente(linhaFim-1, colunaFim, caverna.getComponente(linhaFim-1, colunaFim, 'f'));
                 if(linhaFim+1 < 4)
@@ -60,7 +62,7 @@ public class Heroi extends Componentes
                 controle.perdeu();
             }
         } 
-        else if(caverna.getComponente(linhaFim, colunaFim, 'B') != null)
+        else if(caverna.getComponente(linhaFim, colunaFim, 'B') != null) // s o herói está em uma posição do tabuleiro em que há buraco, ele perde
         {
             controle.atualizaPontuacao(-1000);
             controle.perdeu();
@@ -79,14 +81,16 @@ public class Heroi extends Componentes
             controle.setAlerta(null);
         }    
 
-        if(caverna.getComponente(linhaFim, colunaFim, '-') != null)
+        if(caverna.getComponente(linhaFim, colunaFim, '-') != null) // se o espaço não tinha sido vistado anteriormente, removemos o -, restando o #
             caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, '-'));
-        caverna.addComponente(linhaFim, colunaFim, caverna.getComponente(linhaInicio, colunaInicio, 'P'));
-        caverna.delComponente(linhaInicio, colunaInicio, caverna.getComponente(linhaInicio, colunaInicio, 'P'));
+
+        caverna.addComponente(linhaFim, colunaFim, caverna.getComponente(linhaInicio, colunaInicio, 'P')); // tiramos o herói da sala anterior
+        caverna.delComponente(linhaInicio, colunaInicio, caverna.getComponente(linhaInicio, colunaInicio, 'P')); // colocando o herói na nova sala
 
         controle.atualizaPontuacao(-15);
     }
 
+    // o herói tem uma chance de 50% de ganhar esta batalha
     public boolean ganharBatalha()
     {
         Random random = new Random();
@@ -94,6 +98,7 @@ public class Heroi extends Componentes
         return resultado;
     }
 
+    // o herói pode utilizar os métodos do controle
     public void conectaControle(Controle controle)
     {
         this.controle = controle;

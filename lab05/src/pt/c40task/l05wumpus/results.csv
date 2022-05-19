@@ -41,15 +41,36 @@ score: -160
 status: P
 =====
 ##b-
--fb-
--W--
+-#b-
+-P--
 ----
-score: -1175
-status: L
+score: 325
+status: P
 =====
 ##b-
--fb-
--W--
+-Pb-
+-b--
 ----
-score: -1175
-status: L
+score: 310
+status: P
+=====
+#Pb-
+-#b-
+-b--
+----
+score: 295
+status: P
+=====
+P#b-
+-#b-
+-b--
+----
+score: 1280
+status: W
+=====
+P#b-
+-#b-
+-b--
+----
+score: 1280
+status: W
