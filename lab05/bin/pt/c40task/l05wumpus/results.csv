@@ -42,14 +42,35 @@ status: x
 =====
 ##b-
 -fb-
--W--
+-P--
 ----
-score: -1175
-status: n
+score: 325
+status: x
 =====
 ##b-
--fb-
--W--
+-Pb-
+-b--
 ----
-score: -1175
-status: n
+score: 310
+status: x
+=====
+#Pb-
+-fb-
+-b--
+----
+score: 295
+status: x
+=====
+P#b-
+-fb-
+-b--
+----
+score: 1280
+status: w
+=====
+P#b-
+-fb-
+-b--
+----
+score: 1280
+status: w
