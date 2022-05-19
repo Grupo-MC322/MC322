@@ -13,27 +13,18 @@ public class AppWumpus {
                                   String arquivoMovimentos) {
       Toolkit tk = Toolkit.start(arquivoCaverna, arquivoSaida, arquivoMovimentos);
       
-      String cave[][] = tk.retrieveCave();
-      System.out.println("=== Caverna");
-      for (int l = 0; l < cave.length; l++) {
-         for (int c = 0; c < cave[l].length; c++)
-            System.out.print(cave[l][c] + ((c < cave[l].length-1) ? ", " : ""));
-         System.out.println();
-      }
+      Heroi heroiJogo = new Heroi();
+      Caverna cavernaJogo = new Caverna();
+      new Montador(tk, cavernaJogo, heroiJogo);
+      Controle controleJogo = new Controle();
       
+      heroiJogo.conectaControle(controleJogo);
+      controleJogo.conectaHeroi(heroiJogo);
+
       String movements = tk.retrieveMovements();
       System.out.println("=== Movimentos");
       System.out.println(movements);
       
-      Heroi heroiJogo = new Heroi();
-
-      Caverna cavernaJogo = new Caverna();
-      new Montador(cave, cavernaJogo, heroiJogo);
-      Controle controleJogo = new Controle();
-      heroiJogo.conectaControle(controleJogo);
-      controleJogo.conectaHeroi(heroiJogo);
-      
-
       for(int i = 0; i < movements.length(); i++)
       {
          controleJogo.movimentosArquivo(cavernaJogo, movements, i);
@@ -64,3 +55,4 @@ public class AppWumpus {
 // quem aciona a leitura do arquivo é o montador
 // status como L, P, L ou n, x, w
 // como deve sair
+// comentar código

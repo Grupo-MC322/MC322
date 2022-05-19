@@ -33,23 +33,23 @@ public class Heroi extends Componentes
         return info;
     }
 
-    public void movimentar(int xInicio, int yInicio, int xFim, int yFim, Caverna caverna)
+    public void movimentar(int linhaInicio, int colunaInicio, int linhaFim, int colunaFim, Caverna caverna)
     {
-        if(caverna.getComponente(xFim, yFim, 'W') != null)
+        if(caverna.getComponente(linhaFim, colunaFim, 'W') != null)
         {
             if(flechaEquipada && ganharBatalha())
             {
                 controle.atualizaPontuacao(500);
-                caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim, 'W'));
+                caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, 'W'));
 
-                if(xFim-1 >= 0)
-                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim-1, yFim, 'f'));
-                if(xFim+1 < 4)
-                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim+1, yFim, 'f'));
-                if(yFim-1 >= 0)
-                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim-1, 'f'));
-                if(yFim-1 < 4)
-                    caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim+1, 'f'));
+                if(linhaFim-1 >= 0)
+                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim-1, colunaFim, 'f'));
+                if(linhaFim+1 < 4)
+                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim+1, colunaFim, 'f'));
+                if(colunaFim-1 >= 0)
+                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim-1, 'f'));
+                if(colunaFim-1 < 4)
+                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim+1, 'f'));
 
                 flechaEquipada = false; 
             } 
@@ -59,25 +59,25 @@ public class Heroi extends Componentes
                 controle.perdeu();
             }
         } 
-        else if(caverna.getComponente(xFim, yFim, 'B') != null)
+        else if(caverna.getComponente(linhaFim, colunaFim, 'B') != null)
         {
             controle.atualizaPontuacao(-1000);
             controle.perdeu();
         }
     
-        if(caverna.getComponente(xFim, yFim, 'b') != null)
+        if(caverna.getComponente(linhaFim, colunaFim, 'b') != null)
         {
             controle.setAlerta("Brisa");
         }            
-        if (caverna.getComponente(xFim, yFim, 'f') != null)
+        if (caverna.getComponente(linhaFim, colunaFim, 'f') != null)
         {
             controle.setAlerta("Fedor");
         }
 
-        if(caverna.getComponente(xFim, yFim, '-') != null)
-            caverna.delComponente(xFim, yFim, caverna.getComponente(xFim, yFim, '-'));
-        caverna.addComponente(xFim, yFim, caverna.getComponente(xInicio, yInicio, 'P'));
-        caverna.delComponente(xInicio, yInicio, caverna.getComponente(xInicio, yInicio, 'P'));
+        if(caverna.getComponente(linhaFim, colunaFim, '-') != null)
+            caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, '-'));
+        caverna.addComponente(linhaFim, colunaFim, caverna.getComponente(linhaInicio, colunaInicio, 'P'));
+        caverna.delComponente(linhaInicio, colunaInicio, caverna.getComponente(linhaInicio, colunaInicio, 'P'));
 
         controle.atualizaPontuacao(-15);
     }

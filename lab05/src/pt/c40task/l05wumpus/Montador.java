@@ -3,10 +3,19 @@ package pt.c40task.l05wumpus;
 public class Montador
 {
     private int linha, coluna;
-    private int contaBuraco=0, contaWumpus=0, contaOuro=0, contaHeroi=0;
+    private int contaBuraco = 0, contaWumpus = 0, contaOuro = 0, contaHeroi = 0;
 
-    public Montador(String[][] instrucoes, Caverna caverna, Heroi heroi)
+    public Montador(Toolkit tk, Caverna caverna, Heroi heroi)
     {
+        String instrucoes[][] = tk.retrieveCave();
+        System.out.println("=== Caverna");
+        for(int l = 0; l < instrucoes.length; l++)
+        {
+            for(int c = 0; c < instrucoes[l].length; c++)
+                System.out.print(instrucoes[l][c] + ((c < instrucoes[l].length-1) ? ", " : ""));
+            System.out.println();
+        }
+        
         for(int i = 0; i < instrucoes.length; i++)
         {
             linha = Integer.parseInt(instrucoes[i][0])-1;
