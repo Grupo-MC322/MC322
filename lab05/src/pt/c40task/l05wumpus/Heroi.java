@@ -6,7 +6,7 @@ public class Heroi extends Componentes
     private char info = 'P';
     private boolean flechaUsada = false;
     private boolean flechaEquipada = false;
-    Controle controle;
+    private Controle controle;
 
     public boolean getFlechaUsada()
     {
@@ -84,12 +84,9 @@ public class Heroi extends Componentes
 
     public boolean ganharBatalha()
     {
-        Random rand = new Random();
-        int resultado = rand.nextInt(1);
-        if(resultado == 0){ // se o jogador perder
-            return false;
-        }
-        return true; // se o jogador ganhar
+        Random random = new Random();
+        boolean resultado = random.nextBoolean();
+        return resultado;
     }
 
     public void conectaControle(Controle controle)

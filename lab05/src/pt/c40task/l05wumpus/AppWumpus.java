@@ -24,8 +24,6 @@ public class AppWumpus {
       String movements = tk.retrieveMovements();
       System.out.println("=== Movimentos");
       System.out.println(movements);
-
-      System.out.println("=== Caverna Intermediaria");
       
       Heroi heroiJogo = new Heroi();
 
@@ -62,11 +60,7 @@ public class AppWumpus {
 /*     -  Listinha de tarefas  -    */
 
 // fazer modos automático e com teclado.
-// implementar quit() forçado/bonitinho
 // cada user tem nome? tem que alterar o toolkit
-// verificar condições da caverna, 2 a 3 buracos...
-// os componentes têm referência para a caverna
 // quem aciona a leitura do arquivo é o montador
-// quando dá erros, sair do jogo
 // status como L, P, L ou n, x, w
-// criar mais espaços no vetor dos componentes
+// como deve sair
