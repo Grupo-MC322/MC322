@@ -1,0 +1,55 @@
+#P--
+----
+----
+----
+score: -15
+status: x
+=====
+##P-
+----
+----
+----
+score: -30
+status: x
+=====
+##b-
+--O-
+----
+----
+score: -45
+status: x
+=====
+##b-
+--P-
+----
+----
+score: -45
+status: x
+=====
+##b-
+-Pb-
+----
+----
+score: -60
+status: x
+=====
+##b-
+-Pb-
+----
+----
+score: -160
+status: x
+=====
+##b-
+-fb-
+-W--
+----
+score: -1175
+status: n
+=====
+##b-
+-fb-
+-W--
+----
+score: -1175
+status: n
