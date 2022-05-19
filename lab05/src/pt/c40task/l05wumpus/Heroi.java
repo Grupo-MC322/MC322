@@ -43,15 +43,16 @@ public class Heroi extends Componentes
                 caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, 'W'));
 
                 if(linhaFim-1 >= 0)
-                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim-1, colunaFim, 'f'));
+                    caverna.delComponente(linhaFim-1, colunaFim, caverna.getComponente(linhaFim-1, colunaFim, 'f'));
                 if(linhaFim+1 < 4)
-                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim+1, colunaFim, 'f'));
+                    caverna.delComponente(linhaFim+1, colunaFim, caverna.getComponente(linhaFim+1, colunaFim, 'f'));
                 if(colunaFim-1 >= 0)
-                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim-1, 'f'));
+                    caverna.delComponente(linhaFim, colunaFim-1, caverna.getComponente(linhaFim, colunaFim-1, 'f'));
                 if(colunaFim-1 < 4)
-                    caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim+1, 'f'));
+                    caverna.delComponente(linhaFim, colunaFim+1, caverna.getComponente(linhaFim, colunaFim+1, 'f'));
 
-                flechaEquipada = false; 
+                flechaEquipada = false;
+                System.out.println("Você matou o Wumpus :)");
             } 
             else 
             {
@@ -65,14 +66,18 @@ public class Heroi extends Componentes
             controle.perdeu();
         }
     
-        if(caverna.getComponente(linhaFim, colunaFim, 'b') != null)
-        {
-            controle.setAlerta("Brisa");
-        }            
         if (caverna.getComponente(linhaFim, colunaFim, 'f') != null)
         {
-            controle.setAlerta("Fedor");
+            controle.setAlerta("Estou sentindo um fedor :0");
         }
+        else if(caverna.getComponente(linhaFim, colunaFim, 'b') != null)
+        {
+            controle.setAlerta("Estou sentindo uma brisa ~~~");
+        }
+        else
+        {
+            controle.setAlerta(null);
+        }    
 
         if(caverna.getComponente(linhaFim, colunaFim, '-') != null)
             caverna.delComponente(linhaFim, colunaFim, caverna.getComponente(linhaFim, colunaFim, '-'));

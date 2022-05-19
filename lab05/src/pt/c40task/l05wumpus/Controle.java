@@ -5,8 +5,8 @@ public class Controle
     private static int pontuacao = 0;
     private int linha, coluna;
     private boolean achouOuro = false;
-    private String alerta;
-    private char status = 'x';
+    private String alerta = null;
+    private char status = 'P';
     private Heroi heroi;
 
     public void movimentosArquivo(Caverna caverna, String movimentos, int contaMovimento)
@@ -37,6 +37,7 @@ public class Controle
         {
             achouOuro = true;
             caverna.delComponente(linha, coluna, caverna.getComponente(linha, coluna, 'O'));
+            System.out.println("Você coletou o ouro :)");
         }
         else if (movimentoAtual == 'q')
         {
@@ -49,11 +50,12 @@ public class Controle
             {
                 System.out.println("A flecha já foi utilizada.");
             }
-            else // equipa a flecha e muda para como sendo utilizada
+            else
             {
                 heroi.setFlechaUsada(true);
                 heroi.setFlechaEquipada(true);
                 pontuacao -= 100;
+                System.out.println("Flecha equipada :)");
             }
         }
         else
@@ -100,18 +102,15 @@ public class Controle
     public void perdeu()
     {
         status = 'L';
-        System.out.println("Voce perdeu =( !!!");
     }
     
     public void ganhou()
     {
         status = 'W';
-        System.out.println("Voce ganhou =D !!!");
     }
 
     public void sair()
     {
-        status = 'P';
-        System.out.println("Volte sempre !");
+        status = 'Q';
     }
 }

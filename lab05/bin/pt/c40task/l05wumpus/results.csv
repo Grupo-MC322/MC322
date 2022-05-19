@@ -3,74 +3,53 @@
 ----
 ----
 score: -15
-status: x
+status: P
 =====
 ##P-
 ----
 ----
 ----
 score: -30
-status: x
+status: P
 =====
 ##b-
 --O-
 ----
 ----
 score: -45
-status: x
+status: P
 =====
 ##b-
 --P-
 ----
 ----
 score: -45
-status: x
+status: P
 =====
 ##b-
 -Pb-
 ----
 ----
 score: -60
-status: x
+status: P
 =====
 ##b-
 -Pb-
 ----
 ----
 score: -160
-status: x
+status: P
 =====
 ##b-
 -fb-
--P--
+-W--
 ----
-score: 325
-status: x
+score: -1175
+status: L
 =====
 ##b-
--Pb-
--b--
-----
-score: 310
-status: x
-=====
-#Pb-
 -fb-
--b--
+-W--
 ----
-score: 295
-status: x
-=====
-P#b-
--fb-
--b--
-----
-score: 1280
-status: w
-=====
-P#b-
--fb-
--b--
-----
-score: 1280
-status: w
+score: -1175
+status: L
