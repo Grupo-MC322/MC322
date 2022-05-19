@@ -9,9 +9,9 @@ public class Buraco extends Componentes
         return info;
     }
 
+    // posiciona as brisas em volta da posição de um buraco que é fornecida
     public Buraco(int linha, int coluna, Caverna caverna)
     {
-        // posicionamento das brisas em volta do buraco
         if(linha-1 >= 0)
             caverna.addComponente(linha-1, coluna, new Brisa());
         if(coluna-1 >= 0)
