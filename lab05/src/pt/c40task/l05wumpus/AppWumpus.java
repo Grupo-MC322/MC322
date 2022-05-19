@@ -53,6 +53,6 @@ public class AppWumpus {
 // fazer modos automático e com teclado.
 // cada user tem nome? tem que alterar o toolkit
 // quem aciona a leitura do arquivo é o montador
-// status como L, P, L ou n, x, w
+// status como W, P, L ou n, x, w
 // como deve sair
 // comentar código

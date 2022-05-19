@@ -99,19 +99,19 @@ public class Controle
 
     public void perdeu()
     {
-        status = 'n';
+        status = 'L';
         System.out.println("Voce perdeu =( !!!");
     }
     
     public void ganhou()
     {
-        status = 'w';
+        status = 'W';
         System.out.println("Voce ganhou =D !!!");
     }
 
     public void sair()
     {
-        status = 'n';
+        status = 'P';
         System.out.println("Volte sempre !");
     }
 }
