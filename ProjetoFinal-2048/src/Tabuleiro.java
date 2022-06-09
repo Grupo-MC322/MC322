@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+import PastaBlocos.*;
 
 public class Tabuleiro {
     Blocos[][] tabuleiro;
