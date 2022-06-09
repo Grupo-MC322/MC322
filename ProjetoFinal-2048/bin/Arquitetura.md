@@ -22,4 +22,4 @@ Controle, que faz a comunicação entre o View e o Modelo.
 # View
 Coisas da interface visual.
 
-Perguntar configurações do jogo antes de começar
+Perguntar configurações do jogo antes de começar.
