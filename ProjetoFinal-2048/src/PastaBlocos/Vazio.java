@@ -11,4 +11,9 @@ public class Vazio implements Blocos
     {
         this.numero = numero;
     }
+
+    public Blocos dobra()
+    {
+        return new Preto();
+    }
 }

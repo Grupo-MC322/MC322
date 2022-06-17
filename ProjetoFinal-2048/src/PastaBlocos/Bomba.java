@@ -25,4 +25,9 @@ public class Bomba implements Blocos
         return vida;
     }
 
+    public Blocos dobra()
+    {
+        return new Bomba();
+    }
+
 }

@@ -1,32 +1,60 @@
 import PastaBlocos.*;
 
 public class Controle {
-    Controle()
+
+    public void juntaBloco(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
-
-    }
-
-    void juntaBloco(int posX, int posY, int direcao, Blocos[][] tabuleiro){
-        // direcao: 0-> cima, 1->baixo, 2->esquerda, 3->direita
-
-        // se for para cima (0)
-        // se for vazio
-        if(tabuleiro[posX][posY-1].getNumero() == 0)
+        int xFim = 0, yFim = 0;
+        switch (direcao)
         {
-            tabuleiro[posX][posY-1] = tabuleiro[posX][posY];
-            tabuleiro[posX][posY] = new Vazio();
-            juntaBloco(posX, posY-1, direcao, tabuleiro);
+            case 'w':
+                xFim = xIni;
+                yFim = yIni - 1;
+                break;
+            case 'a':
+                xFim = xIni - 1;
+                yFim = yIni;
+                break;
+            case 's':
+                xFim = xIni;
+                yFim = yIni + 1;
+                break;
+            case 'd':
+                xFim = xIni + 1;
+                yFim = yIni;
+                break;
+        
+        }
+
+        if(xFim < 0 || xFim >= tabuleiro.getTamanhoX() || yFim < 0 || yFim >= tabuleiro.getTamanhoY())
+
+        if(tabuleiro.getNumero(xFim, yFim) == 0)
+        {
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
+            juntaBloco(direcao, xFim, yFim, tabuleiro);
         }
 
         // se o numero for igual
-        if(tabuleiro[posX][posY-1].getNumero() == tabuleiro[posX][posY].getNumero())
+        if(tabuleiro.getNumero(xFim, yFim) == tabuleiro.getNumero(xIni, yIni))
         {
-            tabuleiro[posX][posY-1] = tabuleiro[posX][posY];
-            tabuleiro[posX][posY] = new Vazio();
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).dobra());
+            // depois fazer exceção para os blocos especiais
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
             return;
         }
 
 
 
+
+
+
+
+
+
     }
 }
+
+// fazer movimentos, insistir
+// juntar blocos iguais ou especiais
+// mostrar blocos resultantes

@@ -9,4 +9,9 @@ public class Dobro implements Blocos
         return numero;
     }
 
+    public Blocos dobra()
+    {
+        return new Dobro();
+    }
+
 }

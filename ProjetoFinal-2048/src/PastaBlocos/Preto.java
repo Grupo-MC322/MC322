@@ -17,4 +17,9 @@ public class Preto implements Blocos
         return vida;
     }
 
+    public Blocos dobra()
+    {
+        return new Preto();
+    }
+
 }

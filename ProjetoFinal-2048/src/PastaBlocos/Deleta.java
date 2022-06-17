@@ -9,4 +9,9 @@ public class Deleta implements Blocos
         return numero;
     }
 
+    public Blocos dobra()
+    {
+        return new Deleta();
+    }
+
 }
