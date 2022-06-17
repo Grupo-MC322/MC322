@@ -1,7 +1,7 @@
 package PastaBlocos;
 public class Preto implements Blocos
 {
-    private int numero = 0;
+    private int numero = -2;
     private int vida = 3;
 
     public int getNumero()

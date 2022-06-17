@@ -9,8 +9,8 @@ public class Bomba implements Blocos
 
     public Bomba()
     {
-        Random gera_numero = new Random;
-        numero = Math.pow(2, gera_numero.nextInt(5))
+        Random gera_numero = new Random();
+        numero = (int) Math.pow(2, gera_numero.nextInt(5));
     }
     public int getNumero()
     {
