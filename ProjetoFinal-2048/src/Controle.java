@@ -1,12 +1,28 @@
 import PastaBlocos.*;
 
-public class Controle {
+public class Controle
+{
+    private Blocos bomba;
+    private boolean bombaAtiva = false;
+    private int xExplosao;
+    private int yExplosao;
 
-    Blocos bomba = new Bomba();
+    private int xFim = 0;
+    private int yFim = 0;
     
     public void juntaBloco(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
-        int xFim = 0, yFim = 0;
+        planejaMovimento(direcao, xIni, yIni);
+
+        if(xFim < 0 || xFim >= tabuleiro.getTamanhoX() || yFim < 0 || yFim >= tabuleiro.getTamanhoY())
+        {
+            movimenta(direcao, xIni, yIni, tabuleiro);
+            atualizaBomba(xIni, yIni, tabuleiro);
+        }
+    }
+
+    private void planejaMovimento(char direcao, int xIni, int yIni)
+    {
         switch (direcao)
         {
             case 'w':
@@ -26,49 +42,86 @@ public class Controle {
                 yFim = yIni;
                 break;
         }
+    }
 
-        if(xFim < 0 || xFim >= tabuleiro.getTamanhoX() || yFim < 0 || yFim >= tabuleiro.getTamanhoY() || tabuleiro.get)
+    private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
+    {
+        if(tabuleiro.getNumero(xFim, yFim) == 0)
         {
-            if(tabuleiro.getNumero(xFim, yFim) == 0)
-            {
-                tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-                tabuleiro.setBloco(xIni, yIni, new Vazio());
-                juntaBloco(direcao, xFim, yFim, tabuleiro);
-            }
-            else if(tabuleiro.getNumero(xFim, yFim) == tabuleiro.getNumero(xIni, yIni))
-            {
-                tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).dobra());
-                tabuleiro.setBloco(xIni, yIni, new Vazio());
-            }
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
+            juntaBloco(direcao, xFim, yFim, tabuleiro);
+        }
+        else if(tabuleiro.getNumero(xFim, yFim) == tabuleiro.getNumero(xIni, yIni))
+        {
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).dobra());
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
+        }
+    }
 
-            if(bomba.getAtiva() == true)
+    public void setBombaAtiva(Blocos bomba)
+    {
+        bombaAtiva = true;
+        this.bomba = bomba;
+    }
+
+    private void atualizaBomba(int xIni, int yIni, Tabuleiro tabuleiro)
+    {
+        if(bombaAtiva == true)
+        {
+            bomba.setVida(-1);
+            bomba.setCoordX(bomba.getCoordX() + (xFim - xIni));
+            bomba.setCoordY(bomba.getCoordY() + (yFim - yIni));
+            
+            if(bomba.getvida() == 0)
             {
-                bomba.setVida(-1);
-                bomba.setCoordX(bomba.getCoordX() + (xFim - xIni));
-                bomba.setCoordY(bomba.getCoordY() + (yFim - yIni));
+                bombaAtiva = false;
+
+                xExplosao = bomba.getCoordX;
+                yExplosao = bomba.getCoordY;
+                explodeBomba(tabuleiro);
+
+                xExplosao--;
+                yExplosao--;
+                explodeBomba(tabuleiro);
                 
-                if(bomba.getvida() == 0)
-                {
-                    bomba.setAtiva(false);
-                    bomba.setExplosao(true);
-                    bomba.setVida(3);
+                xExplosao++;
+                explodeBomba(tabuleiro);
 
-                }
+                xExplosao++;
+                explodeBomba(tabuleiro);
+
+                yExplosao++;
+                explodeBomba(tabuleiro);
+
+                yExplosao++;
+                explodeBomba(tabuleiro);
+
+                xExplosao--;
+                explodeBomba(tabuleiro);
+
+                xExplosao--;
+                explodeBomba(tabuleiro);
+
+                yExplosao--;
+                explodeBomba(tabuleiro);
             }
         }
-        
+    }
 
-
-
-
-
-
-
-
-
+    private void explodeBomba(Tabuleiro tabuleiro)
+    {
+        if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanhoX() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanhoY())
+        {
+            tabuleiro.setBloco(xExplosao, yExplosao, new Vazio());
+        }
     }
 }
 
 // fazer movimentos, insistir
 // juntar blocos iguais ou especiais
 // mostrar blocos resultantes
+
+// método randomizar aparecimento, ponderadamente
+// soh uma bomba por vez
+// fazer junções especiais

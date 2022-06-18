@@ -6,8 +6,6 @@ public class Bomba implements Blocos
 {
     private int numero;
     private int vida = 3;
-    private boolean ativa = false;
-    private boolean explosao = false;
     private int coordX;
     private int coordY;
 
@@ -34,17 +32,7 @@ public class Bomba implements Blocos
 
     public Blocos dobra()
     {
-        return new Bomba();
-    }
-
-    public void setAtiva(boolean info)
-    {
-        ativa = info;
-    }
-
-    public boolean getAtiva()
-    {
-        return ativa;
+        return new Bomba(); // nn eh bomba, eh o dobro do numero q a bomba representar
     }
 
     public int getCoordX()
@@ -66,15 +54,4 @@ public class Bomba implements Blocos
     {
         CoordY = y;
     }
-
-    public boolean getExplosao()
-    {
-        return explosao;
-    }
-
-    public void setExplosao(boolean info)
-    {
-        explosao = info;
-    }
-
 }
