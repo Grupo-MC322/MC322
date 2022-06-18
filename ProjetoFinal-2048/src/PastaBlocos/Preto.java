@@ -3,6 +3,8 @@ public class Preto implements Blocos
 {
     private String id = "preto";
     private int vida = 3;
+    private int coordX;
+    private int coordY;
     private boolean juntado = false;
 
     public Object getId()
@@ -10,14 +12,34 @@ public class Preto implements Blocos
         return id;
     }
 
-    public void diminuiVida()
-    {
-        vida--;
-    }
-
-    public int getvida()
+    public int getVida()
     {
         return vida;
+    }
+
+    public void setVida(int mudanca)
+    {
+        vida += mudanca;
+    }
+
+    public int getCoordX()
+    {
+        return coordX;
+    }
+
+    public void setCoordX(int x)
+    {
+        coordX = x;
+    }
+
+    public int getCoordY()
+    {
+        return coordY;
+    }
+
+    public void setCoordY(int y)
+    {
+        coordY = y;
     }
 
     public Blocos junta()

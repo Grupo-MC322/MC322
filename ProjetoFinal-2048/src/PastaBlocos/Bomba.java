@@ -53,10 +53,6 @@ public class Bomba implements Blocos
         {
             return new Bloco32();
         }
-        if(id == 32)
-        {
-            return new Bloco32(); // mudar pra 64 quando existir
-        }
         return null;
     }
 

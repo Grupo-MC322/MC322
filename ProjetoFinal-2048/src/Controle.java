@@ -6,6 +6,7 @@ public class Controle
     private boolean bombaAtiva = false;
     private int xExplosao;
     private int yExplosao;
+    private boolean pretoAtivo = false;
 
     private int xFim = 0;
     private int yFim = 0;
@@ -18,6 +19,7 @@ public class Controle
         {
             movimenta(direcao, xIni, yIni, tabuleiro);
             atualizaBomba(xIni, yIni, tabuleiro);
+            atualizaPreto(xIni, yIni, tabuleiro);
         }
     }
 
@@ -141,11 +143,34 @@ public class Controle
             tabuleiro.setBloco(xExplosao, yExplosao, new Vazio());
         }
     }
+
+    public void setPretoAtivo(Blocos preto)
+    {
+        pretoAtivo = true;
+        this.preto = preto;
+    }
+
+    private void atualizaPreto(int xIni, int yIni, Tabuleiro tabuleiro)
+    {
+        if(pretoAtivo == true)
+        {
+            preto.setVida(-1);
+            preto.setCoordX(preto.getCoordX() + (xFim - xIni));
+            preto.setCoordY(preto.getCoordY() + (yFim - yIni));
+
+            if (preto.getVida() == 0)
+            {
+                pretoAtivo = false;
+                tabuleiro.setBloco(preto.getCoordX(), preto.getCoordY(), new Vazio());
+            }
+        }
+    }
 }
 
-// método randomizar aparecimento, ponderadamente
 // soh uma bomba por vez
-// fazer junções especiais
 
 
 // realizar a movimentação a partir do oposto do movimento
+
+
+// nos atualiza movimento nn está sendo considerado quando eles tao encostados nas paredes
