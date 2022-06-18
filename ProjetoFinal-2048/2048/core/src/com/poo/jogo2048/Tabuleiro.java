@@ -1,6 +1,7 @@
 package com.poo.jogo2048;
 
-public class Tabuleiro {
+public class Tabuleiro
+{
     private Blocos[][] matriz;
     private int tamanhoX, tamanhoY;
 

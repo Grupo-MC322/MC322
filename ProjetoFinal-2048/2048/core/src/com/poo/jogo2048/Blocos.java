@@ -3,21 +3,26 @@ package com.poo.jogo2048;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class Blocos {
+public class Blocos
+{
 	private int numero;
     private Texture imagem;
 
-    public Blocos(int numero){
+    public Blocos(int numero)
+    {
         setNumero(numero);
     }
 
-    public int getNumero() {
+    public int getNumero()
+    {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(int numero)
+    {
         this.numero = numero;
-        switch(numero){
+        switch(numero)
+        {
             case 0:
                 setImagem(new Texture(Gdx.files.internal("vazio.png")));
                 break;
@@ -57,20 +62,23 @@ public class Blocos {
         }
     }
 
-    public Blocos dobraNumero() {
+    public Blocos dobraNumero()
+    {
         return new Blocos(numero * 2);
     }
 
-    public Texture getImagem() {
+    public Texture getImagem()
+    {
         return imagem;
     }
 
-    public void setImagem(Texture imagem) {
+    public void setImagem(Texture imagem)
+    {
         this.imagem = imagem;
     }
 
-    public void disposeImagem() {
+    public void disposeImagem()
+    {
         imagem.dispose();
     }
-
 }

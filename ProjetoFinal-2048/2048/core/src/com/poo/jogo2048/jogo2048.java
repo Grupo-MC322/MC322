@@ -8,20 +8,23 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
-public class jogo2048 extends ApplicationAdapter {
-	SpriteBatch batch;
+public class jogo2048 extends ApplicationAdapter
+{
+	private SpriteBatch batch;
 	private Tabuleiro tabuleiro;
 	private OrthographicCamera camera;
 	private Controle controle;
 
-	enum Screen{
+	enum Screen
+	{
 		inicial, mainGame, gameOver;
 	}
 
 	Screen currentScreen = Screen.inicial;
 	
 	@Override
-	public void create () {
+	public void create()
+	{
 		// preenchimento do tabuleiro inicial
 		tabuleiro = new Tabuleiro(4, 4);
 		spawnBloco();
@@ -34,21 +37,27 @@ public class jogo2048 extends ApplicationAdapter {
 	}
 
 	// função
-	private void spawnBloco() {
+	private void spawnBloco()
+	{
 		int i = MathUtils.random(0, 3);
 		int j = MathUtils.random(0, 3);
 
-		if (tabuleiro.getBloco(i, j).getNumero() == 0) {
+		if (tabuleiro.getBloco(i, j).getNumero() == 0)
+		{
 			tabuleiro.setBloco(i, j, new Blocos(2));
 			return;
-		} else {
+		}
+		else
+		{
 			spawnBloco();
 		}
 	}
 
 	@Override
-	public void render () {
-		if(currentScreen == Screen.inicial){
+	public void render ()
+	{
+		if(currentScreen == Screen.inicial)
+		{
 			
 		}
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
@@ -69,27 +78,35 @@ public class jogo2048 extends ApplicationAdapter {
 		batch.end();
 
 		// ações caso as teclas de comando sejam pressionadas
-		if(Gdx.input.isKeyJustPressed(Keys.LEFT)) {
+		if(Gdx.input.isKeyJustPressed(Keys.LEFT))
+		{
 			spawnBloco();
 			jogada('a');
 			drawTabuleiro();
 			
-		} else if(Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
+		}
+		else if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
+		{
 			spawnBloco();
 			jogada('d');
 			drawTabuleiro();
-		} else if(Gdx.input.isKeyJustPressed(Keys.UP)) {
+		}
+		else if(Gdx.input.isKeyJustPressed(Keys.UP))
+		{
 			spawnBloco();
 			jogada('s');
 			drawTabuleiro();
-		} else if(Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+		}
+		else if(Gdx.input.isKeyJustPressed(Keys.DOWN))
+		{
 			spawnBloco();
 			jogada('w');
 			drawTabuleiro();
 		}
 	}
 
-	private void jogada(char direcao) {
+	private void jogada(char direcao)
+	{
 		for(int i = 0; i < tabuleiro.getTamanhoX(); i++)
         {
             for(int j = 0; j < tabuleiro.getTamanhoY(); j++)
@@ -99,7 +116,8 @@ public class jogo2048 extends ApplicationAdapter {
         }
 	}
 
-	private void drawTabuleiro() {
+	private void drawTabuleiro()
+	{
 		batch.begin();
 		for(int i = 0; i < tabuleiro.getTamanhoX(); i++)
         {
@@ -115,7 +133,8 @@ public class jogo2048 extends ApplicationAdapter {
 
 	
 	@Override
-	public void dispose () {
+	public void dispose ()
+	{
 		batch.dispose();
 		
 		for(int i = 0; i < 4; i++)

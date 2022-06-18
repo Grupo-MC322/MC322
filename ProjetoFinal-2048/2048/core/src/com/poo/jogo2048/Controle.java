@@ -26,7 +26,9 @@ public class Controle {
 
         if(xFim < 0 || xFim >= tabuleiro.getTamanhoX() || yFim < 0 || yFim >= tabuleiro.getTamanhoY()) { // se o bloco estiver nas margens do tabuleiro
             return;
-        } else {
+        }
+        else
+        {
             if(tabuleiro.getNumero(xFim, yFim) == 0)
             {
                 tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
