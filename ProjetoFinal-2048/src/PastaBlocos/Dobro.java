@@ -2,7 +2,7 @@ package PastaBlocos;
 
 public class Dobro implements Blocos
 {
-    private String id = "dobro";
+    private String id = "x2";
     private boolean juntado = false;
 
     public Object getId()

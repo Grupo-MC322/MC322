@@ -33,7 +33,31 @@ public class Bomba implements Blocos
 
     public Blocos junta()
     {
-        return new Bomba(); // nn eh bomba, eh o dobro do numero q a bomba representar
+        if(id == 1)
+        {
+            return new Bloco2();
+        }
+        if(id == 2)
+        {
+            return new Bloco4();
+        }
+        if(id == 4)
+        {
+            return new Bloco8();
+        }
+        if(id == 8)
+        {
+            return new Bloco16();
+        }
+        if(id == 16)
+        {
+            return new Bloco32();
+        }
+        if(id == 32)
+        {
+            return new Bloco32(); // mudar pra 64 quando existir
+        }
+        return null;
     }
 
     public int getCoordX()

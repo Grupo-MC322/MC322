@@ -10,7 +10,7 @@ public class Controle
     private int xFim = 0;
     private int yFim = 0;
     
-    public void juntaBloco(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
+    public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
         planejaMovimento(direcao, xIni, yIni);
 
@@ -46,16 +46,41 @@ public class Controle
 
     private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
+        // quando está vazio na frente, livre para continuar se movendo
         if(tabuleiro.getId(xFim, yFim) == 0)
         {
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
             tabuleiro.setBloco(xIni, yIni, new Vazio());
-            juntaBloco(direcao, xFim, yFim, tabuleiro);
+            realizaComando(direcao, xFim, yFim, tabuleiro);
         }
+
+        // quando ambos os blocos são iguais e podem se juntar
         else if(tabuleiro.getId(xFim, yFim) == tabuleiro.getId(xIni, yIni))
         {
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
             tabuleiro.setBloco(xIni, yIni, new Vazio());
+        }
+
+        // quando o bloco deleta vai deletar o outro
+        else if((tabuleiro.getId(xFim, yFim) == "deleta" && tabuleiro.getId(xIni, yIni) != 0) 
+        || (tabuleiro.getId(xIni, yIni) == "deleta" && tabuleiro.getId(xFim, yFim) != 0))
+        {
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
+            tabuleiro.setBloco(xFim, yFim, new Vazio());
+        }
+
+        // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro
+        else if(tabuleiro.getId(xFim, yFim) == "x2")
+        {
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
+        }
+        
+        // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
+        else if(tabuleiro.getId(xIni, yIni) == "x2")
+        {
+            tabuleiro.setBloco(xIni, yIni, new Vazio());
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
         }
     }
 
