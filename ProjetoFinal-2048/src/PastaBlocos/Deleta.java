@@ -26,5 +26,3 @@ public class Deleta implements Blocos
     }
 
 }
-
-// cuidado para nn deletar o vazio

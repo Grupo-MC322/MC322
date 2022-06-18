@@ -70,14 +70,14 @@ public class Controle
         }
 
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro
-        else if(tabuleiro.getId(xFim, yFim) == "x2")
+        else if(tabuleiro.getId(xFim, yFim) == "x2" && tabuleiro.getId(xIni, yIni) != 0)
         {
             tabuleiro.setBloco(xIni, yIni, new Vazio());
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(tabuleiro.getId(xIni, yIni) == "x2")
+        else if(tabuleiro.getId(xIni, yIni) == "x2" && tabuleiro.getId(xFim, yFim) != 0)
         {
             tabuleiro.setBloco(xIni, yIni, new Vazio());
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());

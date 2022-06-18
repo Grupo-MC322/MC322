@@ -26,5 +26,3 @@ public class Dobro implements Blocos
     }
 
 }
-
-// cuidado para nn juntar o vazio
