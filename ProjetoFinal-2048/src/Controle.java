@@ -46,15 +46,15 @@ public class Controle
 
     private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
-        if(tabuleiro.getNumero(xFim, yFim) == 0)
+        if(tabuleiro.getId(xFim, yFim) == 0)
         {
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
             tabuleiro.setBloco(xIni, yIni, new Vazio());
             juntaBloco(direcao, xFim, yFim, tabuleiro);
         }
-        else if(tabuleiro.getNumero(xFim, yFim) == tabuleiro.getNumero(xIni, yIni))
+        else if(tabuleiro.getId(xFim, yFim) == tabuleiro.getId(xIni, yIni))
         {
-            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).dobra());
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
             tabuleiro.setBloco(xIni, yIni, new Vazio());
         }
     }

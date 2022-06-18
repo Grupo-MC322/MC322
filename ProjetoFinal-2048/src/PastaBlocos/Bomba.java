@@ -4,7 +4,7 @@ import java.lang.Math;
 
 public class Bomba implements Blocos
 {
-    private int numero;
+    private int id;
     private int vida = 3;
     private int coordX;
     private int coordY;
@@ -12,13 +12,13 @@ public class Bomba implements Blocos
 
     public Bomba()
     {
-        Random gera_numero = new Random();
-        numero = (int) Math.pow(2, gera_numero.nextInt(5));
+        Random geraId = new Random();
+        id = (int) Math.pow(2, geraId.nextInt(5));
     }
     
-    public int getNumero()
+    public Object getId()
     {
-        return numero;
+        return id;
     }
 
     public int getvida()
@@ -31,7 +31,7 @@ public class Bomba implements Blocos
         vida += mudanca;
     }
 
-    public Blocos dobra()
+    public Blocos junta()
     {
         return new Bomba(); // nn eh bomba, eh o dobro do numero q a bomba representar
     }
@@ -60,6 +60,7 @@ public class Bomba implements Blocos
     {
         juntado = info;
     }
+    
     public boolean getJuntado()
     {
         return juntado;

@@ -29,9 +29,9 @@ public class Tabuleiro
         return tamanhoY;
     }
 
-    public int getNumero(int x, int y)
+    public int getId(int x, int y)
     {
-        return matriz[x][y].getNumero();
+        return matriz[x][y].getId();
     }
 
     public Blocos getBloco(int x, int y)

@@ -1,24 +1,26 @@
 package PastaBlocos;
 public class Preto implements Blocos
 {
-    private int numero = -2;
+    private String id = "preto";
     private int vida = 3;
     private boolean juntado = false;
 
-    public int getNumero()
+    public Object getId()
     {
-        return numero;
+        return id;
     }
+
     public void diminuiVida()
     {
         vida--;
     }
+
     public int getvida()
     {
         return vida;
     }
 
-    public Blocos dobra()
+    public Blocos junta()
     {
         return new Preto();
     }
@@ -27,6 +29,7 @@ public class Preto implements Blocos
     {
         juntado = info;
     }
+    
     public boolean getJuntado()
     {
         return juntado;

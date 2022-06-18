@@ -1,19 +1,15 @@
 package PastaBlocos;
 public class Vazio implements Blocos
 {
-    private int numero = 0;
+    private int id = 0;
     private boolean juntado = false;
 
-    public int getNumero()
+    public Object getId()
     {
-        return numero;
-    }
-    public void setNumero(int numero)
-    {
-        this.numero = numero;
+        return id;
     }
 
-    public Blocos dobra()
+    public Blocos junta()
     {
         return new Preto();
     }
@@ -22,6 +18,7 @@ public class Vazio implements Blocos
     {
         juntado = info;
     }
+    
     public boolean getJuntado()
     {
         return juntado;

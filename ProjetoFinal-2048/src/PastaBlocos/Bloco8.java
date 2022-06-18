@@ -2,15 +2,15 @@ package PastaBlocos;
 
 public class Bloco8 implements Blocos
 {
-    private int numero = 8;
+    private int id = 8;
     private boolean juntado = false;
 
-    public int getNumero() 
+    public Object getId()
     {
-        return numero;
+        return id;
     }
 
-    public Blocos dobra()
+    public Blocos junta()
     {
         return new Bloco16();
     }
@@ -19,6 +19,7 @@ public class Bloco8 implements Blocos
     {
         juntado = info;
     }
+    
     public boolean getJuntado()
     {
         return juntado;

@@ -2,15 +2,15 @@ package PastaBlocos;
 
 public class Dobro implements Blocos
 {
-    private int numero = 222;
+    private String id = "dobro";
     private boolean juntado = false;
 
-    public int getNumero()
+    public Object getId()
     {
-        return numero;
+        return id;
     }
 
-    public Blocos dobra()
+    public Blocos junta()
     {
         return new Dobro();
     }
@@ -19,6 +19,7 @@ public class Dobro implements Blocos
     {
         juntado = info;
     }
+    
     public boolean getJuntado()
     {
         return juntado;
@@ -26,4 +27,4 @@ public class Dobro implements Blocos
 
 }
 
-// cuidado para nn dobrar o vazio
+// cuidado para nn juntar o vazio
