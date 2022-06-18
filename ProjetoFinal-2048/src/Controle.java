@@ -118,10 +118,9 @@ public class Controle
     }
 }
 
-// fazer movimentos, insistir
-// juntar blocos iguais ou especiais
-// mostrar blocos resultantes
-
 // método randomizar aparecimento, ponderadamente
 // soh uma bomba por vez
 // fazer junções especiais
+
+
+// realizar a movimentação a partir do oposto do movimento

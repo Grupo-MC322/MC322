@@ -8,6 +8,7 @@ public class Bomba implements Blocos
     private int vida = 3;
     private int coordX;
     private int coordY;
+    private boolean juntado = false;
 
     public Bomba()
     {
@@ -37,21 +38,30 @@ public class Bomba implements Blocos
 
     public int getCoordX()
     {
-        return CoordX;
+        return coordX;
     }
 
     public void setCoordX(int x)
     {
-        CoordX = x;
+        coordX = x;
     }
 
     public int getCoordY()
     {
-        return CoordY;
+        return coordY;
     }
 
     public void setCoordY(int y)
     {
-        CoordY = y;
+        coordY = y;
+    }
+
+    public void setJuntado(boolean info)
+    {
+        juntado = info;
+    }
+    public boolean getJuntado()
+    {
+        return juntado;
     }
 }
