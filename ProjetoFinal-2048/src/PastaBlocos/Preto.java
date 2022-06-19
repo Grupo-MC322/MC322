@@ -1,5 +1,5 @@
 package PastaBlocos;
-public class Preto implements Blocos
+public class Preto implements IBlocosVidas
 {
     private String id = "preto";
     private int vida = 3;
@@ -42,7 +42,7 @@ public class Preto implements Blocos
         coordY = y;
     }
 
-    public Blocos junta()
+    public IBlocos junta()
     {
         return new Preto();
     }

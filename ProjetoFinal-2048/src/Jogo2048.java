@@ -9,15 +9,17 @@ public class Jogo2048
         int tamanhoX = 4, tamanhoY = 4;
 
         Tabuleiro tabuleiro = new Tabuleiro(tamanhoX, tamanhoY);
-        brotaBloco();
+        Controle controle = new Controle();
+        spawnBloco(tabuleiro, controle);
         
         // movimentar
         // apresentar tabuleiro com for na direção oposta ao sentido do movimento
 
     }
 
-    public static void brotaBloco()
+    public static void spawnBloco(Tabuleiro tabuleiro, Controle controle)
     {
+        IBlocos blocoGerado;
         Random random = new Random();
         int coordX = random.nextInt(tabuleiro.getTamanhoX());
 		int coordY = random.nextInt(tabuleiro.getTamanhoY());
@@ -25,42 +27,35 @@ public class Jogo2048
 		if (tabuleiro.getId(coordX, coordY) == 0)
 		{
 			int index = random.nextInt(100);
-            Blocos blocoGerado;
             if(index < 20)
             {
-                blocoGerado = new Bloco1();
-            }
-            else if (index < 50)
-            {
-                blocoGerado = new Bloco2();
+                blocoGerado = new BlocoGenerico(1);
             }
             else if (index < 60)
             {
-                blocoGerado = new Bloco4();
-            }
-            else if (index < 65)
-            {
-                blocoGerado = new Bloco8();
-            }
-            else if (index < 70)
-            {
-                blocoGerado = new Bloco16();
-            }
-            else if (index < 75)
-            {
-                blocoGerado = new Bomba();
+                blocoGerado = new BlocoGenerico(2);
             }
             else if (index < 80)
             {
-                blocoGerado = new Deleta();
+                blocoGerado = new BlocoGenerico(4);
             }
-            else if (index < 90)
+            else if (index < 85 && controle.getBombaAtiva() == false)
             {
-                blocoGerado = new Dobro();
+                controle.setBombaAtiva();
+                blocoGerado = new Bomba();
+            }
+            else if (index < 90 && controle.getPretoAtivo() == false)
+            {
+                controle.setPretoAtivo();
+                blocoGerado = new Preto();
+            }
+            else if (index < 95)
+            {
+                blocoGerado = new Deleta();
             }
             else if (index < 100)
             {
-                blocoGerado = new Preto();
+                blocoGerado = new Dobro();
             }
             
             tabuleiro.setBloco(coordX, coordY, blocoGerado);

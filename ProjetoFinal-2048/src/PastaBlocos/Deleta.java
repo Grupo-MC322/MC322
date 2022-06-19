@@ -1,6 +1,6 @@
 package PastaBlocos;
 
-public class Deleta implements Blocos
+public class Deleta implements IBlocos
 {
     private String id = "deleta";
     private boolean juntado = false;
@@ -10,7 +10,7 @@ public class Deleta implements Blocos
         return id;
     }
 
-    public Blocos junta()
+    public IBlocos junta()
     {
         return new Deleta();
     }

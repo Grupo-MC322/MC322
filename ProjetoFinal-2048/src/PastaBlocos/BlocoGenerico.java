@@ -1,17 +1,22 @@
 package PastaBlocos;
-public class Bloco32 implements Blocos
+public class BlocoGenerico implements IBlocos
 {
-    private int id = 32;
+    private int id;
     private boolean juntado = false;
 
+    public BlocoGenerico (int id)
+    {
+        this.id = id;
+    }
+    
     public Object getId()
     {
         return id;
     }
 
-    public Blocos junta()
+    public IBlocos junta()
     {
-        return new Bloco32(); //mudar para Blocos64 quando existir
+        return new BlocoGenerico(id * 2);
     }
 
     public void setJuntado(boolean info)

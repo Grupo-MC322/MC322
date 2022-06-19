@@ -2,7 +2,7 @@ package PastaBlocos;
 import java.util.Random;
 import java.lang.Math;
 
-public class Bomba implements Blocos
+public class Bomba implements IBlocosVidas
 {
     private int id;
     private int vida = 3;
@@ -21,7 +21,7 @@ public class Bomba implements Blocos
         return id;
     }
 
-    public int getvida()
+    public int getVida()
     {
         return vida;
     }
@@ -31,27 +31,27 @@ public class Bomba implements Blocos
         vida += mudanca;
     }
 
-    public Blocos junta()
+    public IBlocos junta()
     {
         if(id == 1)
         {
-            return new Bloco2();
+            return new BlocoGenerico(2);
         }
         if(id == 2)
         {
-            return new Bloco4();
+            return new BlocoGenerico(4);
         }
         if(id == 4)
         {
-            return new Bloco8();
+            return new BlocoGenerico(8);
         }
         if(id == 8)
         {
-            return new Bloco16();
+            return new BlocoGenerico(16);
         }
         if(id == 16)
         {
-            return new Bloco32();
+            return new BlocoGenerico(32);
         }
         return null;
     }

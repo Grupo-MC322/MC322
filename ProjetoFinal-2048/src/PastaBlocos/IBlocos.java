@@ -1,8 +1,8 @@
 package PastaBlocos;
-public interface Blocos
+public interface IBlocos
 {
     public Object getId();
-    public Blocos junta();
+    public IBlocos junta();
     public void setJuntado(boolean info);
     public boolean getJuntado();
 

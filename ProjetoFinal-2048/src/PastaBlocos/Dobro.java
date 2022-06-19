@@ -1,6 +1,6 @@
 package PastaBlocos;
 
-public class Dobro implements Blocos
+public class Dobro implements IBlocos
 {
     private String id = "x2";
     private boolean juntado = false;
@@ -10,7 +10,7 @@ public class Dobro implements Blocos
         return id;
     }
 
-    public Blocos junta()
+    public IBlocos junta()
     {
         return new Dobro();
     }
