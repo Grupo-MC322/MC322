@@ -24,40 +24,40 @@ public class Blocos
         switch(numero)
         {
             case 0:
-                setImagem(new Texture(Gdx.files.internal("vazio.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/vazio.png")));
                 break;
             case 2:
-                setImagem(new Texture(Gdx.files.internal("2.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/2.png")));
                 break;
             case 4:
-                setImagem(new Texture(Gdx.files.internal("4.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/4.png")));
                 break;
             case 8:
-                setImagem(new Texture(Gdx.files.internal("8.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/8.png")));
                 break;
             case 16:
-                setImagem(new Texture(Gdx.files.internal("16.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/16.png")));
                 break;
             case 32:
-                setImagem(new Texture(Gdx.files.internal("32.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/32.png")));
                 break;
             case 64:
-                setImagem(new Texture(Gdx.files.internal("64.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/64.png")));
                 break;
             case 128:
-                setImagem(new Texture(Gdx.files.internal("128.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/128.png")));
                 break;
             case 256:
-                setImagem(new Texture(Gdx.files.internal("256.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/256.png")));
                 break;
             case 512:
-                setImagem(new Texture(Gdx.files.internal("512.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/512.png")));
                 break;
             case 1024:
-                setImagem(new Texture(Gdx.files.internal("1024.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/1024.png")));
                 break;
             case 2048:
-                setImagem(new Texture(Gdx.files.internal("2048.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/2048.png")));
                 break;
         }
     }
