@@ -1,9 +1,48 @@
 package com.poo.jogo2048;
 
+import com.poo.jogo2048.PastaBlocos.*;
+
 public class Controle {
-    public void juntaBloco(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
+    
+    private IBlocosTimer bomba;
+    private boolean bombaAtiva = false;
+
+    private IBlocosTimer preto;
+    private boolean pretoAtivo = false;
+
+    private int xFim = 0;
+    private int yFim = 0;
+    
+    public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
-        int xFim = 0, yFim = 0;
+        planejaMovimento(direcao, xIni, yIni);
+
+        if(xFim >= 0 && xFim < tabuleiro.getTamanhoX() && yFim >= 0 && yFim < tabuleiro.getTamanhoY())
+        {
+            movimenta(direcao, xIni, yIni, tabuleiro);
+            if(bombaAtiva)
+            {
+                atualizaVidas(xIni, yIni, bomba);
+                if(bomba.getvida() == 0)
+                {
+                    bombaAtiva = false;
+                    miraVizinhos(tabuleiro, bomba.getCoordX(), bomba.getCoordy());
+                }
+            }
+            if (pretoAtivo)
+            {
+                atualizaVidas(xIni, yIni, preto);
+                if (preto.getvida() == 0)
+                {
+                    pretoAtivo = false;
+                    tabuleiro.setBloco(preto.getCoordX(), preto.getCoordY(), new BlocoGenerico(0));    
+                }
+            }
+        }
+    }
+
+    private void planejaMovimento(char direcao, int xIni, int yIni)
+    {
         switch (direcao)
         {
             case 'w':
@@ -23,27 +62,112 @@ public class Controle {
                 yFim = yIni;
                 break;
         }
+    }
 
-        if(xFim < 0 || xFim >= tabuleiro.getTamanhoX() || yFim < 0 || yFim >= tabuleiro.getTamanhoY()) { // se o bloco estiver nas margens do tabuleiro
-            return;
-        }
-        else
+    private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
+    {
+        // quando está vazio na frente, livre para continuar se movendo
+        if(tabuleiro.getId(xFim, yFim) == 0)
         {
-            if(tabuleiro.getNumero(xFim, yFim) == 0)
-            {
-                tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-                tabuleiro.setBloco(xIni, yIni, new Blocos(0));
-                juntaBloco(direcao, xFim, yFim, tabuleiro);
-            }
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
+            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            realizaComando(direcao, xFim, yFim, tabuleiro);
+        }
 
-            // se o numero for igual
-            if(tabuleiro.getNumero(xFim, yFim) == tabuleiro.getNumero(xIni, yIni))
-            {
-                tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).dobraNumero());
-                // depois fazer exceção para os blocos especiais
-                tabuleiro.setBloco(xIni, yIni, new Blocos(0));
-                return;
-            }
+        // quando ambos os blocos são iguais e podem se juntar
+        else if(tabuleiro.getId(xFim, yFim) == tabuleiro.getId(xIni, yIni))
+        {
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
+            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+        }
+
+        // quando o bloco deleta vai deletar o outro
+        else if((tabuleiro.getId(xFim, yFim) == "deleta" && tabuleiro.getId(xIni, yIni) != 0) 
+        || (tabuleiro.getId(xIni, yIni) == "deleta" && tabuleiro.getId(xFim, yFim) != 0))
+        {
+            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
+        }
+
+        // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro
+        else if(tabuleiro.getId(xFim, yFim) == "x2" && tabuleiro.getId(xIni, yIni) != 0)
+        {
+            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
+        }
+        
+        // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
+        else if(tabuleiro.getId(xIni, yIni) == "x2" && tabuleiro.getId(xFim, yFim) != 0)
+        {
+            tabuleiro.setBloco(xIni, yIni, BlocoGenerico(0));
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
+        }
+    }
+
+    public void setAtivo(BlocoBomba bomba)
+    {
+        bombaAtiva = true;
+        this.bomba = bomba;
+    }
+
+    public void setAtivo(BlocoTempo preto)
+    {
+        pretoAtivo = true;
+        this.preto = preto;
+    }
+
+    public boolean getBombaAtiva()
+    {
+        return bombaAtiva;
+    }
+
+    public boolean getPretoAtivo()
+    {
+        return pretoAtivo;
+    }
+
+    private void atualizaVidas(int xIni, int yIni, IBlocosVidas bloco)
+    {
+        bloco.setVida(-1);
+        bloco.setCoordX(bloco.getCoordX() + (xFim - xIni));
+        bloco.setCoordY(bloco.getCoordY() + (yFim - yIni));
+    }
+
+    private void miraVizinhos(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
+    {
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        xExplosao--;
+        yExplosao--;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        
+        xExplosao++;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        xExplosao++;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        yExplosao++;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        yExplosao++;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        xExplosao--;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        xExplosao--;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+
+        yExplosao--;
+        explodeBomba(tabuleiro, xExplosao, yExplosao);
+    }
+
+    private void explodeBomba(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
+    {
+        if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanhoX() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanhoY())
+        {
+            tabuleiro.setBloco(xExplosao, yExplosao, new BlocoGenerico(0));
         }
     }
 }

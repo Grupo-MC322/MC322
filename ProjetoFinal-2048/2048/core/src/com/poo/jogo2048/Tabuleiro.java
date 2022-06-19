@@ -1,20 +1,22 @@
 package com.poo.jogo2048;
 
+import com.poo.jogo2048.PastaBlocos.BlocoGenerico;
+
 public class Tabuleiro
 {
-    private Blocos[][] matriz;
+    private BlocoGenerico[][] matriz;
     private int tamanhoX, tamanhoY;
 
     public Tabuleiro(int tamanhoX, int tamanhoY)
     {
         this.tamanhoX = tamanhoX;
         this.tamanhoY = tamanhoY;
-        matriz = new Blocos[tamanhoX][tamanhoY];
+        matriz = new BlocoGenerico[tamanhoX][tamanhoY];
         for(int i = 0; i < tamanhoX; i++)
         {
             for(int j = 0; j < tamanhoY; j++)
             {
-                matriz[i][j] = new Blocos(0);
+                matriz[i][j] = new BlocoGenerico(0);
             }
         }
     }
@@ -29,17 +31,17 @@ public class Tabuleiro
         return tamanhoY;
     }
 
-    public int getNumero(int x, int y)
+    public Object getId(int x, int y)
     {
-        return matriz[x][y].getNumero();
+        return matriz[x][y].getId();
     }
 
-    public Blocos getBloco(int x, int y)
+    public BlocoGenerico getBloco(int x, int y)
     {
         return matriz[x][y];
     }
 
-    public void setBloco(int x, int y, Blocos bloco)
+    public void setBloco(int x, int y, BlocoGenerico bloco)
     {
         matriz[x][y] = bloco;
     }

@@ -3,25 +3,26 @@ package com.poo.jogo2048;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class Blocos
+public class BlocoGenerico
 {
-	private int numero;
+	private int id;
     private Texture imagem;
+    private boolean juntado = false;
 
-    public Blocos(int numero)
+    public BlocoGenerico(int id)
     {
-        setNumero(numero);
+        setId(id);
     }
 
-    public int getNumero()
+    public int getId()
     {
-        return numero;
+        return id;
     }
 
-    public void setNumero(int numero)
+    public void setId(int id)
     {
-        this.numero = numero;
-        switch(numero)
+        this.id = id;
+        switch(id)
         {
             case 0:
                 setImagem(new Texture(Gdx.files.internal("blocos/vazio.png")));
@@ -62,9 +63,19 @@ public class Blocos
         }
     }
 
-    public Blocos dobraNumero()
+    public BlocoGenerico junta()
     {
-        return new Blocos(numero * 2);
+        return new BlocoGenerico(id * 2);
+    }
+
+    public void setJuntado(boolean info)
+    {
+        juntado = info;
+    }
+    
+    public boolean getJuntado()
+    {
+        return juntado;
     }
 
     public Texture getImagem()

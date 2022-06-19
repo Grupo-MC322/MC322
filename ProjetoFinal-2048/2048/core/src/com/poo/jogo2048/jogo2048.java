@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.poo.jogo2048.PastaBlocos.BlocoGenerico;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -51,7 +52,7 @@ public class jogo2048 extends ApplicationAdapter
 
 		if (tabuleiro.getBloco(i, j).getNumero() == 0)
 		{
-			tabuleiro.setBloco(i, j, new Blocos(2));
+			tabuleiro.setBloco(i, j, new BlocoGenerico(2));
 			return;
 		}
 		else
@@ -272,6 +273,7 @@ public class jogo2048 extends ApplicationAdapter
 			camera.update();
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
+
 			for(int i = 0; i < tabuleiro.getTamanhoX(); i++)
 			{
 				for(int j = 0; j < tabuleiro.getTamanhoY(); j++)
@@ -344,9 +346,9 @@ public class jogo2048 extends ApplicationAdapter
 	{
 		batch.dispose();
 		
-		for(int i = 0; i < 4; i++)
+		for(int i = 0; i < tabuleiro.getTamanhoX(); i++)
         {
-            for(int j = 0; j < 4; j++)
+            for(int j = 0; j < tabuleiro.getTamanhoY(); j++)
             {
 				tabuleiro.getBloco(i, j).disposeImagem();
             }
