@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.jogo2048.PastaBlocos;
 
 public class BlocoDeleta implements IBlocos {
     private String id = "deleta";

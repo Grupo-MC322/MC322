@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.jogo2048.PastaBlocos;
 
 public class BlocoDobro implements IBlocos {
     private String id = "x2";

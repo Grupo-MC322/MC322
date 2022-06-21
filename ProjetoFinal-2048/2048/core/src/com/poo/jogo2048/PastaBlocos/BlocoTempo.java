@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.jogo2048.PastaBlocos;
 
 public class BlocoTempo implements IBlocosTimer {
     private String id = "preto";

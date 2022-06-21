@@ -1,6 +1,6 @@
 package com.poo.jogo2048;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,33 +15,23 @@ import com.poo.jogo2048.PastaBlocos.BlocoGenerico;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
-public class jogo2048 extends ApplicationAdapter
+public class jogo2048 extends Game
 {
 	private SpriteBatch batch;
 	private Stage stage;
 	private Tabuleiro tabuleiro;
 	private OrthographicCamera camera;
-	private Controle controle;
 
-	enum Screen
-	{
-		inicial, instrucoes, configuracoes, jogo, gameOver;
-	}
-
-	Screen currentScreen = Screen.inicial;
-	
 	@Override
 	public void create()
 	{
 		// preenchimento do tabuleiro inicial
 		tabuleiro = new Tabuleiro(4, 4);
 		spawnBloco();
-		controle = new Controle();
 
-		// criando camera e SpriteBatch
-		camera = new OrthographicCamera();
-    	camera.setToOrtho(false, 400, 400);
-    	batch = new SpriteBatch();
+		// 
+		ScreenManager.getInstance().initialize(this);
+		ScreenManager.getInstance().showScreen(ScreenEnum.TELA_INICIAL);
 	}
 
 	// função
@@ -50,7 +40,7 @@ public class jogo2048 extends ApplicationAdapter
 		int i = MathUtils.random(0, 3);
 		int j = MathUtils.random(0, 3);
 
-		if (tabuleiro.getBloco(i, j).getNumero() == 0)
+		if (tabuleiro.getBloco(i, j).getId() == 0)
 		{
 			tabuleiro.setBloco(i, j, new BlocoGenerico(2));
 			return;
@@ -64,62 +54,9 @@ public class jogo2048 extends ApplicationAdapter
 	@Override
 	public void render ()
 	{
-		if(currentScreen == Screen.inicial)
-		{
-			ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
-			camera.update();
-			batch.setProjectionMatrix(camera.combined);
-			batch.begin();
-			batch.draw(new Texture(Gdx.files.internal("fundo_tela_inicio.png")), 0, 0, camera.viewportWidth, camera.viewportHeight);
-			stage = new Stage();
-
-			// configuração do botao configurar
-			Image imagemBotao_configurar = new Image(new Texture(Gdx.files.internal("botao_configurar.png")));
-			ImageButton botao_configurar = new ImageButton(imagemBotao_configurar.getDrawable());
-
-			botao_configurar.setX((float) ((camera.viewportWidth / 2) - (camera.viewportWidth * 0.5 / 2)));
-			botao_configurar.setY((float) (camera.viewportHeight * 0.44));
-			botao_configurar.setWidth((float) (camera.viewportWidth * 0.5));
-			botao_configurar.setHeight((float) (camera.viewportHeight * 0.1));
-
-			botao_configurar.draw(batch, 1);
-			stage.addActor(botao_configurar);
-
-			Gdx.input.setInputProcessor(stage);
-
-			botao_configurar.addListener(new ClickListener()
-			{
-				@Override
-				public void clicked(InputEvent event, float x, float y)
-				{
-					currentScreen = Screen.configuracoes;
-				}
-			});
-
-			// configuração do botão instruções
-			Image imagemBotao_instrucoes = new Image(new Texture(Gdx.files.internal("botao_instrucoes.png")));
-			ImageButton botao_instrucoes = new ImageButton(imagemBotao_instrucoes.getDrawable());
-
-			botao_instrucoes.setX((float) ((camera.viewportWidth / 2) - (camera.viewportWidth * 0.5 / 2)));
-			botao_instrucoes.setY((float) (camera.viewportHeight * 0.27));
-			botao_instrucoes.setWidth((float) (camera.viewportWidth * 0.5));
-			botao_instrucoes.setHeight((float) (camera.viewportHeight * 0.1));
-
-			botao_instrucoes.draw(batch, 1);
-			stage.addActor(botao_instrucoes);
-
-			botao_instrucoes.addListener(new ClickListener()
-			{
-				@Override
-				public void clicked(InputEvent event, float x, float y)
-				{
-					currentScreen = Screen.jogo;
-				}
-			});
-
-			batch.end();
-		}
-		else if(currentScreen == Screen.configuracoes)
+		int currentScreen = 0;
+		
+		if(currentScreen == 1)
 		{
 			ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
 			stage.clear();
@@ -133,10 +70,7 @@ public class jogo2048 extends ApplicationAdapter
 			stage = new Stage();
 
 			Image imagemBotao_4x4 = new Image(new Texture(Gdx.files.internal("selecao_4x4.png")));
-			Image imagemBotao_4x4_unselec = new Image(new Texture(Gdx.files.internal("selecao_4x4_unselected.png")));
-			Image imagemBotao_5x5 = new Image(new Texture(Gdx.files.internal("selecao_5x5.png")));
 			Image imagemBotao_5x5_unselec = new Image(new Texture(Gdx.files.internal("selecao_5x5_unselected.png")));
-			Image imagemBotao_6x6 = new Image(new Texture(Gdx.files.internal("selecao_6x6.png")));
 			Image imagemBotao_6x6_unselec = new Image(new Texture(Gdx.files.internal("selecao_6x6_unselected.png")));
 
 			// configuração do botao 4x4
@@ -253,19 +187,11 @@ public class jogo2048 extends ApplicationAdapter
 			botao_jogar.draw(batch, 1);
 			stage.addActor(botao_jogar);
 
-			botao_jogar.addListener(new ClickListener()
-			{
-				@Override
-				public void clicked(InputEvent event, float x, float y)
-				{
-					currentScreen = Screen.jogo;
-				}
-			});
 
 			batch.end();
 			stage.clear();
 		}
-		else if(currentScreen == Screen.jogo)
+		else if(currentScreen == 2)
 		{
 			ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
 			
@@ -320,7 +246,7 @@ public class jogo2048 extends ApplicationAdapter
         {
             for(int j = 0; j < tabuleiro.getTamanhoY(); j++)
             {
-				controle.juntaBloco(direcao, i, j, tabuleiro);
+				//controle.junta(direcao, i, j, tabuleiro);
             }
         }
 	}
