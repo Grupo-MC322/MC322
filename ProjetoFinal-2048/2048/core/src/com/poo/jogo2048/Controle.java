@@ -4,11 +4,11 @@ import com.poo.jogo2048.PastaBlocos.*;
 
 public class Controle {
     
-    private IBlocosTimer bomba;
-    private boolean bombaAtiva = false;
+    private BlocoBomba blocoBomba;
+    private boolean blocoBombaAtiva = false;
 
-    private IBlocosTimer preto;
-    private boolean pretoAtivo = false;
+    private BlocoTempo blocoTempo;
+    private boolean blocoTempoAtivo = false;
 
     private int xFim = 0;
     private int yFim = 0;
@@ -20,22 +20,22 @@ public class Controle {
         if(xFim >= 0 && xFim < tabuleiro.getTamanhoX() && yFim >= 0 && yFim < tabuleiro.getTamanhoY())
         {
             movimenta(direcao, xIni, yIni, tabuleiro);
-            if(bombaAtiva)
+            if(blocoBombaAtiva)
             {
-                atualizaVidas(xIni, yIni, bomba);
-                if(bomba.getvida() == 0)
+                atualizaVidas(xIni, yIni, blocoBomba);
+                if(blocoBomba.getVida() == 0)
                 {
-                    bombaAtiva = false;
-                    miraVizinhos(tabuleiro, bomba.getCoordX(), bomba.getCoordy());
+                    blocoBombaAtiva = false;
+                    miraVizinhos(tabuleiro, blocoBomba.getCoordX(), blocoBomba.getCoordY());
                 }
             }
-            if (pretoAtivo)
+            if (blocoTempoAtivo)
             {
-                atualizaVidas(xIni, yIni, preto);
-                if (preto.getvida() == 0)
+                atualizaVidas(xIni, yIni, blocoTempo);
+                if (blocoTempo.getVida() == 0)
                 {
-                    pretoAtivo = false;
-                    tabuleiro.setBloco(preto.getCoordX(), preto.getCoordY(), new BlocoGenerico(0));    
+                    blocoTempoAtivo = false;
+                    tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));    
                 }
             }
         }
@@ -67,7 +67,7 @@ public class Controle {
     private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
     {
         // quando está vazio na frente, livre para continuar se movendo
-        if(tabuleiro.getId(xFim, yFim) == 0)
+        if(tabuleiro.getId(xFim, yFim) == (Object) 0)
         {
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
@@ -82,51 +82,51 @@ public class Controle {
         }
 
         // quando o bloco deleta vai deletar o outro
-        else if((tabuleiro.getId(xFim, yFim) == "deleta" && tabuleiro.getId(xIni, yIni) != 0) 
-        || (tabuleiro.getId(xIni, yIni) == "deleta" && tabuleiro.getId(xFim, yFim) != 0))
+        else if((tabuleiro.getId(xFim, yFim) == "deleta" && tabuleiro.getId(xIni, yIni) != (Object) 0) 
+        || (tabuleiro.getId(xIni, yIni) == "deleta" && tabuleiro.getId(xFim, yFim) != (Object) 0))
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
         }
 
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro
-        else if(tabuleiro.getId(xFim, yFim) == "x2" && tabuleiro.getId(xIni, yIni) != 0)
+        else if(tabuleiro.getId(xFim, yFim) == "x2" && tabuleiro.getId(xIni, yIni) != (Object) 0)
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(tabuleiro.getId(xIni, yIni) == "x2" && tabuleiro.getId(xFim, yFim) != 0)
+        else if(tabuleiro.getId(xIni, yIni) == "x2" && tabuleiro.getId(xFim, yFim) != (Object) 0)
         {
-            tabuleiro.setBloco(xIni, yIni, BlocoGenerico(0));
+            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
         }
     }
 
-    public void setAtivo(BlocoBomba bomba)
+    public void setAtivo(BlocoBomba blocoBomba)
     {
-        bombaAtiva = true;
-        this.bomba = bomba;
+        blocoBombaAtiva = true;
+        this.blocoBomba = blocoBomba;
     }
 
-    public void setAtivo(BlocoTempo preto)
+    public void setAtivo(BlocoTempo blocoTempo)
     {
-        pretoAtivo = true;
-        this.preto = preto;
+        blocoTempoAtivo = true;
+        this.blocoTempo = blocoTempo;
     }
 
-    public boolean getBombaAtiva()
+    public boolean getBlocoBombaAtiva()
     {
-        return bombaAtiva;
+        return blocoBombaAtiva;
     }
 
-    public boolean getPretoAtivo()
+    public boolean getBlocoTempoAtivo()
     {
-        return pretoAtivo;
+        return blocoTempoAtivo;
     }
 
-    private void atualizaVidas(int xIni, int yIni, IBlocosVidas bloco)
+    private void atualizaVidas(int xIni, int yIni, IBlocosTimer bloco)
     {
         bloco.setVida(-1);
         bloco.setCoordX(bloco.getCoordX() + (xFim - xIni));
@@ -135,35 +135,35 @@ public class Controle {
 
     private void miraVizinhos(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
     {
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         xExplosao--;
         yExplosao--;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
         
         xExplosao++;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         xExplosao++;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         yExplosao++;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         yExplosao++;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         xExplosao--;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         xExplosao--;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
 
         yExplosao--;
-        explodeBomba(tabuleiro, xExplosao, yExplosao);
+        explodeblocoBomba(tabuleiro, xExplosao, yExplosao);
     }
 
-    private void explodeBomba(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
+    private void explodeblocoBomba(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
     {
         if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanhoX() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanhoY())
         {

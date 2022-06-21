@@ -1,5 +1,9 @@
 package com.poo.jogo2048.PastaBlocos;
 import java.util.Random;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 import java.lang.Math;
 
 public class BlocoBomba implements IBlocosTimer {
@@ -8,6 +12,7 @@ public class BlocoBomba implements IBlocosTimer {
     private int coordX;
     private int coordY;
     private boolean juntado = false;
+    private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
 
     public BlocoBomba()
     {
@@ -30,7 +35,7 @@ public class BlocoBomba implements IBlocosTimer {
         vida += mudanca;
     }
 
-    public BlocoGenerico junta()
+    public IBlocos junta()
     {
         if(id == 1)
         {
@@ -83,5 +88,20 @@ public class BlocoBomba implements IBlocosTimer {
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public Texture getImagem()
+    {
+        return imagem;
+    }
+
+    public void setImagem(Texture imagem)
+    {
+        this.imagem = imagem;
+    }
+
+    public void disposeImagem()
+    {
+        imagem.dispose();
     }
 }

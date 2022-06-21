@@ -14,10 +14,7 @@ public abstract class TelaAbstrata extends Stage implements Screen
     {
         super(new StretchViewport(400f, 400f, new OrthographicCamera()));
     }
-
-    // construção do stage
-    public abstract void buildStage();
-
+    
     @Override
     public void render(float delta){
         // limpar tela
@@ -28,18 +25,26 @@ public abstract class TelaAbstrata extends Stage implements Screen
         super.act(delta);
         super.draw();
     }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(this);
-    }
     
     @Override
     public void resize(int width, int height) {
         getViewport().update(width, height, true);
     }
-    @Override public void hide() {}
-    @Override public void pause() {}
-    @Override public void resume() {}
+
+	@Override
+	public void show()
+    {}
+
+	@Override
+	public void hide()
+    {}
+
+    @Override
+	public void pause()
+    {}
+
+	@Override
+	public void resume()
+    {}
 
 }

@@ -3,7 +3,7 @@ package com.poo.jogo2048.PastaBlocos;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class BlocoGenerico
+public class BlocoGenerico implements IBlocos
 {
 	private int id;
     private Texture imagem;
@@ -14,7 +14,7 @@ public class BlocoGenerico
         setId(id);
     }
 
-    public int getId()
+    public Object getId()
     {
         return id;
     }

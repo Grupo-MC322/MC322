@@ -19,12 +19,12 @@ public class main2 {
 
     public static void spawnBloco(Tabuleiro tabuleiro, Controle controle)
     {
-        IBlocos blocoGerado;
+        IBlocos blocoGerado = new BlocoGenerico(0);
         Random random = new Random();
         int coordX = random.nextInt(tabuleiro.getTamanhoX());
 		int coordY = random.nextInt(tabuleiro.getTamanhoY());
 
-		if (tabuleiro.getId(coordX, coordY) == 0)
+		if (tabuleiro.getId(coordX, coordY) == (Object) 0)
 		{
 			int index = random.nextInt(100);
             if(index < 20)
@@ -39,30 +39,28 @@ public class main2 {
             {
                 blocoGerado = new BlocoGenerico(4);
             }
-            else if (index < 85 && controle.getBombaAtiva() == false)
+            else if (index < 85 && controle.getBlocoBombaAtiva() == false)
             {
-                controle.setBombaAtiva();
-                blocoGerado = new Bomba();
+                controle.setAtivo(new BlocoBomba());
             }
-            else if (index < 90 && controle.getPretoAtivo() == false)
+            else if (index < 90 && controle.getBlocoTempoAtivo() == false)
             {
-                controle.setPretoAtivo();
-                blocoGerado = new Preto();
+                controle.setAtivo(new BlocoTempo());
             }
             else if (index < 95)
             {
-                blocoGerado = new Deleta();
+                blocoGerado = new BlocoDeleta();
             }
             else if (index < 100)
             {
-                blocoGerado = new Dobro();
+                blocoGerado = new BlocoDobro();
             }
             
             tabuleiro.setBloco(coordX, coordY, blocoGerado);
 		}
 		else
 		{
-			spawnBloco();
+			spawnBloco(tabuleiro, controle);
 		}
     }
 }

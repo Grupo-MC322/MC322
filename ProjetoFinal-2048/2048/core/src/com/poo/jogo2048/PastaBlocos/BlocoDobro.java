@@ -1,8 +1,12 @@
 package com.poo.jogo2048.PastaBlocos;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 public class BlocoDobro implements IBlocos {
     private String id = "x2";
     private boolean juntado = false;
+    private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
     public Object getId()
     {
@@ -22,5 +26,15 @@ public class BlocoDobro implements IBlocos {
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public Texture getImagem()
+    {
+        return imagem;
+    }
+
+    public void disposeImagem()
+    {
+        imagem.dispose();
     }
 }
