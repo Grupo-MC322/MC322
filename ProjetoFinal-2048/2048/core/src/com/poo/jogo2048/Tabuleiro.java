@@ -6,30 +6,24 @@ import com.poo.jogo2048.PastaBlocos.IBlocos;
 public class Tabuleiro
 {
     private IBlocos[][] matriz;
-    private int tamanhoX, tamanhoY;
+    private int tamanho;
 
-    public Tabuleiro(int tamanhoX, int tamanhoY)
+    public Tabuleiro(int tamanho)
     {
-        this.tamanhoX = tamanhoX;
-        this.tamanhoY = tamanhoY;
-        matriz = new BlocoGenerico[tamanhoX][tamanhoY];
-        for(int i = 0; i < tamanhoX; i++)
+        this.tamanho = tamanho;
+        matriz = new IBlocos[tamanho][tamanho];
+        for(int i = 0; i < tamanho; i++)
         {
-            for(int j = 0; j < tamanhoY; j++)
+            for(int j = 0; j < tamanho; j++)
             {
                 matriz[i][j] = new BlocoGenerico(0);
             }
         }
     }
 
-    public int getTamanhoX()
+    public int getTamanho()
     {
-        return tamanhoX;
-    }
-
-    public int getTamanhoY()
-    {
-        return tamanhoY;
+        return tamanho;
     }
 
     public Object getId(int x, int y)

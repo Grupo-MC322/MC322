@@ -17,7 +17,7 @@ public class Controle {
     {
         planejaMovimento(direcao, xIni, yIni);
 
-        if(xFim >= 0 && xFim < tabuleiro.getTamanhoX() && yFim >= 0 && yFim < tabuleiro.getTamanhoY())
+        if(xFim >= 0 && xFim < tabuleiro.getTamanho() && yFim >= 0 && yFim < tabuleiro.getTamanho())
         {
             movimenta(direcao, xIni, yIni, tabuleiro);
             if(blocoBombaAtiva)
@@ -35,11 +35,13 @@ public class Controle {
                 if (blocoTempo.getVida() == 0)
                 {
                     blocoTempoAtivo = false;
-                    tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));    
+                    tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
                 }
             }
         }
     }
+
+    
 
     private void planejaMovimento(char direcao, int xIni, int yIni)
     {
@@ -104,16 +106,18 @@ public class Controle {
         }
     }
 
-    public void setAtivo(BlocoBomba blocoBomba)
+    public BlocoBomba setAtivo(BlocoBomba blocoBomba)
     {
         blocoBombaAtiva = true;
         this.blocoBomba = blocoBomba;
+        return blocoBomba;
     }
 
-    public void setAtivo(BlocoTempo blocoTempo)
+    public BlocoTempo setAtivo(BlocoTempo blocoTempo)
     {
         blocoTempoAtivo = true;
         this.blocoTempo = blocoTempo;
+        return blocoTempo;
     }
 
     public boolean getBlocoBombaAtiva()
@@ -165,7 +169,7 @@ public class Controle {
 
     private void explodeblocoBomba(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
     {
-        if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanhoX() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanhoY())
+        if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanho() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanho())
         {
             tabuleiro.setBloco(xExplosao, yExplosao, new BlocoGenerico(0));
         }

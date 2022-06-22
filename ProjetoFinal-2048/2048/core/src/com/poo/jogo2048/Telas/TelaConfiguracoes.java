@@ -46,7 +46,7 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
         txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
-        txtrTimer = new Texture(Gdx.files.internal("blocos/bloco_timer.png"));
+        txtrTimer = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
         txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
         txtrJogar = new Texture(Gdx.files.internal("botao_jogar.png"));
@@ -112,13 +112,25 @@ public class TelaConfiguracoes extends TelaAbstrata
         // configurações de input dos botões
         botao4x4.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setScreen(new TelaConfiguracoes(jogo));
+                jogo.setTamanhoTabuleiro(4);
             }
         });
 
         botao5x5.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setScreen(new TelaConfiguracoes(jogo));
+                jogo.setTamanhoTabuleiro(5);
+            }
+        });
+
+        botao6x6.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                jogo.setTamanhoTabuleiro(6);
+            }
+        });
+
+        botao7x7.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                jogo.setTamanhoTabuleiro(7);
             }
         });
 

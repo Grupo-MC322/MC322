@@ -1,5 +1,6 @@
 package com.poo.jogo2048.PastaBlocos;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BlocoTempo implements IBlocosTimer {
@@ -8,7 +9,7 @@ public class BlocoTempo implements IBlocosTimer {
     private int coordX;
     private int coordY;
     private boolean juntado = false;
-    Texture imagem;
+    Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));;
 
     public Object getId()
     {
