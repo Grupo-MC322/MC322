@@ -17,7 +17,7 @@ public class Controle {
     {
         planejaMovimento(direcao, xIni, yIni);
 
-        if(xFim >= 0 && xFim < tabuleiro.getTamanho() && yFim >= 0 && yFim < tabuleiro.getTamanho())
+        if(0 <= xFim && xFim < tabuleiro.getTamanho() && 0 <= yFim && yFim < tabuleiro.getTamanho())
         {
             movimenta(direcao, xIni, yIni, tabuleiro);
             if(blocoBombaAtiva)
@@ -41,15 +41,13 @@ public class Controle {
         }
     }
 
-    
-
     private void planejaMovimento(char direcao, int xIni, int yIni)
     {
         switch (direcao)
         {
             case 'w':
                 xFim = xIni;
-                yFim = yIni - 1;
+                yFim = yIni + 1;
                 break;
             case 'a':
                 xFim = xIni - 1;
@@ -57,7 +55,7 @@ public class Controle {
                 break;
             case 's':
                 xFim = xIni;
-                yFim = yIni + 1;
+                yFim = yIni - 1;
                 break;
             case 'd':
                 xFim = xIni + 1;
@@ -71,6 +69,11 @@ public class Controle {
         // quando está vazio na frente, livre para continuar se movendo
         if(tabuleiro.getId(xFim, yFim) == (Object) 0)
         {
+            if(tabuleiro.getId(xIni, yIni) == "tempo")
+            {
+                ((BlocoTempo) tabuleiro.getBloco(xIni, yIni)).setCoordX(xFim);
+                ((BlocoTempo) tabuleiro.getBloco(xIni, yIni)).setCoordY(yFim);
+            }
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, tabuleiro);

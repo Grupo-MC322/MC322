@@ -1,11 +1,9 @@
 package com.poo.jogo2048.Telas;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -18,6 +16,7 @@ public class TelaConfiguracoes extends TelaAbstrata
     final jogo2048 jogo;
 
     OrthographicCamera camera;
+
     private Texture txtrFundo;
     private Texture txtr4x4;
     private Texture txtr5x5;
@@ -25,18 +24,25 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtr7x7;
     private Texture txtrBomba;
     private Texture txtrDeleta;
-    private Texture txtrTimer;
+    private Texture txtrTempo;
     private Texture txtr2x;
     private Texture txtrJogar;
+
+    private boolean botaoBombaSelected;
+    private boolean botaoDeletaSelected;
+    private boolean botaoTempoSelected;
+    private boolean botao2xSelected;
 
 
     public TelaConfiguracoes(final jogo2048 jogo)
     {
         this.jogo = jogo;
 
+        // configurações de camera
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 400, 400);
     
+        // setup inicial das texturas
         txtrFundo = new Texture(Gdx.files.internal("fundo_configuracoes.png"));
 
         txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4.png"));
@@ -46,10 +52,16 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
         txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
-        txtrTimer = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
+        txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
         txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
         txtrJogar = new Texture(Gdx.files.internal("botao_jogar.png"));
+
+        // setup inicial das opções de blocos
+        botaoBombaSelected = true;
+        botaoDeletaSelected = true;
+        botaoTempoSelected = true;
+        botao2xSelected = true;
     }
 
     @Override
@@ -57,45 +69,32 @@ public class TelaConfiguracoes extends TelaAbstrata
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1);
 
 		camera.update();
-		jogo.batch.setProjectionMatrix(camera.combined);
 
         // configurações do batch
-		jogo.batch.begin();
-        
+		jogo.batch.setProjectionMatrix(camera.combined);
+        jogo.batch.begin();
         jogo.batch.draw(txtrFundo, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
-        // configurações do stage
+        // criação e configuração do stage
         criaStage(jogo.batch, jogo.stage);
 
-		jogo.batch.end();
+        jogo.batch.end();
 	}
 
     public void criaStage(Batch batch, Stage stage)
     {
         // adicionando os atores
 
-        // botão 4x4
+        // botões de tabuleiro
         Image botao4x4 = criaBotao(txtr4x4, 0.13, 0.65, 0.17, 0.17);
-    
-        // botao 5x5
         Image botao5x5 = criaBotao(txtr5x5, 0.32, 0.65, 0.17, 0.17);
-
-        // botao 6x6
         Image botao6x6 = criaBotao(txtr6x6, 0.51, 0.65, 0.17, 0.17);
-        
-        // botao 7x7
         Image botao7x7 = criaBotao(txtr7x7, 0.70, 0.65, 0.17, 0.17);
 
-        // botão bomba
+        // botões de blocos
         Image botaoBomba = criaBotao(txtrBomba, 0.13, 0.32, 0.17, 0.17);
-
-        // botão deleta
         Image botaoDeleta = criaBotao(txtrDeleta, 0.32, 0.32, 0.17, 0.17);
-
-        // botão timer
-        Image botaoTimer = criaBotao(txtrTimer, 0.51, 0.32, 0.17, 0.17);
-
-        // botão 2x
+        Image botaoTempo = criaBotao(txtrTempo, 0.51, 0.32, 0.17, 0.17);
         Image botao2x = criaBotao(txtr2x, 0.70, 0.32, 0.17, 0.17);
 
         // botão jogar
@@ -104,33 +103,119 @@ public class TelaConfiguracoes extends TelaAbstrata
         botaoJogar.setY((float) (0.1 * 400));
         botaoJogar.setWidth((float) (0.37 * 400));
         botaoJogar.setHeight((float) (0.1 * 400));
-
         botaoJogar.draw(batch, 1);
         stage.addActor(botaoJogar);
-
 
         // configurações de input dos botões
         botao4x4.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 jogo.setTamanhoTabuleiro(4);
+                
+                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
             }
         });
 
         botao5x5.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 jogo.setTamanhoTabuleiro(5);
+
+                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
             }
         });
 
         botao6x6.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 jogo.setTamanhoTabuleiro(6);
+
+                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
             }
         });
 
         botao7x7.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 jogo.setTamanhoTabuleiro(7);
+
+                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7.png"));
+            }
+        });
+
+        botaoBomba.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                jogo.setTamanhoTabuleiro(7);
+
+                if(botaoBombaSelected)
+                {
+                    botaoBombaSelected = false;
+                    txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba_unselected.png"));
+                }
+                else
+                {
+                    botaoBombaSelected = true;
+                    txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
+                }
+            }
+        });
+
+        botaoDeleta.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                jogo.setTamanhoTabuleiro(7);
+                
+                if(botaoDeletaSelected)
+                {
+                    botaoDeletaSelected = false;
+                    txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta_unselected.png"));
+                }
+                else
+                {
+                    botaoDeletaSelected = true;
+                    txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+                }
+            }
+        });
+
+        botaoTempo.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                jogo.setTamanhoTabuleiro(7);
+                
+                if(botaoTempoSelected)
+                {
+                    botaoTempoSelected = false;
+                    txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo_unselected.png"));
+                }
+                else
+                {
+                    botaoTempoSelected = true;
+                    txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
+                }
+            }
+        });
+
+        botao2x.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+                jogo.setTamanhoTabuleiro(7);
+                
+                if(botao2xSelected)
+                {
+                    botao2xSelected = false;
+                    txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x_unselected.png"));
+                }
+                else
+                {
+                    botao2xSelected = true;
+                    txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
+                }
             }
         });
 
@@ -178,27 +263,6 @@ public class TelaConfiguracoes extends TelaAbstrata
             });
         }
     }
-
-
-    @Override
-	public void resize(int width, int height) {
-	}
-
-	@Override
-	public void show()
-    {}
-
-	@Override
-	public void hide()
-    {}
-
-	@Override
-	public void pause()
-    {}
-
-	@Override
-	public void resume()
-    {}
 
     @Override
 	public void dispose() {

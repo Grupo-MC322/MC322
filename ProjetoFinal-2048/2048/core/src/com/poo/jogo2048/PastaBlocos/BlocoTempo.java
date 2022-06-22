@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BlocoTempo implements IBlocosTimer {
-    private String id = "preto";
+    private String id = "tempo";
     private int vida = 3;
     private int coordX;
     private int coordY;

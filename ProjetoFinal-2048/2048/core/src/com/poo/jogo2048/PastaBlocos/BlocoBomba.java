@@ -12,7 +12,7 @@ public class BlocoBomba implements IBlocosTimer {
     private int coordX;
     private int coordY;
     private boolean juntado = false;
-    private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+    private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
 
     public BlocoBomba()
     {

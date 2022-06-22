@@ -28,7 +28,7 @@ public class BlocoGenerico implements IBlocos
                 setImagem(new Texture(Gdx.files.internal("blocos/vazio.png")));
                 break;
             case 1:
-                setImagem(new Texture(Gdx.files.internal("selecao_5x5.png")));
+                setImagem(new Texture(Gdx.files.internal("blocos/1.png")));
                 break;
             case 2:
                 setImagem(new Texture(Gdx.files.internal("blocos/2.png")));
