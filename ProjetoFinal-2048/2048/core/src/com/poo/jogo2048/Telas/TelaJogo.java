@@ -92,57 +92,6 @@ public class TelaJogo extends TelaAbstrata
         }
 	}
 
-    public static void spawnBloco(Tabuleiro tabuleiro, Controle controle)
-    {
-        IBlocos blocoGerado = new BlocoGenerico(0);
-        Random random = new Random();
-        int coordX = random.nextInt(tabuleiro.getTamanho());
-		int coordY = random.nextInt(tabuleiro.getTamanho());
-
-		if (tabuleiro.getId(coordX, coordY) == (Object) 0)
-		{
-			int index = random.nextInt(100);
-            if(index < 10)
-            {
-                blocoGerado = new BlocoGenerico(1);
-            }
-            else if (index < 60)
-            {
-                blocoGerado = new BlocoGenerico(2);
-            }
-            else if (index < 80)
-            {
-                blocoGerado = new BlocoGenerico(4);
-            }
-            else if (index < 85 && controle.getBlocoBombaAtiva() == false && controle.getBotaoBombaSelected())
-            {
-                blocoGerado = controle.setAtivo(new BlocoBomba());
-            }
-            else if (index < 90 && controle.getBlocoTempoAtivo() == false && controle.getBotaoTempoSelected())
-            {
-                blocoGerado = controle.setAtivo(new BlocoTempo());
-            }
-            else if (index < 95 && controle.getBotaoDeletaSelected())
-            {
-                blocoGerado = new BlocoDeleta();
-            }
-            else if (index < 100 && controle.getBotao2xSelected())
-            {
-                blocoGerado = new BlocoDobro();
-            }
-            else
-            {
-                spawnBloco(tabuleiro, controle);
-            }
-            
-            tabuleiro.setBloco(coordX, coordY, blocoGerado);
-		}
-		else
-		{
-			spawnBloco(tabuleiro, controle);
-		}
-    }
-
     // private void drawTabuleiro(Batch batch, Tabuleiro tabuleiro)
 	// {
 	// 	batch.begin();

@@ -1,6 +1,7 @@
 package com.poo.jogo2048;
 
 import java.util.Objects;
+import java.util.Random;
 
 import com.poo.jogo2048.PastaBlocos.*;
 
@@ -11,17 +12,69 @@ public class Controle {
     private boolean botao2xSelected;
 
     private IBlocosTimer blocoBomba;
-    private boolean blocoBombaAtiva = false;
-
     private IBlocosTimer blocoTempo;
-    private boolean blocoTempoAtivo = false;
 
     private int xFim = 0;
     private int yFim = 0;
     
-    public void conectaBlocoTimer()
+    public Controle()
     {
-        
+        blocoBomba = BlocoBomba.getInstance();
+        blocoTempo = BlocoTempo.getInstance();
+    }
+
+    public void spawnBloco(Tabuleiro tabuleiro, Controle controle)
+    {
+        IBlocos blocoGerado = new BlocoGenerico(0);
+        Random random = new Random();
+        int coordX = random.nextInt(tabuleiro.getTamanho());
+		int coordY = random.nextInt(tabuleiro.getTamanho());
+
+		if (Objects.equals(tabuleiro.getId(coordX, coordY), 0))
+		{
+			int index = random.nextInt(100);
+            if(index < 10)
+            {
+                blocoGerado = new BlocoGenerico(1);
+            }
+            else if (index < 60)
+            {
+                blocoGerado = new BlocoGenerico(2);
+            }
+            else if (index < 80)
+            {
+                blocoGerado = new BlocoGenerico(4);
+            }
+            else if (index < 85 && blocoBomba.getAtivo() == false && controle.getBotaoBombaSelected())
+            {
+                
+                blocoGerado = blocoBomba;
+                blocoBomba.setAtivo(true);
+            }
+            else if (index < 90 && blocoTempo.getAtivo() == false && controle.getBotaoTempoSelected())
+            {
+                blocoGerado = blocoTempo;
+                blocoTempo.setAtivo(true);
+            }
+            else if (index < 95 && controle.getBotaoDeletaSelected())
+            {
+                blocoGerado = new BlocoDeleta();
+            }
+            else if (index < 100 && controle.getBotao2xSelected())
+            {
+                blocoGerado = new BlocoDobro();
+            }
+            else
+            {
+                spawnBloco(tabuleiro, controle);
+            }
+            
+            tabuleiro.setBloco(coordX, coordY, blocoGerado);
+		}
+		else
+		{
+			spawnBloco(tabuleiro, controle);
+		}
     }
     
     public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
@@ -30,12 +83,12 @@ public class Controle {
 
         if(0 <= xFim && xFim < tabuleiro.getTamanho() && 0 <= yFim && yFim < tabuleiro.getTamanho())
         {
-            if(tabuleiro.getBloco(xIni, yIni).getClass() == IBlocosTimer.class)
+            if(tabuleiro.getBloco(xIni, yIni) instanceof IBlocosTimer)
             {
                 IBlocosTimer bloco = (IBlocosTimer) tabuleiro.getBloco(xIni, yIni);
                 bloco.setVida(-1);
-                bloco.setCoordX(bloco.getCoordX() + (xFim - xIni));
-                bloco.setCoordY(bloco.getCoordY() + (yFim - yIni));
+                bloco.setCoordX(xFim);
+                bloco.setCoordY(yFim);
             }
             movimenta(direcao, xIni, yIni, tabuleiro);
         }
@@ -95,61 +148,33 @@ public class Controle {
         }
 
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro, não sendo o outro vazio
-        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "x2") && !Objects.equals(tabuleiro.getId(xIni, yIni), 0))
+        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "2x") && !Objects.equals(tabuleiro.getId(xIni, yIni), 0))
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(Objects.equals(tabuleiro.getId(xIni, yIni), "x2") && !Objects.equals(tabuleiro.getId(xFim, yFim), 0))
+        else if(Objects.equals(tabuleiro.getId(xIni, yIni), "2x") && !Objects.equals(tabuleiro.getId(xFim, yFim), 0))
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
         }
     }
 
-    public BlocoBomba setAtivo(BlocoBomba blocoBomba)
+    public void atualizaVidas(Tabuleiro tabuleiro)
     {
-        blocoBombaAtiva = true;
-        this.blocoBomba = blocoBomba;
-        return blocoBomba;
-    }
-
-    public BlocoTempo setAtivo(BlocoTempo blocoTempo)
-    {
-        blocoTempoAtivo = true;
-        this.blocoTempo = blocoTempo;
-        return blocoTempo;
-    }
-
-    public boolean getBlocoBombaAtiva()
-    {
-        return blocoBombaAtiva;
-    }
-
-    public boolean getBlocoTempoAtivo()
-    {
-        return blocoTempoAtivo;
-    }
-
-    public void atualizaVidas()
-    {
-        if(blocoBombaAtiva)
+        if(blocoBomba.getAtivo() && blocoBomba.getVida() == 0)
         {
-            if(blocoBomba.getVida() == 0)
-            {
-                blocoBombaAtiva = false;
-                miraVizinhos(tabuleiro, blocoBomba.getCoordX(), blocoBomba.getCoordY());
-            }
+            blocoBomba.setAtivo(false);
+            blocoBomba.setVida(3);
+            miraVizinhos(tabuleiro, blocoBomba.getCoordX(), blocoBomba.getCoordY());
         }
-        if (blocoTempoAtivo)
+        if (blocoTempo.getAtivo() && blocoTempo.getVida() == 0)
         {
-            if (blocoTempo.getVida() == 0)
-            {
-                blocoTempoAtivo = false;
-                tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
-            }
+            blocoTempo.setAtivo(false);
+            blocoTempo.setVida(3);
+            tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
         }
     }
 
@@ -231,6 +256,5 @@ public class Controle {
 
 
 
-// reconhecer se eh um bloco bomba ou tempo antes de entrar na função
 // entrar na função(de movimentar cada bloco) com a direção oposta ao que foi jogado
-// singleton com bomba e tempo
+// soh dps de todas as celulas rodadas, ver se a bomba explode ou o bloco some

@@ -7,15 +7,18 @@ import com.badlogic.gdx.graphics.Texture;
 import java.lang.Math;
 
 public class BlocoBomba implements IBlocosTimer {
-    private IBlocosTimer instance;
+    private static IBlocosTimer instance;
     private int id;
     private int vida = 3;
     private int coordX;
     private int coordY;
+    private boolean ativo = false;
     private boolean juntado = false;
     private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
     
-    public IBlocosTimer getInstance()
+    private BlocoBomba(){}
+    
+    public static IBlocosTimer getInstance()
     {
         if (instance == null)
         {
@@ -45,29 +48,19 @@ public class BlocoBomba implements IBlocosTimer {
         vida += mudanca;
     }
 
+    public boolean getAtivo()
+    {
+        return ativo;
+    }
+
+    public void setAtivo(boolean info)
+    {
+        ativo = info;
+    }
+
     public IBlocos junta()
     {
-        if(id == 1)
-        {
-            return new BlocoGenerico(2);
-        }
-        if(id == 2)
-        {
-            return new BlocoGenerico(4);
-        }
-        if(id == 4)
-        {
-            return new BlocoGenerico(8);
-        }
-        if(id == 8)
-        {
-            return new BlocoGenerico(16);
-        }
-        if(id == 16)
-        {
-            return new BlocoGenerico(32);
-        }
-        return null;
+        return instance;
     }
 
     public int getCoordX()

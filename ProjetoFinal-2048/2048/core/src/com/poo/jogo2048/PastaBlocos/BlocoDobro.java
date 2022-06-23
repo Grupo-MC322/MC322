@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BlocoDobro implements IBlocos {
-    private String id = "x2";
+    private String id = "2x";
     private boolean juntado = false;
     private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
