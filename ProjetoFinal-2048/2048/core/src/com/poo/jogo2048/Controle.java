@@ -3,7 +3,11 @@ package com.poo.jogo2048;
 import com.poo.jogo2048.PastaBlocos.*;
 
 public class Controle {
-    
+    private boolean botaoBombaSelected;
+    private boolean botaoDeletaSelected;
+    private boolean botaoTempoSelected;
+    private boolean botao2xSelected;
+
     private BlocoBomba blocoBomba;
     private boolean blocoBombaAtiva = false;
 
@@ -177,4 +181,41 @@ public class Controle {
             tabuleiro.setBloco(xExplosao, yExplosao, new BlocoGenerico(0));
         }
     }
+
+    public boolean getBotaoBombaSelected()
+    {
+        return botaoBombaSelected;
+    }
+
+    public void setBotaoBombaSelected(boolean botaoBombaSelected) {
+        this.botaoBombaSelected = botaoBombaSelected;
+    }
+
+    public boolean getBotaoDeletaSelected()
+    {
+        return botaoDeletaSelected;
+    }
+
+    public void setBotaoDeletaSelected(boolean botaoDeletaSelected) {
+        this.botaoDeletaSelected = botaoDeletaSelected;
+    }
+
+    public boolean getBotaoTempoSelected()
+    {
+        return botaoTempoSelected;
+    }
+
+    public void setBotaoTempoSelected(boolean botaoTempoSelected) {
+        this.botaoTempoSelected = botaoTempoSelected;
+    }
+
+    public boolean getBotao2xSelected()
+    {
+        return botao2xSelected;
+    }
+
+    public void setBotao2xSelected(boolean botao2xSelected) {
+        this.botao2xSelected = botao2xSelected;
+    }
 }
+

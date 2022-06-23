@@ -81,7 +81,7 @@ public class TelaInicial extends TelaAbstrata
         // configurações de input dos botões
         botaoConfig.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setScreen(new TelaConfiguracoes(jogo));
+                jogo.setScreen(new TelaConfiguracoes(jogo, jogo.controle));
             }
         });
         botaoInstr.addListener(new ClickListener(){

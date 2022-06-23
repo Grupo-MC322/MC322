@@ -114,21 +114,25 @@ public class TelaJogo extends TelaAbstrata
             {
                 blocoGerado = new BlocoGenerico(4);
             }
-            else if (index < 85 && controle.getBlocoBombaAtiva() == false)
+            else if (index < 85 && controle.getBlocoBombaAtiva() == false && controle.getBotaoBombaSelected())
             {
                 blocoGerado = controle.setAtivo(new BlocoBomba());
             }
-            else if (index < 90 && controle.getBlocoTempoAtivo() == false)
+            else if (index < 90 && controle.getBlocoTempoAtivo() == false && controle.getBotaoTempoSelected())
             {
                 blocoGerado = controle.setAtivo(new BlocoTempo());
             }
-            else if (index < 95)
+            else if (index < 95 && controle.getBotaoDeletaSelected())
             {
                 blocoGerado = new BlocoDeleta();
             }
-            else if (index < 100)
+            else if (index < 100 && controle.getBotao2xSelected())
             {
                 blocoGerado = new BlocoDobro();
+            }
+            else
+            {
+                spawnBloco(tabuleiro, controle);
             }
             
             tabuleiro.setBloco(coordX, coordY, blocoGerado);
