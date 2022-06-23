@@ -7,22 +7,32 @@ import com.badlogic.gdx.graphics.Texture;
 import java.lang.Math;
 
 public class BlocoBomba implements IBlocosTimer {
+    private IBlocosTimer instance;
     private int id;
     private int vida = 3;
     private int coordX;
     private int coordY;
     private boolean juntado = false;
     private Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
-
-    public BlocoBomba()
+    
+    public IBlocosTimer getInstance()
     {
-        Random geraId = new Random();
-        id = (int) Math.pow(2, geraId.nextInt(5));
+        if (instance == null)
+        {
+            instance = new BlocoBomba();
+        }
+        return instance;
     }
     
     public Object getId()
     {
         return id;
+    }
+
+    public void setId()
+    {
+        Random geraId = new Random();
+        id = (int) Math.pow(2, geraId.nextInt(5));
     }
 
     public int getVida()

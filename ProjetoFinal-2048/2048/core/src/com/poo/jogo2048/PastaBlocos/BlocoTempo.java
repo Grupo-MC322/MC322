@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BlocoTempo implements IBlocosTimer {
+    private IBlocosTimer instance;
     private String id = "tempo";
     private int vida = 3;
     private int coordX;
@@ -11,6 +12,15 @@ public class BlocoTempo implements IBlocosTimer {
     private boolean juntado = false;
     Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));;
 
+    public IBlocosTimer getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new BlocoTempo();
+        }
+        return instance;
+    }
+    
     public Object getId()
     {
         return id;
