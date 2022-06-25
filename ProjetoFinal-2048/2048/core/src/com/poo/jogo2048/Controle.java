@@ -3,6 +3,10 @@ package com.poo.jogo2048;
 import java.util.Objects;
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.poo.jogo2048.PastaBlocos.*;
 
 public class Controle {
@@ -77,7 +81,7 @@ public class Controle {
 		}
     }
     
-    public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
+    public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
     {
         planejaMovimento(direcao, xIni, yIni);
 
@@ -90,7 +94,7 @@ public class Controle {
                 bloco.setCoordX(xFim);
                 bloco.setCoordY(yFim);
             }
-            movimenta(direcao, xIni, yIni, tabuleiro);
+            movimenta(direcao, xIni, yIni, tabuleiro, batch, stage);
         }
     }
 
@@ -117,7 +121,7 @@ public class Controle {
         }
     }
 
-    private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro)
+    private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
     {
         // quando está vazio na frente, livre para continuar se movendo
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
@@ -127,9 +131,20 @@ public class Controle {
                 ((BlocoTempo) tabuleiro.getBloco(xIni, yIni)).setCoordX(xFim);
                 ((BlocoTempo) tabuleiro.getBloco(xIni, yIni)).setCoordY(yFim);
             }
+            float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
+            float posicaoYBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * yFim + (400 * 0.01) * yFim));
+
+            MoveToAction moveBottomRightAction = new MoveToAction();
+            moveBottomRightAction.setPosition(posicaoXBloco,posicaoYBloco);
+            moveBottomRightAction.setDuration(1);
+            moveBottomRightAction.setInterpolation(Interpolation.smooth);
+    
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBottomRightAction);
+            stage.draw();
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
+            
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
-            realizaComando(direcao, xFim, yFim, tabuleiro);
+            realizaComando(direcao, xFim, yFim, tabuleiro, batch, stage);
         }
 
         // quando ambos os blocos são iguais e podem se juntar

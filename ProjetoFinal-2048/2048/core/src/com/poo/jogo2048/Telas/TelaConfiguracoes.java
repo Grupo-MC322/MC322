@@ -150,8 +150,6 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         botaoBomba.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setTamanhoTabuleiro(7);
-
                 if(controle.getBotaoBombaSelected())
                 {
                     controle.setBotaoBombaSelected(false);
@@ -167,8 +165,6 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         botaoDeleta.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setTamanhoTabuleiro(7);
-                
                 if(controle.getBotaoDeletaSelected())
                 {
                     controle.setBotaoDeletaSelected(false);
@@ -184,8 +180,6 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         botaoTempo.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setTamanhoTabuleiro(7);
-                
                 if(controle.getBotaoTempoSelected())
                 {
                     controle.setBotaoTempoSelected(false);
@@ -201,8 +195,6 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         botao2x.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                jogo.setTamanhoTabuleiro(7);
-                
                 if(controle.getBotao2xSelected())
                 {
                     controle.setBotao2xSelected(false);
@@ -216,6 +208,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
+        // conexão para o botao jogar inicializar a tela jogo
         adicionaConexao(botaoJogar, "jogo");
     }
 

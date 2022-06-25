@@ -2,8 +2,11 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoTempo implements IBlocosTimer
+public class BlocoTempo extends Actor implements IBlocosTimer
 {
     private static IBlocosTimer instance;
     private String id = "tempo";
@@ -12,7 +15,10 @@ public class BlocoTempo implements IBlocosTimer
     private int coordY;
     private boolean ativo = false;
     private boolean juntado = false;
-    Texture imagem = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));;
+    private float posX;
+    private float posY;
+    private float size;
+    Image imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo.png")));
 
     private BlocoTempo(){}
     
@@ -86,18 +92,40 @@ public class BlocoTempo implements IBlocosTimer
         return juntado;
     }
 
-    public Texture getImagem()
+    public Image getImagem()
     {
         return imagem;
     }
 
-    public void setImagem(Texture imagem)
-    {
-        this.imagem = imagem;
+    public void setPosX(float posX) {
+        this.posX = posX;
+        this.getImagem().setX(posX);
     }
 
-    public void disposeImagem()
-    {
-        imagem.dispose();
+    public float getPosX() {
+        return posX;
     }
+
+    public void setPosY(float posY) {
+        this.posY = posY;
+        this.getImagem().setY(posY);
+    }
+
+    public float getPosY() {
+        return posY;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+        this.getImagem().setWidth(size);
+        this.getImagem().setHeight(size);
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void moveToPosition(float x, float y) {
+		addAction(Actions.moveTo(x, y, .075f));
+	}
 }

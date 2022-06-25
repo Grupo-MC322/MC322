@@ -1,26 +1,27 @@
 package com.poo.jogo2048.Telas;
 
-import java.util.Random;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.Controle;
 import com.poo.jogo2048.Tabuleiro;
 import com.poo.jogo2048.jogo2048;
-import com.poo.jogo2048.PastaBlocos.*;
 
 public class TelaJogo extends TelaAbstrata
 {
     final jogo2048 jogo;
     Tabuleiro tabuleiro;
     Controle controle;
+    Stage stage;
 
     OrthographicCamera camera;
 
     public TelaJogo(final jogo2048 jogo)
     {
+        stage = new Stage();
+
         this.jogo = jogo;
         this.controle = jogo.controle;
 
@@ -28,7 +29,7 @@ public class TelaJogo extends TelaAbstrata
 		camera.setToOrtho(false, 400, 400);
 
         tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
-        spawnBloco(tabuleiro, controle);
+        controle.spawnBloco(tabuleiro, controle);
     }
 
     @Override
@@ -48,37 +49,32 @@ public class TelaJogo extends TelaAbstrata
 			{
 				for(int j = 0; j < tabuleiro.getTamanho(); j++)
 				{
-					Float posX = (float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i);
-					Float posY = (float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j);
-					jogo.batch.draw(tabuleiro.getBloco(i, j).getImagem(), posX, posY, (float) (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()), (float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+					tabuleiro.getBloco(i, j).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i));
+					tabuleiro.getBloco(i, j).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j));
+                    tabuleiro.getBloco(i, j).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+                    tabuleiro.getBloco(i, j).getImagem().draw(jogo.batch, 1);
+                    stage.addActor(tabuleiro.getBloco(i, j).getImagem());
 				}
 			}
         }
 
-		jogo.batch.end();
+        stage.draw();
+        stage.act();
 
         // configuração dos inputs das teclas de comando
         if(Gdx.input.isKeyJustPressed(Keys.LEFT))
-        {
             jogada('a');
-            spawnBloco(tabuleiro, controle);
-            
-        }
+
         else if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
-        {
             jogada('d');
-            spawnBloco(tabuleiro, controle);
-        }
+
         else if(Gdx.input.isKeyJustPressed(Keys.UP))
-        {
             jogada('w');
-            spawnBloco(tabuleiro, controle);
-        }
+        
         else if(Gdx.input.isKeyJustPressed(Keys.DOWN))
-        {
             jogada('s');
-            spawnBloco(tabuleiro, controle);
-        }
+        
+        jogo.batch.end();
 	}
 
     public void jogada(char direcao)
@@ -87,25 +83,11 @@ public class TelaJogo extends TelaAbstrata
         {
             for(int j = 0; j < tabuleiro.getTamanho(); j++)
             {
-				controle.realizaComando(direcao, i, j, tabuleiro);
+				controle.realizaComando(direcao, i, j, tabuleiro, jogo.batch, stage);
             }
         }
+        controle.spawnBloco(tabuleiro, controle);
 	}
-
-    // private void drawTabuleiro(Batch batch, Tabuleiro tabuleiro)
-	// {
-	// 	batch.begin();
-	// 	for(int i = 0; i < tabuleiro.getTamanho(); i++)
-    //     {
-    //         for(int j = 0; j < tabuleiro.getTamanho(); j++)
-    //         {
-	// 			Float posX = (float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i);
-	// 			Float posY = (float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j);
-	// 			batch.draw(tabuleiro.getBloco(i, j).getImagem(), posX, posY, (float) (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()), (float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
-    //         }
-    //     }
-	// 	batch.end();
-	// }
 
     @Override
 	public void dispose() {

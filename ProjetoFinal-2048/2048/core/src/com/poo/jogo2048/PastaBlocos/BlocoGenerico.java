@@ -2,12 +2,19 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoGenerico implements IBlocos
+public class BlocoGenerico extends Actor implements IBlocos
 {
 	private int id;
-    private Texture imagem;
+    private Image imagem;
     private boolean juntado = false;
+    private float posX;
+    private float posY;
+    private float size;
 
     public BlocoGenerico(int id)
     {
@@ -25,43 +32,43 @@ public class BlocoGenerico implements IBlocos
         switch(id)
         {
             case 0:
-                setImagem(new Texture(Gdx.files.internal("blocos/vazio.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/vazio.png"))));
                 break;
             case 1:
-                setImagem(new Texture(Gdx.files.internal("blocos/1.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/1.png"))));
                 break;
             case 2:
-                setImagem(new Texture(Gdx.files.internal("blocos/2.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/2.png"))));
                 break;
             case 4:
-                setImagem(new Texture(Gdx.files.internal("blocos/4.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/4.png"))));
                 break;
             case 8:
-                setImagem(new Texture(Gdx.files.internal("blocos/8.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/8.png"))));
                 break;
             case 16:
-                setImagem(new Texture(Gdx.files.internal("blocos/16.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/16.png"))));
                 break;
             case 32:
-                setImagem(new Texture(Gdx.files.internal("blocos/32.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/32.png"))));
                 break;
             case 64:
-                setImagem(new Texture(Gdx.files.internal("blocos/64.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/64.png"))));
                 break;
             case 128:
-                setImagem(new Texture(Gdx.files.internal("blocos/128.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/128.png"))));
                 break;
             case 256:
-                setImagem(new Texture(Gdx.files.internal("blocos/256.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/256.png"))));
                 break;
             case 512:
-                setImagem(new Texture(Gdx.files.internal("blocos/512.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/512.png"))));
                 break;
             case 1024:
-                setImagem(new Texture(Gdx.files.internal("blocos/1024.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/1024.png"))));
                 break;
             case 2048:
-                setImagem(new Texture(Gdx.files.internal("blocos/2048.png")));
+                setImagem(new Image(new Texture(Gdx.files.internal("blocos/2048.png"))));
                 break;
         }
     }
@@ -81,18 +88,45 @@ public class BlocoGenerico implements IBlocos
         return juntado;
     }
 
-    public Texture getImagem()
+    public Image getImagem()
     {
         return imagem;
     }
 
-    public void setImagem(Texture imagem)
+    public void setImagem(Image imagem)
     {
         this.imagem = imagem;
     }
 
-    public void disposeImagem()
-    {
-        imagem.dispose();
+    public void setPosX(float posX) {
+        this.posX = posX;
+        this.getImagem().setX(posX);
     }
+
+    public float getPosX() {
+        return posX;
+    }
+
+    public void setPosY(float posY) {
+        this.posY = posY;
+        this.getImagem().setY(posY);
+    }
+
+    public float getPosY() {
+        return posY;
+    }
+
+    public void setSize(float size) {
+        this.size = size;
+        this.getImagem().setWidth(size);
+        this.getImagem().setHeight(size);
+    }
+
+    public float getSize() {
+        return size;
+    }
+
+    public void moveToPosition(float x, float y) {
+		addAction(Actions.moveTo(x, y, .075f));
+	}
 }
