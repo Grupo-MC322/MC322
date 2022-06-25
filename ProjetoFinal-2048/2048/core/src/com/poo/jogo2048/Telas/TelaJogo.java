@@ -33,7 +33,8 @@ public class TelaJogo extends TelaAbstrata
     }
 
     @Override
-	public void render(float delta) {
+	public void render(float delta)
+    {
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
 
         // configurações de camera
@@ -90,7 +91,8 @@ public class TelaJogo extends TelaAbstrata
 	}
 
     @Override
-	public void dispose() {
+	public void dispose()
+    {
 		// FAZER
 	}
 }

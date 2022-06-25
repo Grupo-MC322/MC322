@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.poo.jogo2048.PastaBlocos.*;
 
-public class Controle {
+public class Controle
+{
     private boolean botaoBombaSelected;
     private boolean botaoDeletaSelected;
     private boolean botaoTempoSelected;
@@ -236,7 +237,8 @@ public class Controle {
         return botaoBombaSelected;
     }
 
-    public void setBotaoBombaSelected(boolean botaoBombaSelected) {
+    public void setBotaoBombaSelected(boolean botaoBombaSelected)
+    {
         this.botaoBombaSelected = botaoBombaSelected;
     }
 
@@ -245,7 +247,8 @@ public class Controle {
         return botaoDeletaSelected;
     }
 
-    public void setBotaoDeletaSelected(boolean botaoDeletaSelected) {
+    public void setBotaoDeletaSelected(boolean botaoDeletaSelected)
+    {
         this.botaoDeletaSelected = botaoDeletaSelected;
     }
 
@@ -254,7 +257,8 @@ public class Controle {
         return botaoTempoSelected;
     }
 
-    public void setBotaoTempoSelected(boolean botaoTempoSelected) {
+    public void setBotaoTempoSelected(boolean botaoTempoSelected)
+    {
         this.botaoTempoSelected = botaoTempoSelected;
     }
 
@@ -263,7 +267,8 @@ public class Controle {
         return botao2xSelected;
     }
 
-    public void setBotao2xSelected(boolean botao2xSelected) {
+    public void setBotao2xSelected(boolean botao2xSelected)
+    {
         this.botao2xSelected = botao2xSelected;
     }
 }

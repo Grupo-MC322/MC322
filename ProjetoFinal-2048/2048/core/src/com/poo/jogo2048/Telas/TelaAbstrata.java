@@ -16,7 +16,8 @@ public abstract class TelaAbstrata extends Stage implements Screen
     }
     
     @Override
-    public void render(float delta){
+    public void render(float delta)
+    {
         // limpar tela
         Gdx.gl.glClearColor(0.32f, 0.41f, 0.42f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -27,7 +28,8 @@ public abstract class TelaAbstrata extends Stage implements Screen
     }
     
     @Override
-    public void resize(int width, int height) {
+    public void resize(int width, int height)
+    {
         getViewport().update(width, height, true);
     }
 

@@ -28,11 +28,13 @@ public class jogo2048 extends Game
         Controle controle = new Controle();
 	}
 
-	public void setTamanhoTabuleiro(int tamanhoTabuleiro) {
+	public void setTamanhoTabuleiro(int tamanhoTabuleiro)
+	{
 		this.tamanhoTabuleiro = tamanhoTabuleiro;
 	}
 
-	public int getTamanhoTabuleiro() {
+	public int getTamanhoTabuleiro()
+	{
 		return tamanhoTabuleiro;
 	}
 

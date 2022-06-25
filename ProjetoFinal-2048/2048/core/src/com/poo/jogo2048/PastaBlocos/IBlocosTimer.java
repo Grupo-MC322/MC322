@@ -1,6 +1,7 @@
 package com.poo.jogo2048.PastaBlocos;
 
-public interface IBlocosTimer extends IBlocos {
+public interface IBlocosTimer extends IBlocos
+{
     public int getVida();
     public void setVida(int mudanca);
     public boolean getAtivo();

@@ -62,7 +62,8 @@ public class TelaConfiguracoes extends TelaAbstrata
     }
 
     @Override
-	public void render(float delta) {
+	public void render(float delta)
+    {
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1);
 
 		camera.update();
@@ -104,8 +105,10 @@ public class TelaConfiguracoes extends TelaAbstrata
         stage.addActor(botaoJogar);
 
         // configurações de input dos botões
-        botao4x4.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botao4x4.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 jogo.setTamanhoTabuleiro(4);
                 
                 txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4.png"));
@@ -115,8 +118,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botao5x5.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botao5x5.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 jogo.setTamanhoTabuleiro(5);
 
                 txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
@@ -126,8 +131,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botao6x6.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botao6x6.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 jogo.setTamanhoTabuleiro(6);
 
                 txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
@@ -137,8 +144,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botao7x7.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botao7x7.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 jogo.setTamanhoTabuleiro(7);
 
                 txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
@@ -148,8 +157,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botaoBomba.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botaoBomba.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 if(controle.getBotaoBombaSelected())
                 {
                     controle.setBotaoBombaSelected(false);
@@ -163,8 +174,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botaoDeleta.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botaoDeleta.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 if(controle.getBotaoDeletaSelected())
                 {
                     controle.setBotaoDeletaSelected(false);
@@ -178,8 +191,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botaoTempo.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botaoTempo.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 if(controle.getBotaoTempoSelected())
                 {
                     controle.setBotaoTempoSelected(false);
@@ -193,8 +208,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             }
         });
 
-        botao2x.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botao2x.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 if(controle.getBotao2xSelected())
                 {
                     controle.setBotao2xSelected(false);
@@ -230,7 +247,8 @@ public class TelaConfiguracoes extends TelaAbstrata
     {
         if(tela.equals("inicial"))
         {
-            botao.addListener(new ClickListener(){
+            botao.addListener(new ClickListener()
+            {
                 public void clicked(InputEvent event, float x, float y) {
                     jogo.setScreen(new TelaInicial(jogo));
                 }
@@ -238,7 +256,8 @@ public class TelaConfiguracoes extends TelaAbstrata
         } 
         else if(tela.equals("jogo"))
         {
-            botao.addListener(new ClickListener(){
+            botao.addListener(new ClickListener()
+            {
                 public void clicked(InputEvent event, float x, float y) {
                     jogo.setScreen(new TelaJogo(jogo));
                 }
@@ -246,7 +265,8 @@ public class TelaConfiguracoes extends TelaAbstrata
         }
         else if(tela.equals("instrucoes"))
         {
-            botao.addListener(new ClickListener(){
+            botao.addListener(new ClickListener()
+            {
                 public void clicked(InputEvent event, float x, float y) {
                     jogo.setScreen(new TelaInstrucoes(jogo));
                 }

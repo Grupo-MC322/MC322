@@ -44,7 +44,8 @@ public class TelaInicial extends TelaAbstrata
     }
 
     @Override
-	public void render(float delta) {
+	public void render(float delta)
+    {
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1);
 
 		camera.update();
@@ -79,20 +80,25 @@ public class TelaInicial extends TelaAbstrata
         jogo.stage.addActor(botaoInstr);
 
         // configurações de input dos botões
-        botaoConfig.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botaoConfig.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 jogo.setScreen(new TelaConfiguracoes(jogo, jogo.controle));
             }
         });
-        botaoInstr.addListener(new ClickListener(){
-            public void clicked(InputEvent event, float x, float y) {
+        botaoInstr.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
                 jogo.setScreen(new TelaInstrucoes(jogo));
             }
         });
     }
 
     @Override
-	public void dispose() {
+	public void dispose()
+    {
 		txtrFundo.dispose();
 		txtrBotaoConfig.dispose();
 		txtrBotaoInstr.dispose();

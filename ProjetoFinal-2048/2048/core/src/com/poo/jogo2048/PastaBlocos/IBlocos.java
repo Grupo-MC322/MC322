@@ -2,7 +2,8 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public interface IBlocos {
+public interface IBlocos
+{
     public Object getId();
     public IBlocos junta();
     public void setJuntado(boolean info);
