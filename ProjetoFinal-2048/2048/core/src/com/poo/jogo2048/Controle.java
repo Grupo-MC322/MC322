@@ -283,8 +283,4 @@ public class Controle
 
 
 
-
-// ver se ja foi juntado ou nn
-
-// pesquisar sobre mvc
 // fazer exceções para entradas, por exemplo, de direção do movimenti
