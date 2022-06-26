@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public interface IBlocos
 {
     public Object getId();
-    public IBlocos junta();
+    public void junta();
     public void setJuntado(boolean info);
     public boolean getJuntado();
 
@@ -17,5 +17,4 @@ public interface IBlocos
     public float getPosY();
     public void setSize(float size);
     public float getSize();
-    public void moveToPosition(float x, float y);
 }

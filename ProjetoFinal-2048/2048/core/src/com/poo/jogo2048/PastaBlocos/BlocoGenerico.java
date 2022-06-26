@@ -2,11 +2,9 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoGenerico extends Actor implements IBlocos
+public class BlocoGenerico implements IBlocos
 {
 	private int id;
     private Image imagem;
@@ -72,9 +70,9 @@ public class BlocoGenerico extends Actor implements IBlocos
         }
     }
 
-    public BlocoGenerico junta()
+    public void junta()
     {
-        return new BlocoGenerico(id * 2);
+        setId(id * 2);
     }
 
     public void setJuntado(boolean info)
@@ -129,9 +127,4 @@ public class BlocoGenerico extends Actor implements IBlocos
     {
         return size;
     }
-
-    public void moveToPosition(float x, float y)
-    {
-		addAction(Actions.moveTo(x, y, .075f));
-	}
 }

@@ -3,10 +3,15 @@ package com.poo.jogo2048;
 import java.util.Objects;
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.poo.jogo2048.PastaBlocos.*;
 
 public class Controle
@@ -52,9 +57,11 @@ public class Controle
             }
             else if (index < 85 && blocoBomba.getAtivo() == false && controle.getBotaoBombaSelected())
             {
-                
                 blocoGerado = blocoBomba;
+                
                 blocoBomba.setAtivo(true);
+                blocoBomba.setCoordX(coordX);
+                blocoBomba.setCoordY(coordY);
             }
             else if (index < 90 && blocoTempo.getAtivo() == false && controle.getBotaoTempoSelected())
             {
@@ -74,7 +81,10 @@ public class Controle
                 spawnBloco(tabuleiro, controle);
             }
             
+            // adicionando o novo bloco ao tabuleiro e animando
             tabuleiro.setBloco(coordX, coordY, blocoGerado);
+            tabuleiro.getBloco(coordX, coordY).getImagem().setScale(.75f);
+			tabuleiro.getBloco(coordX, coordY).getImagem().addAction(Actions.scaleTo(1, 1, .25f));
 		}
 		else
 		{
@@ -124,21 +134,21 @@ public class Controle
 
     private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
     {
+        // animação
+        float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
+        float posicaoYBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * yFim + (400 * 0.01) * yFim));
+        MoveToAction moveBloco = new MoveToAction();
+        moveBloco.setPosition(posicaoXBloco,posicaoYBloco);
+        moveBloco.setDuration(0.25f);
+        moveBloco.setInterpolation(Interpolation.smooth);
+        tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBloco);
+        SequenceAction sequencia = new SequenceAction(moveBloco, Actions.removeActor());
+
         // quando está vazio na frente, livre para continuar se movendo
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
-        {
-            float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
-            float posicaoYBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * yFim + (400 * 0.01) * yFim));
-
-            MoveToAction moveBottomRightAction = new MoveToAction();
-            moveBottomRightAction.setPosition(posicaoXBloco,posicaoYBloco);
-            moveBottomRightAction.setDuration(1);
-            moveBottomRightAction.setInterpolation(Interpolation.smooth);
-    
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBottomRightAction);
-            stage.draw();
-
+        {            
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, tabuleiro, batch, stage);
         }
@@ -146,7 +156,9 @@ public class Controle
         // quando ambos os blocos são iguais e podem se juntar
         else if(Objects.equals(tabuleiro.getId(xFim, yFim), tabuleiro.getId(xIni, yIni)))
         {
-            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
+            tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
+            tabuleiro.getBloco(xFim, yFim).junta();
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
         }
@@ -154,23 +166,31 @@ public class Controle
         // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
         else if(Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xIni, yIni), "deleta"))
         {
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
         }
 
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
         else if(Objects.equals(tabuleiro.getId(xFim, yFim), "2x"))
         {
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
+            tabuleiro.getBloco(xIni, yIni).junta();
+            tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
-            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
             tabuleiro.getBloco(xIni, yIni).setJuntado(true);
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
         else if(Objects.equals(tabuleiro.getId(xIni, yIni), "2x"))
         {
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
-            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
+            tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
+            tabuleiro.getBloco(xFim, yFim).junta();
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
         }
     }
@@ -181,13 +201,49 @@ public class Controle
         {
             blocoBomba.setAtivo(false);
             blocoBomba.setVida(3);
+            tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
             miraVizinhos(tabuleiro, blocoBomba.getCoordX(), blocoBomba.getCoordY());
         }
         if (blocoTempo.getAtivo() && blocoTempo.getVida() == 0)
         {
             blocoTempo.setAtivo(false);
-            blocoTempo.setVida(3);
+            blocoTempo.setVida(4);
+            tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
+        }
+        if (blocoBomba.getAtivo() && blocoBomba.getVida() != 0)
+        {
+            // diminui 1
+            blocoBomba.setVida(-1);
+
+            // setup das imagens para identificação do estado do bloco
+            if(blocoBomba.getVida() == 2){
+                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().remove();
+                blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_2:3.png"))));
+            }
+            else if(blocoBomba.getVida() == 1){
+                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().remove();
+                blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
+            }
+        }
+        if (blocoTempo.getAtivo() && blocoTempo.getVida() != 0)
+        {
+            // diminui 1
+            blocoTempo.setVida(-1);
+
+            // setup das imagens para identificação do estado do bloco
+            if(blocoTempo.getVida() == 3){
+                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().remove();
+                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
+            }
+            if(blocoTempo.getVida() == 2){
+                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().remove();
+                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
+            }
+            else if(blocoTempo.getVida() == 1){
+                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().remove();
+                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_1:4.png"))));
+            }
         }
     }
 
@@ -225,6 +281,8 @@ public class Controle
     {
         if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanho() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanho())
         {
+            SequenceAction sequencia = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
+            tabuleiro.getBloco(xExplosao, yExplosao).getImagem().addAction(sequencia);
             tabuleiro.setBloco(xExplosao, yExplosao, new BlocoGenerico(0));
         }
     }

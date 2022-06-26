@@ -32,25 +32,50 @@ public class TelaJogo extends TelaAbstrata
 		camera.setToOrtho(false, 400, 400);
 
         tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
+
+        for(int i = 0; i < tabuleiro.getTamanho(); i++)
+        {
+            for(int j = 0; j < tabuleiro.getTamanho(); j++)
+            {
+                tabuleiro.getBloco(i, j).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i));
+                tabuleiro.getBloco(i, j).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j));
+                tabuleiro.getBloco(i, j).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+                
+                stage.addActor(tabuleiro.getBloco(i, j).getImagem());
+            }
+        }
+        stage.draw();
+
+        controle.spawnBloco(tabuleiro, controle);
         controle.spawnBloco(tabuleiro, controle);
     }
 
     private void leComando()
     {
-        if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
+        if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A)){
             direcao = 'a';
-        else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
-            direcao = 'd';
-        else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))
-            direcao = 'w';
-        else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S))
-            direcao = 's';
-        else
-        {
-            // System.out.println("Digite um movimento válido no teclado: W, A, S, D ou setas de direção")
-            leComando();
+            iteraTabuleiro();
         }
-        
+            
+        else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D)){
+            direcao = 'd';
+            iteraTabuleiro();
+        }
+            
+        else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)){
+            direcao = 'w';
+            iteraTabuleiro();
+        }
+            
+        else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S)){
+            direcao = 's';
+            iteraTabuleiro();
+        }
+        // else if(Gdx.input.isKeyPressed(key))
+        // {
+        //     // System.out.println("Digite um movimento válido no teclado: W, A, S, D ou setas de direção")
+            
+        // }
     }
 
     @Override
@@ -65,26 +90,25 @@ public class TelaJogo extends TelaAbstrata
         // configurações do batch
 		jogo.batch.begin();
         
-        // desenho inicial do tabuleiro
+        // desenho do tabuleiro
         for(int i = 0; i < tabuleiro.getTamanho(); i++)
         {
-			{
-				for(int j = 0; j < tabuleiro.getTamanho(); j++)
-				{
-					tabuleiro.getBloco(i, j).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i));
-					tabuleiro.getBloco(i, j).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j));
-                    tabuleiro.getBloco(i, j).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
-                    tabuleiro.getBloco(i, j).getImagem().draw(jogo.batch, 1);
+            for(int j = 0; j < tabuleiro.getTamanho(); j++)
+            {
+                tabuleiro.getBloco(i, j).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i));
+                tabuleiro.getBloco(i, j).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j));
+                tabuleiro.getBloco(i, j).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+                
+                if(!Objects.equals(tabuleiro.getId(i, j), 0))
                     stage.addActor(tabuleiro.getBloco(i, j).getImagem());
-				}
-			}
+            }
         }
 
         stage.draw();
         stage.act();
 
-        leComando();        
-        iteraTabuleiro();
+        leComando();
+        
         jogo.batch.end();
 	}
 
@@ -110,7 +134,7 @@ public class TelaJogo extends TelaAbstrata
         }
         else if(direcao == 's')
         {
-            for(int linha = tabuleiro.getTamanho(); linha > 0; linha--)
+            for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
             {
                 for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
                 {
@@ -130,7 +154,7 @@ public class TelaJogo extends TelaAbstrata
         }
         else if(direcao == 'd')
         {
-            for(int coluna = tabuleiro.getTamanho(); coluna > 0; coluna--)
+            for(int coluna = tabuleiro.getTamanho() - 1; coluna >= 0; coluna--)
             {
                 for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
                 {

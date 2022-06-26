@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.poo.jogo2048.jogo2048;
 
@@ -34,8 +36,8 @@ public class TelaInstrucoes extends TelaAbstrata
         moveBottomRightAction.setPosition(X_right,Y_bottom);
         moveBottomRightAction.setDuration(1);
         moveBottomRightAction.setInterpolation(Interpolation.smooth);
-    
-        image1.addAction(moveBottomRightAction);
+        SequenceAction acao =  new SequenceAction(moveBottomRightAction, Actions.removeActor());
+        image1.addAction(acao);
     }
     
     @Override

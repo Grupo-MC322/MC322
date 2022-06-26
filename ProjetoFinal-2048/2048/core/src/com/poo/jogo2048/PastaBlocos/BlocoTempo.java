@@ -2,11 +2,9 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoTempo extends Actor implements IBlocosTimer
+public class BlocoTempo implements IBlocosTimer
 {
     private static IBlocosTimer instance;
     private String id = "tempo";
@@ -78,10 +76,7 @@ public class BlocoTempo extends Actor implements IBlocosTimer
         ativo = info;
     }
 
-    public IBlocos junta()
-    {
-        return instance;
-    }
+    public void junta() {}
 
     public void setJuntado(boolean info)
     {
@@ -96,6 +91,11 @@ public class BlocoTempo extends Actor implements IBlocosTimer
     public Image getImagem()
     {
         return imagem;
+    }
+
+    public void setImagem(Image imagem)
+    {
+        this.imagem = imagem;
     }
 
     public void setPosX(float posX)
@@ -131,9 +131,4 @@ public class BlocoTempo extends Actor implements IBlocosTimer
     {
         return size;
     }
-
-    public void moveToPosition(float x, float y)
-    {
-		addAction(Actions.moveTo(x, y, .075f));
-	}
 }

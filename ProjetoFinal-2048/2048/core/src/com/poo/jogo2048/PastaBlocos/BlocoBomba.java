@@ -1,18 +1,13 @@
 package com.poo.jogo2048.PastaBlocos;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import java.lang.Math;
-
-public class BlocoBomba extends Actor implements IBlocosTimer
+public class BlocoBomba implements IBlocosTimer
 {
     private static IBlocosTimer instance;
-    private int id;
+    private String id = "bomba";
     private int vida = 3;
     private int coordX;
     private int coordY;
@@ -22,7 +17,7 @@ public class BlocoBomba extends Actor implements IBlocosTimer
     private float posY;
     private float size;
 
-    private Image imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba.png")));
+    private Image imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_1:3.png")));
     
     private BlocoBomba()
     {}
@@ -39,12 +34,6 @@ public class BlocoBomba extends Actor implements IBlocosTimer
     public Object getId()
     {
         return id;
-    }
-
-    public void setId()
-    {
-        Random geraId = new Random();
-        id = (int) Math.pow(2, geraId.nextInt(5));
     }
 
     public int getVida()
@@ -67,10 +56,7 @@ public class BlocoBomba extends Actor implements IBlocosTimer
         ativo = info;
     }
 
-    public IBlocos junta()
-    {
-        return instance;
-    }
+    public void junta() {}
 
     public int getCoordX()
     {
@@ -145,9 +131,4 @@ public class BlocoBomba extends Actor implements IBlocosTimer
     {
         return size;
     }
-
-    public void moveToPosition(float x, float y)
-    {
-		addAction(Actions.moveTo(x, y, .075f));
-	}
 }
