@@ -1,5 +1,7 @@
 package com.poo.jogo2048.Telas;
 
+import java.util.Objects;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -8,6 +10,9 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.Controle;
 import com.poo.jogo2048.Tabuleiro;
 import com.poo.jogo2048.jogo2048;
+import com.poo.jogo2048.PastaBlocos.BlocoBomba;
+import com.poo.jogo2048.PastaBlocos.BlocoTempo;
+import com.poo.jogo2048.PastaBlocos.IBlocosTimer;
 
 public class TelaJogo extends TelaAbstrata
 {
@@ -15,6 +20,7 @@ public class TelaJogo extends TelaAbstrata
     Tabuleiro tabuleiro;
     Controle controle;
     Stage stage;
+    private char direcao;
 
     OrthographicCamera camera;
 
@@ -64,29 +70,71 @@ public class TelaJogo extends TelaAbstrata
 
         // configuração dos inputs das teclas de comando
         if(Gdx.input.isKeyJustPressed(Keys.LEFT))
-            jogada('a');
-
+            direcao = 'a';
         else if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
-            jogada('d');
-
+            direcao = 'd';
         else if(Gdx.input.isKeyJustPressed(Keys.UP))
-            jogada('w');
-        
+            direcao = 'w';
         else if(Gdx.input.isKeyJustPressed(Keys.DOWN))
-            jogada('s');
+            direcao = 's';
         
+        iteraTabuleiro();
         jogo.batch.end();
 	}
 
-    public void jogada(char direcao)
-	{
-		for(int i = 0; i < tabuleiro.getTamanho(); i++)
+    private void jogada(int linha, int coluna)
+    {
+        if(!Objects.equals(tabuleiro.getId(linha, coluna), 0) && tabuleiro.getBloco(linha, coluna).getJuntado() == false)
         {
-            for(int j = 0; j < tabuleiro.getTamanho(); j++)
+            controle.realizaComando(direcao, linha, coluna, tabuleiro, jogo.batch, stage);
+        }
+    }
+
+    private void iteraTabuleiro()
+	{
+		if(direcao == 'w')
+        {
+            for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
             {
-				controle.realizaComando(direcao, i, j, tabuleiro, jogo.batch, stage);
+                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                {
+                    jogada(linha, coluna);
+                }
             }
         }
+        else if(direcao == 's')
+        {
+            for(int linha = tabuleiro.getTamanho(); linha > 0; linha--)
+            {
+                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                {
+                    jogada(linha, coluna);
+                }
+            }
+        }
+        else if(direcao == 'a')
+        {
+            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            {
+                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+                {
+                    jogada(linha, coluna);
+                }
+            }
+        }
+        else if(direcao == 'd')
+        {
+            for(int coluna = tabuleiro.getTamanho(); coluna > 0; coluna--)
+            {
+                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+                {
+                    jogada(linha, coluna);
+                }
+            }
+        }
+        
+        controle.atualizaVidas(tabuleiro);
+        controle.zeraTabuleiro(tabuleiro);
         controle.spawnBloco(tabuleiro, controle);
 	}
 

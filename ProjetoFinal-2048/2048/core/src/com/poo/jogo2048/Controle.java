@@ -127,11 +127,6 @@ public class Controle
         // quando está vazio na frente, livre para continuar se movendo
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
         {
-            if(Objects.equals(tabuleiro.getId(xIni, yIni), "tempo"))
-            {
-                ((BlocoTempo) tabuleiro.getBloco(xIni, yIni)).setCoordX(xFim);
-                ((BlocoTempo) tabuleiro.getBloco(xIni, yIni)).setCoordY(yFim);
-            }
             float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
             float posicaoYBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * yFim + (400 * 0.01) * yFim));
 
@@ -142,8 +137,8 @@ public class Controle
     
             tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBottomRightAction);
             stage.draw();
+
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-            
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, tabuleiro, batch, stage);
         }
@@ -153,28 +148,30 @@ public class Controle
         {
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.getBloco(xFim, yFim).setJuntado(true);
         }
 
-        // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial, não sendo o outro bloco vazio
-        else if((Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") && !Objects.equals(tabuleiro.getId(xIni, yIni), 0)) 
-        || (Objects.equals(tabuleiro.getId(xIni, yIni), "deleta") && !Objects.equals(tabuleiro.getId(xFim, yFim), 0)))
+        // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
+        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xIni, yIni), "deleta"))
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
         }
 
-        // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro, não sendo o outro vazio
-        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "2x") && !Objects.equals(tabuleiro.getId(xIni, yIni), 0))
+        // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
+        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "2x"))
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni).junta());
+            tabuleiro.getBloco(xIni, yIni).setJuntado(true);
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(Objects.equals(tabuleiro.getId(xIni, yIni), "2x") && !Objects.equals(tabuleiro.getId(xFim, yFim), 0))
+        else if(Objects.equals(tabuleiro.getId(xIni, yIni), "2x"))
         {
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xFim, yFim).junta());
+            tabuleiro.getBloco(xFim, yFim).setJuntado(true);
         }
     }
 
@@ -232,6 +229,17 @@ public class Controle
         }
     }
 
+    public void zeraTabuleiro(Tabuleiro tabuleiro)
+    {
+        for(int i = 0; i < tabuleiro.getTamanho(); i++)
+        {
+            for(int j = 0; j < tabuleiro.getTamanho(); j++)
+            {
+                tabuleiro.getBloco(i, j).setJuntado(false);
+            }
+        }
+    }
+
     public boolean getBotaoBombaSelected()
     {
         return botaoBombaSelected;
@@ -276,5 +284,7 @@ public class Controle
 
 
 
-// entrar na função(de movimentar cada bloco) com a direção oposta ao que foi jogado
-// soh dps de todas as celulas rodadas, ver se a bomba explode ou o bloco some
+// ver se ja foi juntado ou nn
+
+// pesquisar sobre mvc
+// fazer exceções para entradas, por exemplo, de direção do movimenti
