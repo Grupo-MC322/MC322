@@ -35,6 +35,24 @@ public class TelaJogo extends TelaAbstrata
         controle.spawnBloco(tabuleiro, controle);
     }
 
+    private void leComando()
+    {
+        if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
+            direcao = 'a';
+        else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
+            direcao = 'd';
+        else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))
+            direcao = 'w';
+        else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S))
+            direcao = 's';
+        else
+        {
+            // System.out.println("Digite um movimento válido no teclado: W, A, S, D ou setas de direção")
+            leComando();
+        }
+        
+    }
+
     @Override
 	public void render(float delta)
     {
@@ -65,16 +83,7 @@ public class TelaJogo extends TelaAbstrata
         stage.draw();
         stage.act();
 
-        // configuração dos inputs das teclas de comando
-        if(Gdx.input.isKeyJustPressed(Keys.LEFT))
-            direcao = 'a';
-        else if(Gdx.input.isKeyJustPressed(Keys.RIGHT))
-            direcao = 'd';
-        else if(Gdx.input.isKeyJustPressed(Keys.UP))
-            direcao = 'w';
-        else if(Gdx.input.isKeyJustPressed(Keys.DOWN))
-            direcao = 's';
-        
+        leComando();        
         iteraTabuleiro();
         jogo.batch.end();
 	}
