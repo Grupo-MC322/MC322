@@ -24,8 +24,6 @@ public class jogo2048 extends Game
 		Gdx.input.setInputProcessor(stage);
 		
 		this.setScreen(new TelaInicial(this));
-
-        Controle controle = new Controle();
 	}
 
 	public void setTamanhoTabuleiro(int tamanhoTabuleiro)

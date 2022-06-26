@@ -12,7 +12,6 @@ import com.poo.jogo2048.jogo2048;
 
 public class TelaInstrucoes extends TelaAbstrata
 {
-    private Texture txtrFundo;
     OrthographicCamera camera;
     Stage stage;
 

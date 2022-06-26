@@ -10,9 +10,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.Controle;
 import com.poo.jogo2048.Tabuleiro;
 import com.poo.jogo2048.jogo2048;
-import com.poo.jogo2048.PastaBlocos.BlocoBomba;
-import com.poo.jogo2048.PastaBlocos.BlocoTempo;
-import com.poo.jogo2048.PastaBlocos.IBlocosTimer;
 
 public class TelaJogo extends TelaAbstrata
 {
