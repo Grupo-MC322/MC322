@@ -284,7 +284,6 @@ public class Controle
     {
         if (blocoBomba.getAtivo())
         {
-            Gdx.app.log("bomba", "tem vida maior que 0");
             // diminui 1
             blocoBomba.setVida(-1);
             tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
@@ -292,20 +291,15 @@ public class Controle
             // setup das imagens para identificação do estado do bloco
             if(blocoBomba.getVida() == 2)
             {
-                Gdx.app.log("bomba", "tem vida == 2");
-                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_2:3.png"))));
             }
             else if(blocoBomba.getVida() == 1)
             {
-                Gdx.app.log("bomba", "tem vida == 1");
-                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
             }
         }
         if (blocoTempo.getAtivo())
         {
-            Gdx.app.log("tempo", "tem vida maior que 0");
             // diminui 1
             blocoTempo.setVida(-1);
             tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
@@ -313,78 +307,68 @@ public class Controle
             // setup das imagens para identificação do estado do bloco
             if(blocoTempo.getVida() == 3)
             {
-                Gdx.app.log("tempo", "tem vida == 3, pos:"+blocoTempo.getCoordX()+blocoTempo.getCoordY());
-                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
             }
             else if(blocoTempo.getVida() == 2)
             {
-                Gdx.app.log("tempo", "tem vida == 2 pos:"+blocoTempo.getCoordX()+blocoTempo.getCoordY());
-                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
             }
             else if(blocoTempo.getVida() == 1)
             {
-                Gdx.app.log("tempo", "tem vida == 1 pos"+blocoTempo.getCoordX()+blocoTempo.getCoordY());
-                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_1:4.png"))));
             }
         }
         if(blocoBomba.getVida() == 0)
         {
-            Gdx.app.log("bomba", "zerou");
             algoMudou = true;
             blocoBomba.reset();
-            tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
             miraVizinhos(blocoBomba.getCoordX(), blocoBomba.getCoordY());
         }
         if (blocoTempo.getVida() == 0)
         {
-            Gdx.app.log("tempo", "zerou");
             algoMudou = true;
             blocoTempo.reset();
-            tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
         }
     }
 
-    private void miraVizinhos(int xExplosao, int yExplosao)
+    private void miraVizinhos(int linha, int coluna)
     {
-        explode(xExplosao, yExplosao);
+        explode(linha, coluna);
 
-        xExplosao--;
-        yExplosao--;
-        explode(xExplosao, yExplosao);
+        linha--;
+        coluna--;
+        explode(linha, coluna);
         
-        xExplosao++;
-        explode(xExplosao, yExplosao);
+        linha++;
+        explode(linha, coluna);
 
-        xExplosao++;
-        explode(xExplosao, yExplosao);
+        linha++;
+        explode(linha, coluna);
 
-        yExplosao++;
-        explode(xExplosao, yExplosao);
+        coluna++;
+        explode(linha, coluna);
 
-        yExplosao++;
-        explode(xExplosao, yExplosao);
+        coluna++;
+        explode(linha, coluna);
 
-        xExplosao--;
-        explode(xExplosao, yExplosao);
+        linha--;
+        explode(linha, coluna);
 
-        xExplosao--;
-        explode(xExplosao, yExplosao);
+        linha--;
+        explode(linha, coluna);
 
-        yExplosao--;
-        explode(xExplosao, yExplosao);
+        coluna--;
+        explode(linha, coluna);
     }
 
-    private void explode(int xExplosao, int yExplosao)
+    private void explode(int linha, int coluna)
     {
-        if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanho() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanho())
+        if(linha >= 0 && linha < tabuleiro.getTamanho() && coluna >= 0 && coluna < tabuleiro.getTamanho())
         {
             SequenceAction animaExplosao = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
-            tabuleiro.getBloco(xExplosao, yExplosao).getImagem().addAction(animaExplosao);
-            tabuleiro.setBloco(xExplosao, yExplosao, new BlocoGenerico(0));
+            tabuleiro.getBloco(linha, coluna).getImagem().addAction(animaExplosao);
+            tabuleiro.setBloco(linha, coluna, new BlocoGenerico(0));
         }
     }
 
