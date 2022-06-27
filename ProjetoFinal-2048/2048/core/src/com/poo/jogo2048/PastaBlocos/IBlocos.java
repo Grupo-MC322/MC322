@@ -1,6 +1,5 @@
 package com.poo.jogo2048.PastaBlocos;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public interface IBlocos
@@ -10,7 +9,6 @@ public interface IBlocos
     public void setJuntado(boolean info);
     public boolean getJuntado();
 
-    public Texture getTextura();
     public Image getImagem();
 
     public void setPosX(float posX);

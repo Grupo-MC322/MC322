@@ -117,9 +117,9 @@ public class Controle
 
 		if(direcao == 'w')
         {
-            for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+            for(int coluna = tabuleiro.getTamanho() - 1; coluna >= 0; coluna--)
             {
-                for(int coluna = tabuleiro.getTamanho() - 1; coluna >= 0; coluna--)
+                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
                 {
                     jogada(linha, coluna, direcao);
                 }
@@ -127,9 +127,9 @@ public class Controle
         }
         else if(direcao == 's')
         {
-            for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
+            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
             {
-                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
                 {
                     jogada(linha, coluna, direcao);
                 }
@@ -137,9 +137,9 @@ public class Controle
         }
         else if(direcao == 'a')
         {
-            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
             {
-                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
                 {
                     jogada(linha, coluna, direcao);
                 }
