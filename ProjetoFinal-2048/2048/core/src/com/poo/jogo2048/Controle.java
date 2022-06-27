@@ -42,6 +42,7 @@ public class Controle
         blocoTempo = BlocoTempo.getInstance();
     }
 
+    /* Adiciona um bloco entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro. */
     public void spawnBloco()
     {
         IBlocos blocoGerado = new BlocoGenerico(0);
@@ -49,6 +50,7 @@ public class Controle
         int coordX = random.nextInt(tabuleiro.getTamanho());
 		int coordY = random.nextInt(tabuleiro.getTamanho());
 
+        // definição das probabilidades de cada bloco ser adicionado
 		if (Objects.equals(tabuleiro.getId(coordX, coordY), 0))
 		{
 			int index = random.nextInt(100);
@@ -101,7 +103,7 @@ public class Controle
 		}
     }
 
-    public void iteraTabuleiro(char direcao)
+    public void realizaComando(char direcao)
 	{
 		if(direcao == 'w')
         {
@@ -145,7 +147,7 @@ public class Controle
         }
         
         atualizaVidas(tabuleiro);
-        zeraTabuleiro(tabuleiro);
+        percorreTabuleiro(tabuleiro);
         spawnBloco();
 	}
 
@@ -197,23 +199,24 @@ public class Controle
         }
     }
 
+    /* Realiza a movimentação de um bloco de uma posição inicial indicada para a posição final definida. */
     private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
     {
         // animação
         float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
         float posicaoYBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * yFim + (400 * 0.01) * yFim));
-        MoveToAction moveBloco = new MoveToAction();
-        moveBloco.setPosition(posicaoXBloco,posicaoYBloco);
-        moveBloco.setDuration(0.25f);
-        moveBloco.setInterpolation(Interpolation.smooth);
-        tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBloco);
-        SequenceAction sequencia = new SequenceAction(moveBloco, Actions.removeActor());
+        MoveToAction juntaBloco = new MoveToAction();
+        juntaBloco.setPosition(posicaoXBloco,posicaoYBloco);
+        juntaBloco.setDuration(0.25f);
+        juntaBloco.setInterpolation(Interpolation.smooth);
+        tabuleiro.getBloco(xIni, yIni).getImagem().addAction(juntaBloco);
+        SequenceAction animaExplosao = new SequenceAction(juntaBloco, Actions.removeActor());
 
         // quando está vazio na frente, livre para continuar se movendo
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
         {            
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBloco);
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(juntaBloco);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, tabuleiro, batch, stage);
         }
@@ -223,7 +226,7 @@ public class Controle
         {
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.getBloco(xFim, yFim).junta();
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaExplosao);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
         }
@@ -231,7 +234,7 @@ public class Controle
         // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
         else if(Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xIni, yIni), "deleta"))
         {
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaExplosao);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
@@ -240,7 +243,7 @@ public class Controle
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
         else if(Objects.equals(tabuleiro.getId(xFim, yFim), "2x"))
         {
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaExplosao);
             tabuleiro.getBloco(xIni, yIni).junta();
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
@@ -252,7 +255,7 @@ public class Controle
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
         else if(Objects.equals(tabuleiro.getId(xIni, yIni), "2x"))
         {
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(sequencia);
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaExplosao);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.getBloco(xFim, yFim).junta();
@@ -346,13 +349,14 @@ public class Controle
     {
         if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanho() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanho())
         {
-            SequenceAction sequencia = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
-            tabuleiro.getBloco(xExplosao, yExplosao).getImagem().addAction(sequencia);
+            SequenceAction animaExplosao = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
+            tabuleiro.getBloco(xExplosao, yExplosao).getImagem().addAction(animaExplosao);
             tabuleiro.setBloco(xExplosao, yExplosao, new BlocoGenerico(0));
         }
     }
 
-    public void zeraTabuleiro(Tabuleiro tabuleiro)
+    // mudar a funcao pra nova
+    public void percorreTabuleiro(Tabuleiro tabuleiro)
     {
         for(int i = 0; i < tabuleiro.getTamanho(); i++)
         {

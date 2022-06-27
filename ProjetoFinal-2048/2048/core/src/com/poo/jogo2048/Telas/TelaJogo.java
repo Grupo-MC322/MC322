@@ -60,22 +60,22 @@ public class TelaJogo extends TelaAbstrata
     {
         if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A)){
             direcao = 'a';
-            controle.iteraTabuleiro(direcao);
+            controle.realizaComando(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D)){
             direcao = 'd';
-            controle.iteraTabuleiro(direcao);
+            controle.realizaComando(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)){
             direcao = 'w';
-            controle.iteraTabuleiro(direcao);
+            controle.realizaComando(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S)){
             direcao = 's';
-            controle.iteraTabuleiro(direcao);
+            controle.realizaComando(direcao);
         }
         // else if(Gdx.input.isKeyPressed(key))
         // {
