@@ -84,14 +84,14 @@ public class TelaInicial extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setScreen(new TelaConfiguracoes(jogo, jogo.controle));
+                jogo.setScreen(new TelaConfiguracoes(jogo));
             }
         });
         botaoInstr.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setScreen(new TelaInstrucoes(jogo));
+                jogo.setScreen(new TelaGanhou(jogo));
             }
         });
     }

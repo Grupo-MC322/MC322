@@ -11,19 +11,36 @@ public class jogo2048 extends Game
 {
 	public SpriteBatch batch;
 	public Stage stage;
+	private Tabuleiro tabuleiro;
 	private int tamanhoTabuleiro = 4;
-	public Controle controle;
+	private Controle controle;
 
 	@Override
 	public void create()
 	{
 		batch = new SpriteBatch();
 		stage = new Stage();
-		controle = new Controle();
+		controle = new Controle(this);
 
 		Gdx.input.setInputProcessor(stage);
 		
 		this.setScreen(new TelaInicial(this));
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public Tabuleiro getTabuleiro() {
+		return tabuleiro;
+	}
+
+	public void setTabuleiro(Tabuleiro tabuleiro) {
+		this.tabuleiro = tabuleiro;
 	}
 
 	public void setTamanhoTabuleiro(int tamanhoTabuleiro)
@@ -34,6 +51,10 @@ public class jogo2048 extends Game
 	public int getTamanhoTabuleiro()
 	{
 		return tamanhoTabuleiro;
+	}
+
+	public Controle getControle() {
+		return controle;
 	}
 
 	

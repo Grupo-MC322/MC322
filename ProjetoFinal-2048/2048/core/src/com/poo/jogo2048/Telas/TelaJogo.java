@@ -26,13 +26,16 @@ public class TelaJogo extends TelaAbstrata
         stage = new Stage();
 
         this.jogo = jogo;
-        this.controle = jogo.controle;
+        this.controle = jogo.getControle();
 
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 400, 400);
 
         tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
+        jogo.setTabuleiro(tabuleiro);
+        controle.setTabuleiro(tabuleiro);
 
+        // desenho inicial do tabuleiro vazio
         for(int i = 0; i < tabuleiro.getTamanho(); i++)
         {
             for(int j = 0; j < tabuleiro.getTamanho(); j++)
@@ -46,30 +49,30 @@ public class TelaJogo extends TelaAbstrata
         }
         stage.draw();
 
-        controle.spawnBloco(tabuleiro, controle);
-        controle.spawnBloco(tabuleiro, controle);
+        controle.spawnBloco();
+        controle.spawnBloco();
     }
 
     private void leComando()
     {
         if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A)){
             direcao = 'a';
-            iteraTabuleiro();
+            controle.iteraTabuleiro(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D)){
             direcao = 'd';
-            iteraTabuleiro();
+            controle.iteraTabuleiro(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)){
             direcao = 'w';
-            iteraTabuleiro();
+            controle.iteraTabuleiro(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S)){
             direcao = 's';
-            iteraTabuleiro();
+            controle.iteraTabuleiro(direcao);
         }
         // else if(Gdx.input.isKeyPressed(key))
         // {
@@ -110,67 +113,5 @@ public class TelaJogo extends TelaAbstrata
         leComando();
         
         jogo.batch.end();
-	}
-
-    private void jogada(int linha, int coluna)
-    {
-        if(!Objects.equals(tabuleiro.getId(linha, coluna), 0) && tabuleiro.getBloco(linha, coluna).getJuntado() == false)
-        {
-            controle.realizaComando(direcao, linha, coluna, tabuleiro, jogo.batch, stage);
-        }
-    }
-
-    private void iteraTabuleiro()
-	{
-		if(direcao == 'w')
-        {
-            for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
-            {
-                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
-                {
-                    jogada(linha, coluna);
-                }
-            }
-        }
-        else if(direcao == 's')
-        {
-            for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
-            {
-                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
-                {
-                    jogada(linha, coluna);
-                }
-            }
-        }
-        else if(direcao == 'a')
-        {
-            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
-            {
-                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
-                {
-                    jogada(linha, coluna);
-                }
-            }
-        }
-        else if(direcao == 'd')
-        {
-            for(int coluna = tabuleiro.getTamanho() - 1; coluna >= 0; coluna--)
-            {
-                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
-                {
-                    jogada(linha, coluna);
-                }
-            }
-        }
-        
-        controle.atualizaVidas(tabuleiro);
-        controle.zeraTabuleiro(tabuleiro);
-        controle.spawnBloco(tabuleiro, controle);
-	}
-
-    @Override
-	public void dispose()
-    {
-		// FAZER
 	}
 }

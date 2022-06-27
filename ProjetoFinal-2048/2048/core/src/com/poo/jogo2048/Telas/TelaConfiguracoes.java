@@ -30,10 +30,10 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtr2x;
     private Texture txtrJogar;
 
-    public TelaConfiguracoes(final jogo2048 jogo, Controle controle)
+    public TelaConfiguracoes(final jogo2048 jogo)
     {
         this.jogo = jogo;
-        this.controle = controle;
+        this.controle = jogo.getControle();
 
         // configurações de camera
         camera = new OrthographicCamera();

@@ -16,6 +16,11 @@ import com.poo.jogo2048.PastaBlocos.*;
 
 public class Controle
 {
+    final jogo2048 jogo;
+    private Tabuleiro tabuleiro;
+    private SpriteBatch batch;
+    private Stage stage;
+
     private boolean botaoBombaSelected;
     private boolean botaoDeletaSelected;
     private boolean botaoTempoSelected;
@@ -27,13 +32,17 @@ public class Controle
     private int xFim = 0;
     private int yFim = 0;
     
-    public Controle()
+    public Controle(final jogo2048 jogo)
     {
+        this.jogo = jogo;
+        this.batch = jogo.getBatch();
+        this.stage = jogo.getStage();
+        
         blocoBomba = BlocoBomba.getInstance();
         blocoTempo = BlocoTempo.getInstance();
     }
 
-    public void spawnBloco(Tabuleiro tabuleiro, Controle controle)
+    public void spawnBloco()
     {
         IBlocos blocoGerado = new BlocoGenerico(0);
         Random random = new Random();
@@ -55,7 +64,7 @@ public class Controle
             {
                 blocoGerado = new BlocoGenerico(4);
             }
-            else if (index < 85 && blocoBomba.getAtivo() == false && controle.getBotaoBombaSelected())
+            else if (index < 85 && blocoBomba.getAtivo() == false && getBotaoBombaSelected())
             {
                 blocoGerado = blocoBomba;
                 
@@ -63,22 +72,22 @@ public class Controle
                 blocoBomba.setCoordX(coordX);
                 blocoBomba.setCoordY(coordY);
             }
-            else if (index < 90 && blocoTempo.getAtivo() == false && controle.getBotaoTempoSelected())
+            else if (index < 90 && blocoTempo.getAtivo() == false && getBotaoTempoSelected())
             {
                 blocoGerado = blocoTempo;
                 blocoTempo.setAtivo(true);
             }
-            else if (index < 95 && controle.getBotaoDeletaSelected())
+            else if (index < 95 && getBotaoDeletaSelected())
             {
                 blocoGerado = new BlocoDeleta();
             }
-            else if (index < 100 && controle.getBotao2xSelected())
+            else if (index < 100 && getBotao2xSelected())
             {
                 blocoGerado = new BlocoDobro();
             }
             else
             {
-                spawnBloco(tabuleiro, controle);
+                spawnBloco();
             }
             
             // adicionando o novo bloco ao tabuleiro e animando
@@ -88,8 +97,64 @@ public class Controle
 		}
 		else
 		{
-			spawnBloco(tabuleiro, controle);
+			spawnBloco();
 		}
+    }
+
+    public void iteraTabuleiro(char direcao)
+	{
+		if(direcao == 'w')
+        {
+            for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+            {
+                for(int coluna = tabuleiro.getTamanho() - 1; coluna >= 0; coluna--)
+                {
+                    jogada(linha, coluna, direcao);
+                }
+            }
+        }
+        else if(direcao == 's')
+        {
+            for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
+            {
+                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                {
+                    jogada(linha, coluna, direcao);
+                }
+            }
+        }
+        else if(direcao == 'a')
+        {
+            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            {
+                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+                {
+                    jogada(linha, coluna, direcao);
+                }
+            }
+        }
+        else if(direcao == 'd')
+        {
+            for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
+            {
+                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                {
+                    jogada(linha, coluna, direcao);
+                }
+            }
+        }
+        
+        atualizaVidas(tabuleiro);
+        zeraTabuleiro(tabuleiro);
+        spawnBloco();
+	}
+
+    private void jogada(int linha, int coluna, char direcao)
+    {
+        if(!Objects.equals(tabuleiro.getId(linha, coluna), 0) && tabuleiro.getBloco(linha, coluna).getJuntado() == false)
+        {
+            realizaComando(direcao, linha, coluna, tabuleiro, batch, stage);
+        }
     }
     
     public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
@@ -148,7 +213,7 @@ public class Controle
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
         {            
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(Actions.removeActor());
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(moveBloco);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, tabuleiro, batch, stage);
         }
@@ -336,6 +401,10 @@ public class Controle
     public void setBotao2xSelected(boolean botao2xSelected)
     {
         this.botao2xSelected = botao2xSelected;
+    }
+
+    public void setTabuleiro(Tabuleiro tabuleiro) {
+        this.tabuleiro = tabuleiro;
     }
 }
 
