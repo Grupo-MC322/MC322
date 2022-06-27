@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.poo.jogo2048.PastaBlocos.*;
+import com.poo.jogo2048.Telas.TelaGanhou;
+import com.poo.jogo2048.Telas.TelaPerdeu;
 
 public class Controle
 {
@@ -31,6 +33,9 @@ public class Controle
 
     private int xFim = 0;
     private int yFim = 0;
+
+    private boolean vazioInexistente;
+    private boolean algoMudou;
     
     public Controle(final jogo2048 jogo)
     {
@@ -148,7 +153,11 @@ public class Controle
         
         atualizaVidas();
         percorreTabuleiro();
-        spawnBloco();
+        if(algoMudou)
+        {
+            spawnBloco();
+            algoMudou = false;
+        }
 	}
 
     private void jogada(int linha, int coluna, char direcao)
@@ -219,6 +228,7 @@ public class Controle
             tabuleiro.getBloco(xIni, yIni).getImagem().addAction(juntaBloco);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, batch, stage);
+            algoMudou = true;
         }
 
         // quando ambos os blocos são iguais e podem se juntar
@@ -229,6 +239,7 @@ public class Controle
             tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaExplosao);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
+            algoMudou = true;
         }
 
         // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
@@ -238,6 +249,7 @@ public class Controle
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
+            algoMudou = true;
         }
 
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
@@ -250,6 +262,7 @@ public class Controle
             tabuleiro.getBloco(xIni, yIni).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xIni, yIni).setJuntado(true);
+            algoMudou = true;
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
@@ -260,6 +273,7 @@ public class Controle
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.getBloco(xFim, yFim).junta();
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
+            algoMudou = true;
         }
     }
 
@@ -267,6 +281,7 @@ public class Controle
     {
         if(blocoBomba.getAtivo() && blocoBomba.getVida() == 0)
         {
+            algoMudou = true;
             blocoBomba.setAtivo(false);
             blocoBomba.setVida(3);
             tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
@@ -274,12 +289,13 @@ public class Controle
         }
         if (blocoTempo.getAtivo() && blocoTempo.getVida() == 0)
         {
+            algoMudou = true;
             blocoTempo.setAtivo(false);
             blocoTempo.setVida(4);
             tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
         }
-        if (blocoBomba.getAtivo() && blocoBomba.getVida() != 0)
+        if (blocoBomba.getAtivo() && blocoBomba.getVida() > 0)
         {
             // diminui 1
             blocoBomba.setVida(-1);
@@ -294,7 +310,7 @@ public class Controle
                 blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
             }
         }
-        if (blocoTempo.getAtivo() && blocoTempo.getVida() != 0)
+        if (blocoTempo.getAtivo() && blocoTempo.getVida() > 0)
         {
             // diminui 1
             blocoTempo.setVida(-1);
@@ -355,15 +371,27 @@ public class Controle
         }
     }
 
-    // mudar a funcao pra nova
     public void percorreTabuleiro()
     {
+        vazioInexistente = true;
         for(int i = 0; i < tabuleiro.getTamanho(); i++)
         {
             for(int j = 0; j < tabuleiro.getTamanho(); j++)
             {
+                if(Objects.equals(tabuleiro.getId(i, j), 2048))
+                {
+                    jogo.setScreen(new TelaGanhou(jogo));
+                }
+                else if(Objects.equals(tabuleiro.getId(i, j), 0))
+                {
+                    vazioInexistente = false;
+                }
                 tabuleiro.getBloco(i, j).setJuntado(false);
             }
+        }
+        if(vazioInexistente)
+        {
+            jogo.setScreen(new TelaPerdeu(jogo));
         }
     }
 
