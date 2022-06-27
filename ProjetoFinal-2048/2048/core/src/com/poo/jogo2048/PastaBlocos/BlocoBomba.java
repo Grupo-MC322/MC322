@@ -131,4 +131,11 @@ public class BlocoBomba implements IBlocosTimer
     {
         return size;
     }
+
+    public void reset()
+    {
+        setVida(3);
+        setAtivo(false);
+        imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba.png")));
+    }
 }

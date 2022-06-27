@@ -8,7 +8,7 @@ public class BlocoTempo implements IBlocosTimer
 {
     private static IBlocosTimer instance;
     private String id = "tempo";
-    private int vida = 3;
+    private int vida = 4;
     private int coordX;
     private int coordY;
     private boolean ativo = false;
@@ -43,7 +43,7 @@ public class BlocoTempo implements IBlocosTimer
 
     public void setVida(int mudanca)
     {
-        vida += mudanca;
+        vida = vida + mudanca;
     }
 
     public int getCoordX()
@@ -130,5 +130,12 @@ public class BlocoTempo implements IBlocosTimer
     public float getSize()
     {
         return size;
+    }
+
+    public void reset()
+    {
+        vida = 4;
+        ativo = false;
+        imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo.png")));
     }
 }

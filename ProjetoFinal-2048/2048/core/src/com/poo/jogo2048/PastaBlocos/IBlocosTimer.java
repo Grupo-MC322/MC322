@@ -13,4 +13,5 @@ public interface IBlocosTimer extends IBlocos
     public int getCoordY();
     public void setCoordY(int y);
     public void setImagem(Image imagem);
+    public void reset();
 }
