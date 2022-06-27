@@ -8,7 +8,8 @@ public class BlocoDobro implements IBlocos
 {
     private String id = "2x";
     private boolean juntado = false;
-    private Image imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_2x.png")));
+    Texture textura = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
+    private Image imagem = new Image(textura);
     private float posX;
     private float posY;
     private float size;
@@ -28,6 +29,14 @@ public class BlocoDobro implements IBlocos
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public Texture getTextura() {
+        return textura;
+    }
+
+    public void setTextura(Texture textura) {
+        this.textura = textura;
     }
 
     public Image getImagem()

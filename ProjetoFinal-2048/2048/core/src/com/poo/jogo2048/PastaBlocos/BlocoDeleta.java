@@ -8,7 +8,8 @@ public class BlocoDeleta implements IBlocos
 {
     private String id = "deleta";
     private boolean juntado = false;
-    private Image imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_deleta.png")));
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+    private Image imagem = new Image(textura);
     private float posX;
     private float posY;
     private float size;
@@ -28,6 +29,10 @@ public class BlocoDeleta implements IBlocos
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public Texture getTextura() {
+        return textura;
     }
 
     public Image getImagem()

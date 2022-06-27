@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class BlocoGenerico implements IBlocos
 {
 	private int id;
+    private Texture textura;
     private Image imagem;
     private boolean juntado = false;
     private float posX;
@@ -29,13 +30,16 @@ public class BlocoGenerico implements IBlocos
         switch(id)
         {
             case 0:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocos/vazio.png"))));
+                textura = new Texture(Gdx.files.internal("blocos/vazio.png"));
+                setImagem(new Image(textura));
                 break;
             case 1:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocos/1.png"))));
+                textura = new Texture(Gdx.files.internal("blocos/1.png"));
+                setImagem(new Image(textura));
                 break;
             case 2:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocos/2.png"))));
+                textura = new Texture(Gdx.files.internal("blocos/2.png"));
+                setImagem(new Image(textura));
                 break;
             case 4:
                 setImagem(new Image(new Texture(Gdx.files.internal("blocos/4.png"))));
@@ -83,6 +87,10 @@ public class BlocoGenerico implements IBlocos
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public Texture getTextura() {
+        return textura;
     }
 
     public Image getImagem()

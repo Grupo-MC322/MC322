@@ -12,11 +12,11 @@ public class Tabuleiro
     {
         this.tamanho = tamanho;
         matriz = new IBlocos[tamanho][tamanho];
-        for(int i = 0; i < tamanho; i++)
+        for(int linha = 0; linha < tamanho; linha++)
         {
-            for(int j = 0; j < tamanho; j++)
+            for(int coluna = 0; coluna < tamanho; coluna++)
             {
-                matriz[i][j] = new BlocoGenerico(0);
+                matriz[linha][coluna] = new BlocoGenerico(0);
             }
         }
     }
@@ -26,18 +26,18 @@ public class Tabuleiro
         return tamanho;
     }
 
-    public Object getId(int x, int y)
+    public Object getId(int linha, int coluna)
     {
-        return matriz[x][y].getId();
+        return matriz[linha][coluna].getId();
     }
 
-    public IBlocos getBloco(int x, int y)
+    public IBlocos getBloco(int linha, int coluna)
     {
-        return matriz[x][y];
+        return matriz[linha][coluna];
     }
 
-    public void setBloco(int x, int y, IBlocos bloco)
+    public void setBloco(int linha, int coluna, IBlocos bloco)
     {
-        matriz[x][y] = bloco;
+        matriz[linha][coluna] = bloco;
     }
 }

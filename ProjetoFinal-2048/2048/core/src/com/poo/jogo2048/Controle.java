@@ -82,7 +82,10 @@ public class Controle
             else if (index < 90 && blocoTempo.getAtivo() == false && getBotaoTempoSelected())
             {
                 blocoGerado = blocoTempo;
+
                 blocoTempo.setAtivo(true);
+                blocoTempo.setCoordX(coordX);
+                blocoTempo.setCoordY(coordY);
             }
             else if (index < 95 && getBotaoDeletaSelected())
             {
@@ -175,10 +178,11 @@ public class Controle
 
         if(0 <= xFim && xFim < tabuleiro.getTamanho() && 0 <= yFim && yFim < tabuleiro.getTamanho())
         {
-            if(tabuleiro.getBloco(xIni, yIni) instanceof IBlocosTimer)
+            if(tabuleiro.getBloco(xIni, yIni) instanceof IBlocosTimer && (Objects.equals(tabuleiro.getId(xFim, yFim), 0) || Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xFim, yFim), "2x")))
             {
                 ((IBlocosTimer) tabuleiro.getBloco(xIni, yIni)).setCoordX(xFim);
                 ((IBlocosTimer) tabuleiro.getBloco(xIni, yIni)).setCoordY(yFim);
+                Gdx.app.log(tabuleiro.getBloco(xIni, yIni).getId().toString(), "\nini: "+xIni+yIni+"\nfim: "+xFim+yFim);
             }
             movimenta(direcao, xIni, yIni, batch, stage);
         }
@@ -222,9 +226,9 @@ public class Controle
 
         // quando está vazio na frente, livre para continuar se movendo
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
-        {            
+        {
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(Actions.removeActor());
+            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaBloco);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, batch, stage);
             algoMudou = true;
@@ -283,18 +287,19 @@ public class Controle
             Gdx.app.log("bomba", "tem vida maior que 0");
             // diminui 1
             blocoBomba.setVida(-1);
+            tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
 
             // setup das imagens para identificação do estado do bloco
             if(blocoBomba.getVida() == 2)
             {
                 Gdx.app.log("bomba", "tem vida == 2");
-                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().remove();
+                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_2:3.png"))));
             }
             else if(blocoBomba.getVida() == 1)
             {
                 Gdx.app.log("bomba", "tem vida == 1");
-                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().remove();
+                tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
             }
         }
@@ -303,25 +308,26 @@ public class Controle
             Gdx.app.log("tempo", "tem vida maior que 0");
             // diminui 1
             blocoTempo.setVida(-1);
+            tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
 
             // setup das imagens para identificação do estado do bloco
             if(blocoTempo.getVida() == 3)
             {
-                Gdx.app.log("tempo", "tem vida == 3");
-                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().remove();
+                Gdx.app.log("tempo", "tem vida == 3, pos:"+blocoTempo.getCoordX()+blocoTempo.getCoordY());
+                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
                 blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
             }
-            if(blocoTempo.getVida() == 2)
+            else if(blocoTempo.getVida() == 2)
             {
-                Gdx.app.log("tempo", "tem vida == 2");
-                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().remove();
-                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
+                Gdx.app.log("tempo", "tem vida == 2 pos:"+blocoTempo.getCoordX()+blocoTempo.getCoordY());
+                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
+                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
             }
             else if(blocoTempo.getVida() == 1)
             {
-                Gdx.app.log("tempo", "tem vida == 1");
-                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().remove();
-                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
+                Gdx.app.log("tempo", "tem vida == 1 pos"+blocoTempo.getCoordX()+blocoTempo.getCoordY());
+                tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
+                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_1:4.png"))));
             }
         }
         if(blocoBomba.getVida() == 0)
@@ -336,8 +342,8 @@ public class Controle
         {
             Gdx.app.log("tempo", "zerou");
             algoMudou = true;
-            tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
             blocoTempo.reset();
+            tabuleiro.getBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY()).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(blocoTempo.getCoordX(), blocoTempo.getCoordY(), new BlocoGenerico(0));
         }
     }

@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -23,6 +24,8 @@ public class TelaJogo extends TelaAbstrata
 
     OrthographicCamera camera;
 
+    private Texture txtrTabuleiro;
+
     public TelaJogo(final jogo2048 jogo)
     {
         stage = new Stage();
@@ -38,19 +41,15 @@ public class TelaJogo extends TelaAbstrata
         jogo.setTabuleiro(tabuleiro);
         controle.setTabuleiro(tabuleiro);
 
+        txtrTabuleiro = new Texture(Gdx.files.internal("tabuleiro_4x4.png"));
+        // if(tabuleiro.getTamanho() == 4)
+        // {
+        //     txtrTabuleiro = new Texture(Gdx.files.internal("tabuleiro_4x4.png"));
+        // }
+
         // desenho inicial do tabuleiro vazio
-        for(int i = 0; i < tabuleiro.getTamanho(); i++)
-        {
-            for(int j = 0; j < tabuleiro.getTamanho(); j++)
-            {
-                tabuleiro.getBloco(i, j).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i));
-                tabuleiro.getBloco(i, j).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j));
-                tabuleiro.getBloco(i, j).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
-                
-                stage.addActor(tabuleiro.getBloco(i, j).getImagem());
-            }
-        }
-        stage.draw();
+        // configurações de camera
+		
 
         controle.spawnBloco();
         controle.spawnBloco();
@@ -93,24 +92,27 @@ public class TelaJogo extends TelaAbstrata
     {
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
 
-        // configurações de camera
-		camera.update();
+        camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
-        // configurações do batch
-		batch.begin();
+        batch.begin();
+        
+        
+        //batch.draw(txtrTabuleiro, 0, 0, camera.viewportWidth, camera.viewportHeight);
+
+        batch.end();
         
         // desenho do tabuleiro
-        for(int i = 0; i < tabuleiro.getTamanho(); i++)
+        for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
         {
-            for(int j = 0; j < tabuleiro.getTamanho(); j++)
+            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
             {
-                tabuleiro.getBloco(i, j).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * i + (camera.viewportWidth * 0.01) * i));
-                tabuleiro.getBloco(i, j).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * j + (camera.viewportHeight * 0.01) * j));
-                tabuleiro.getBloco(i, j).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+                tabuleiro.getBloco(linha, coluna).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * linha + (camera.viewportWidth * 0.01) * linha));
+                tabuleiro.getBloco(linha, coluna).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * coluna + (camera.viewportHeight * 0.01) * coluna));
+                tabuleiro.getBloco(linha, coluna).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
                 
-                if(!Objects.equals(tabuleiro.getId(i, j), 0))
-                    stage.addActor(tabuleiro.getBloco(i, j).getImagem());
+                if(!Objects.equals(tabuleiro.getId(linha, coluna), 0))
+                    stage.addActor(tabuleiro.getBloco(linha, coluna).getImagem());
             }
         }
 
@@ -118,7 +120,5 @@ public class TelaJogo extends TelaAbstrata
         stage.act();
 
         leComando();
-        
-        batch.end();
 	}
 }

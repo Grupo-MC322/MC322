@@ -17,7 +17,8 @@ public class BlocoBomba implements IBlocosTimer
     private float posY;
     private float size;
 
-    private Image imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_1:3.png")));
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba_1:3.png"));
+    private Image imagem = new Image(textura);
     
     private BlocoBomba()
     {}
@@ -86,6 +87,14 @@ public class BlocoBomba implements IBlocosTimer
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public Texture getTextura() {
+        return textura;
+    }
+
+    public void setTextura(Texture textura) {
+        this.textura = textura;
     }
 
     public Image getImagem()
