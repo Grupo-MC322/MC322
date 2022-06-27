@@ -14,8 +14,9 @@ import com.poo.jogo2048.jogo2048;
 
 public class TelaConfiguracoes extends TelaAbstrata
 {
-    final jogo2048 jogo;
-    Controle controle;
+    private final jogo2048 jogo;
+    private Controle controle;
+    private Stage stage;
 
     OrthographicCamera camera;
 
@@ -34,6 +35,8 @@ public class TelaConfiguracoes extends TelaAbstrata
     {
         this.jogo = jogo;
         this.controle = jogo.getControle();
+        jogo.getStage().clear();
+        this.stage = jogo.getStage();
 
         // configurações de camera
         camera = new OrthographicCamera();
@@ -74,7 +77,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         jogo.batch.draw(txtrFundo, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
         // criação e configuração do stage
-        criaStage(jogo.batch, jogo.stage);
+        criaStage(jogo.batch, stage);
 
         jogo.batch.end();
 	}
@@ -238,7 +241,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         botao.setHeight((float) (height * camera.viewportHeight));
 
         botao.draw(jogo.batch, 1);
-        jogo.stage.addActor(botao);
+        stage.addActor(botao);
 
         return botao;
     }

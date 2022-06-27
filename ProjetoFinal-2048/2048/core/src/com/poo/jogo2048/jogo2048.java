@@ -10,7 +10,7 @@ import com.poo.jogo2048.Telas.TelaInicial;
 public class jogo2048 extends Game
 {
 	public SpriteBatch batch;
-	public Stage stage;
+	private Stage stage;
 	private Tabuleiro tabuleiro;
 	private int tamanhoTabuleiro = 4;
 	private Controle controle;

@@ -19,7 +19,8 @@ public class TelaInstrucoes extends TelaAbstrata
 
     public TelaInstrucoes(final jogo2048 jogo)
     {
-        this.stage = jogo.stage;
+        jogo.getStage().clear();
+        this.stage = jogo.getStage();
         
         Texture texture = new Texture(Gdx.files.absolute("blocos/1.png"));
     
@@ -30,7 +31,7 @@ public class TelaInstrucoes extends TelaAbstrata
         Image image1 = new Image(texture);
         image1.setPosition(X_left,Y_bottom);
         image1.setOrigin(image1.getWidth()/2,image1.getHeight()/2);
-        jogo.stage.addActor(image1);
+        stage.addActor(image1);
     
         MoveToAction moveBottomRightAction = new MoveToAction();
         moveBottomRightAction.setPosition(X_right,Y_bottom);
