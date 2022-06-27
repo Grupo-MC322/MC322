@@ -172,47 +172,47 @@ public class Controle
         }
     }
     
-    public void realizaComando(char direcao, int xIni, int yIni, SpriteBatch batch, Stage stage)
+    public void realizaComando(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
     {
-        planejaMovimento(direcao, xIni, yIni);
+        planejaMovimento(direcao, linhaIni, colunaIni);
 
         if(0 <= xFim && xFim < tabuleiro.getTamanho() && 0 <= yFim && yFim < tabuleiro.getTamanho())
         {
-            if(tabuleiro.getBloco(xIni, yIni) instanceof IBlocosTimer && (Objects.equals(tabuleiro.getId(xFim, yFim), 0) || Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xFim, yFim), "2x")))
+            if(tabuleiro.getBloco(linhaIni, colunaIni) instanceof IBlocosTimer && (Objects.equals(tabuleiro.getId(xFim, yFim), 0) || Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xFim, yFim), "2x")))
             {
-                ((IBlocosTimer) tabuleiro.getBloco(xIni, yIni)).setCoordX(xFim);
-                ((IBlocosTimer) tabuleiro.getBloco(xIni, yIni)).setCoordY(yFim);
-                Gdx.app.log(tabuleiro.getBloco(xIni, yIni).getId().toString(), "\nini: "+xIni+yIni+"\nfim: "+xFim+yFim);
+                ((IBlocosTimer) tabuleiro.getBloco(linhaIni, colunaIni)).setCoordX(xFim);
+                ((IBlocosTimer) tabuleiro.getBloco(linhaIni, colunaIni)).setCoordY(yFim);
+                Gdx.app.log(tabuleiro.getBloco(linhaIni, colunaIni).getId().toString(), "\nini: "+linhaIni+colunaIni+"\nfim: "+xFim+yFim);
             }
-            movimenta(direcao, xIni, yIni, batch, stage);
+            movimenta(direcao, linhaIni, colunaIni, batch, stage);
         }
     }
 
-    private void planejaMovimento(char direcao, int xIni, int yIni)
+    private void planejaMovimento(char direcao, int linhaIni, int colunaIni)
     {
         switch (direcao)
         {
             case 'w':
-                xFim = xIni;
-                yFim = yIni + 1;
+                xFim = linhaIni;
+                yFim = colunaIni + 1;
                 break;
             case 'a':
-                xFim = xIni - 1;
-                yFim = yIni;
+                xFim = linhaIni - 1;
+                yFim = colunaIni;
                 break;
             case 's':
-                xFim = xIni;
-                yFim = yIni - 1;
+                xFim = linhaIni;
+                yFim = colunaIni - 1;
                 break;
             case 'd':
-                xFim = xIni + 1;
-                yFim = yIni;
+                xFim = linhaIni + 1;
+                yFim = colunaIni;
                 break;
         }
     }
 
     /* Realiza a movimentação de um bloco de uma posição inicial indicada para a posição final definida. */
-    private void movimenta(char direcao, int xIni, int yIni, SpriteBatch batch, Stage stage)
+    private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
     {
         // animação
         float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
@@ -221,35 +221,35 @@ public class Controle
         juntaBloco.setPosition(posicaoXBloco,posicaoYBloco);
         juntaBloco.setDuration(0.25f);
         juntaBloco.setInterpolation(Interpolation.smooth);
-        tabuleiro.getBloco(xIni, yIni).getImagem().addAction(juntaBloco);
+        tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(juntaBloco);
         SequenceAction animaBloco = new SequenceAction(juntaBloco, Actions.removeActor());
 
         // quando está vazio na frente, livre para continuar se movendo
         if(Objects.equals(tabuleiro.getId(xFim, yFim), 0))
         {
-            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(linhaIni, colunaIni));
+            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             realizaComando(direcao, xFim, yFim, batch, stage);
             algoMudou = true;
         }
 
         // quando ambos os blocos são iguais e podem se juntar
-        else if(Objects.equals(tabuleiro.getId(xFim, yFim), tabuleiro.getId(xIni, yIni)))
+        else if(Objects.equals(tabuleiro.getId(xFim, yFim), tabuleiro.getId(linhaIni, colunaIni)))
         {
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.getBloco(xFim, yFim).junta();
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
             algoMudou = true;
         }
 
         // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
-        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(xIni, yIni), "deleta"))
+        else if(Objects.equals(tabuleiro.getId(xFim, yFim), "deleta") || Objects.equals(tabuleiro.getId(linhaIni, colunaIni), "deleta"))
         {
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(xFim, yFim, new BlocoGenerico(0));
             algoMudou = true;
@@ -258,21 +258,21 @@ public class Controle
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
         else if(Objects.equals(tabuleiro.getId(xFim, yFim), "2x"))
         {
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaBloco);
-            tabuleiro.getBloco(xIni, yIni).junta();
+            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            tabuleiro.getBloco(linhaIni, colunaIni).junta();
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
-            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(Actions.removeActor());
-            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
-            tabuleiro.getBloco(xIni, yIni).setJuntado(true);
+            tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(linhaIni, colunaIni));
+            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(Actions.removeActor());
+            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            tabuleiro.getBloco(linhaIni, colunaIni).setJuntado(true);
             algoMudou = true;
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(Objects.equals(tabuleiro.getId(xIni, yIni), "2x"))
+        else if(Objects.equals(tabuleiro.getId(linhaIni, colunaIni), "2x"))
         {
-            tabuleiro.getBloco(xIni, yIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
+            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             tabuleiro.getBloco(xFim, yFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.getBloco(xFim, yFim).junta();
             tabuleiro.getBloco(xFim, yFim).setJuntado(true);
