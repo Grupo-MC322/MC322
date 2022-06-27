@@ -58,26 +58,30 @@ public class TelaJogo extends TelaAbstrata
 
     private void leComando()
     {
-        if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A)){
+        if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
+        {
             direcao = 'a';
             controle.realizaComando(direcao);
         }
             
-        else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D)){
+        else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
+        {
             direcao = 'd';
             controle.realizaComando(direcao);
         }
             
-        else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W)){
+        else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))
+        {
             direcao = 'w';
             controle.realizaComando(direcao);
         }
             
-        else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S)){
+        else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S))
+        {
             direcao = 's';
             controle.realizaComando(direcao);
         }
-        // else if(Gdx.input.isKeyPressed(key))
+        // else if(Gdx.input.isKeyPressed())
         // {
         //     // System.out.println("Digite um movimento válido no teclado: W, A, S, D ou setas de direção")
             

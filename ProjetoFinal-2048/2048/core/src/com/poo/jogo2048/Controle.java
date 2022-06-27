@@ -146,8 +146,8 @@ public class Controle
             }
         }
         
-        atualizaVidas(tabuleiro);
-        percorreTabuleiro(tabuleiro);
+        atualizaVidas();
+        percorreTabuleiro();
         spawnBloco();
 	}
 
@@ -155,11 +155,11 @@ public class Controle
     {
         if(!Objects.equals(tabuleiro.getId(linha, coluna), 0) && tabuleiro.getBloco(linha, coluna).getJuntado() == false)
         {
-            realizaComando(direcao, linha, coluna, tabuleiro, batch, stage);
+            realizaComando(direcao, linha, coluna, batch, stage);
         }
     }
     
-    public void realizaComando(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
+    public void realizaComando(char direcao, int xIni, int yIni, SpriteBatch batch, Stage stage)
     {
         planejaMovimento(direcao, xIni, yIni);
 
@@ -172,7 +172,7 @@ public class Controle
                 bloco.setCoordX(xFim);
                 bloco.setCoordY(yFim);
             }
-            movimenta(direcao, xIni, yIni, tabuleiro, batch, stage);
+            movimenta(direcao, xIni, yIni, batch, stage);
         }
     }
 
@@ -200,7 +200,7 @@ public class Controle
     }
 
     /* Realiza a movimentação de um bloco de uma posição inicial indicada para a posição final definida. */
-    private void movimenta(char direcao, int xIni, int yIni, Tabuleiro tabuleiro, SpriteBatch batch, Stage stage)
+    private void movimenta(char direcao, int xIni, int yIni, SpriteBatch batch, Stage stage)
     {
         // animação
         float posicaoXBloco = ((float) ((400 * 0.05) + (400 * 0.87 / tabuleiro.getTamanho()) * xFim + (400 * 0.01) * xFim));
@@ -218,7 +218,7 @@ public class Controle
             tabuleiro.setBloco(xFim, yFim, tabuleiro.getBloco(xIni, yIni));
             tabuleiro.getBloco(xIni, yIni).getImagem().addAction(juntaBloco);
             tabuleiro.setBloco(xIni, yIni, new BlocoGenerico(0));
-            realizaComando(direcao, xFim, yFim, tabuleiro, batch, stage);
+            realizaComando(direcao, xFim, yFim, batch, stage);
         }
 
         // quando ambos os blocos são iguais e podem se juntar
@@ -263,14 +263,14 @@ public class Controle
         }
     }
 
-    public void atualizaVidas(Tabuleiro tabuleiro)
+    public void atualizaVidas()
     {
         if(blocoBomba.getAtivo() && blocoBomba.getVida() == 0)
         {
             blocoBomba.setAtivo(false);
             blocoBomba.setVida(3);
             tabuleiro.getBloco(blocoBomba.getCoordX(), blocoBomba.getCoordY()).getImagem().addAction(Actions.removeActor());
-            miraVizinhos(tabuleiro, blocoBomba.getCoordX(), blocoBomba.getCoordY());
+            miraVizinhos(blocoBomba.getCoordX(), blocoBomba.getCoordY());
         }
         if (blocoTempo.getAtivo() && blocoTempo.getVida() == 0)
         {
@@ -315,37 +315,37 @@ public class Controle
         }
     }
 
-    private void miraVizinhos(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
+    private void miraVizinhos(int xExplosao, int yExplosao)
     {
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         xExplosao--;
         yExplosao--;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
         
         xExplosao++;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         xExplosao++;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         yExplosao++;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         yExplosao++;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         xExplosao--;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         xExplosao--;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
 
         yExplosao--;
-        explode(tabuleiro, xExplosao, yExplosao);
+        explode(xExplosao, yExplosao);
     }
 
-    private void explode(Tabuleiro tabuleiro, int xExplosao, int yExplosao)
+    private void explode(int xExplosao, int yExplosao)
     {
         if(xExplosao >= 0 && xExplosao < tabuleiro.getTamanho() && yExplosao >= 0 && yExplosao < tabuleiro.getTamanho())
         {
@@ -356,7 +356,7 @@ public class Controle
     }
 
     // mudar a funcao pra nova
-    public void percorreTabuleiro(Tabuleiro tabuleiro)
+    public void percorreTabuleiro()
     {
         for(int i = 0; i < tabuleiro.getTamanho(); i++)
         {
