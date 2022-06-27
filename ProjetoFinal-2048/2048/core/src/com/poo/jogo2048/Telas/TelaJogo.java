@@ -5,6 +5,7 @@ import java.util.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.Controle;
@@ -17,6 +18,7 @@ public class TelaJogo extends TelaAbstrata
     Tabuleiro tabuleiro;
     Controle controle;
     Stage stage;
+    SpriteBatch batch;
     private char direcao;
 
     OrthographicCamera camera;
@@ -27,6 +29,7 @@ public class TelaJogo extends TelaAbstrata
 
         this.jogo = jogo;
         this.controle = jogo.getControle();
+        this.batch = jogo.getBatch();
 
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 400, 400);
@@ -88,10 +91,10 @@ public class TelaJogo extends TelaAbstrata
 
         // configurações de camera
 		camera.update();
-		jogo.batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined);
 
         // configurações do batch
-		jogo.batch.begin();
+		batch.begin();
         
         // desenho do tabuleiro
         for(int i = 0; i < tabuleiro.getTamanho(); i++)
@@ -112,6 +115,6 @@ public class TelaJogo extends TelaAbstrata
 
         leComando();
         
-        jogo.batch.end();
+        batch.end();
 	}
 }

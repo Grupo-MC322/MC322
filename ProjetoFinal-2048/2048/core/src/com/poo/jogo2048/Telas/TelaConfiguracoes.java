@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -17,6 +18,7 @@ public class TelaConfiguracoes extends TelaAbstrata
     private final jogo2048 jogo;
     private Controle controle;
     private Stage stage;
+    private SpriteBatch batch;
 
     OrthographicCamera camera;
 
@@ -37,6 +39,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         this.controle = jogo.getControle();
         jogo.getStage().clear();
         this.stage = jogo.getStage();
+        this.batch = jogo.getBatch();
 
         // configurações de camera
         camera = new OrthographicCamera();
@@ -72,14 +75,14 @@ public class TelaConfiguracoes extends TelaAbstrata
 		camera.update();
 
         // configurações do batch
-		jogo.batch.setProjectionMatrix(camera.combined);
-        jogo.batch.begin();
-        jogo.batch.draw(txtrFundo, 0, 0, camera.viewportWidth, camera.viewportHeight);
+		batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(txtrFundo, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
         // criação e configuração do stage
-        criaStage(jogo.batch, stage);
+        criaStage(batch, stage);
 
-        jogo.batch.end();
+        batch.end();
 	}
 
     public void criaStage(Batch batch, Stage stage)
@@ -240,7 +243,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         botao.setWidth((float) (width * camera.viewportWidth));
         botao.setHeight((float) (height * camera.viewportHeight));
 
-        botao.draw(jogo.batch, 1);
+        botao.draw(batch, 1);
         stage.addActor(botao);
 
         return botao;
