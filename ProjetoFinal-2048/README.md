@@ -28,3 +28,4 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 
 ### Diagrama Geral da Arquitetura do Jogo
 https://drive.google.com/file/d/1kIefUAAOxpeZK-sIDVDN-f2Am7_HBjts/view?usp=sharing
+[Diagrama](Untitled_Diagram-2-4.drawio)
