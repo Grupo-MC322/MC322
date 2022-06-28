@@ -21,7 +21,6 @@ public class TelaConfiguracoes extends TelaAbstrata
     private ISettingScreenControl control;
     private Stage stage;
     private SpriteBatch batch;
-
     private OrthographicCamera camera;
 
     private Texture txtrFundo;
@@ -34,6 +33,9 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtrTempo;
     private Texture txtr2x;
     private Texture txtrJogar;
+    private Texture txtrBotaoMusica;
+
+    private boolean botaoMusicaSelected;
 
     public TelaConfiguracoes(final Criador jogo)
     {
@@ -62,6 +64,8 @@ public class TelaConfiguracoes extends TelaAbstrata
         txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
         txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_2.png"));
+
+        txtrBotaoMusica = new Texture(Gdx.files.absolute("botoes/botao_musica.png"));
 
         // setup inicial das opções de blocos
         control.setBotaoSelected("bomba", true);
@@ -116,10 +120,17 @@ public class TelaConfiguracoes extends TelaAbstrata
         // botão voltar
         Texture txtrBotaoVoltar = new Texture(Gdx.files.absolute("botoes/botao_voltar.png"));
         Image botaoVoltar = new Image(txtrBotaoVoltar);
-        botaoVoltar.setPosition((stage.getWidth() * 0.05f), stage.getHeight() * 0.85f);
+        botaoVoltar.setPosition(stage.getWidth() * 0.05f, stage.getHeight() * 0.85f);
         botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
         botaoVoltar.draw(batch, 1);
         stage.addActor(botaoVoltar);
+
+        // botão musica
+        Image botaoMusica = new Image(txtrBotaoMusica);
+        botaoMusica.setPosition(stage.getWidth() * 0.85f, stage.getHeight() * 0.85f);
+        botaoMusica.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+        botaoMusica.draw(batch, 1);
+        stage.addActor(botaoMusica);
 
         // configurações de input dos botões
         botao4x4.addListener(new ClickListener()
@@ -239,6 +250,29 @@ public class TelaConfiguracoes extends TelaAbstrata
                     control.setBotaoSelected("2x", true);
                     txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
                 }
+            }
+        });
+
+        
+        
+        botaoMusica.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(botaoMusicaSelected)
+                {
+                    game.getMusic().pause();
+                    botaoMusicaSelected = false;
+                    txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica_unselected.png"));
+                }
+                else
+                {
+                    game.getMusic().play();
+                    botaoMusicaSelected = true;
+                    txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica.png"));
+                }
+                    
+
             }
         });
 

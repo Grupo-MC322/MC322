@@ -4,5 +4,5 @@ public interface IGameScreenControl
 {
     public void conectaTabuleiro(Tabuleiro tabuleiro);
     public void spawnBloco();
-    public void realizaComando(char direcao);
+    public void transfereComando(char direcao);
 }

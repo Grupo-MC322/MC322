@@ -10,14 +10,14 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.poo.jogo2048.Telas.TelaInicial;
 
 
-public class Criador extends Game implements ISettingScreenCreator
+public class Criador extends Game implements ISettingScreenCreator, ICreatorControl
 {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
 	private int tamanhoTabuleiro;
 	private Controle controle;
-	private Music musica;
+	private Music music;
 
 	@Override
 	public void create()
@@ -33,15 +33,15 @@ public class Criador extends Game implements ISettingScreenCreator
 		controle = new Controle(this);
 
 		// fazendo o load da música de fundo e a iniciando
-		musica = Gdx.audio.newMusic(Gdx.files.internal("musicas/Corona-320bit.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("musicas/Corona-320bit.mp3"));
 		/* 
 		Corona by Alexander Nakarada | https://www.serpentsoundstudios.com
 		Music promoted by https://www.chosic.com/free-music/all/
 		Attribution 4.0 International (CC BY 4.0)
 		https://creativecommons.org/licenses/by/4.0/ 
 		*/
-		musica.setLooping(true);
-		musica.play();
+		music.setLooping(true);
+		music.play();
  
 		// definindo a tela como tela inicial
 		this.setScreen(new TelaInicial(this));
@@ -72,6 +72,9 @@ public class Criador extends Game implements ISettingScreenCreator
 		return controle;
 	}
 
+	public Music getMusic() {
+		return music;
+	}
 	
 	@Override
 	public void dispose()

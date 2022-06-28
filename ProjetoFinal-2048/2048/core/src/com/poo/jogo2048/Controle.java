@@ -18,6 +18,7 @@ import com.poo.jogo2048.Telas.TelaPerdeu;
 
 public class Controle implements IGameScreenControl, ISettingScreenControl
 {
+    final ICreatorControl game;
     final Criador jogo;
     private Stage stage;
     private SpriteBatch batch;
@@ -40,8 +41,9 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     public Controle(final Criador jogo)
     {
         this.jogo = jogo;
-        this.batch = jogo.getBatch();
-        this.stage = jogo.getStage();
+        game = jogo;
+        this.batch = game.getBatch();
+        this.stage = game.getStage();
         
         bomb = BlocoBomba.getInstance();
         timer = BlocoTempo.getInstance();
@@ -111,17 +113,21 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 		}
     }
 
-    public void realizaComando(char direcao)
+    public void transfereComando(char direcao)
 	{
-        atualizaVidas();
-
+        if(algoMudou)
+        {
+            atualizaVidas();
+            algoMudou = false;
+        }
+        
 		if(direcao == 'w')
         {
             for(int coluna = board.getTamanho() - 1; coluna >= 0; coluna--)
             {
                 for(int linha = 0; linha < board.getTamanho(); linha++)
                 {
-                    jogada(linha, coluna, direcao);
+                    verificaViabilidade(linha, coluna, direcao);
                 }
             }
         }
@@ -131,7 +137,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             {
                 for(int linha = board.getTamanho() - 1; linha >= 0; linha--)
                 {
-                    jogada(linha, coluna, direcao);
+                    verificaViabilidade(linha, coluna, direcao);
                 }
             }
         }
@@ -141,7 +147,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             {
                 for(int coluna = 0; coluna < board.getTamanho(); coluna++)
                 {
-                    jogada(linha, coluna, direcao);
+                    verificaViabilidade(linha, coluna, direcao);
                 }
             }
         }
@@ -151,7 +157,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             {
                 for(int coluna = 0; coluna < board.getTamanho(); coluna++)
                 {
-                    jogada(linha, coluna, direcao);
+                    verificaViabilidade(linha, coluna, direcao);
                 }
             }
         }
@@ -160,19 +166,18 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         if(algoMudou)
         {
             spawnBloco();
-            algoMudou = false;
         }
 	}
 
-    private void jogada(int linha, int coluna, char direcao)
+    private void verificaViabilidade(int linha, int coluna, char direcao)
     {
         if(!Objects.equals(board.getId(linha, coluna), 0) && board.getBloco(linha, coluna).getJuntado() == false)
         {
-            realizaComando(direcao, linha, coluna, batch, stage);
+            interpretaComando(direcao, linha, coluna, batch, stage);
         }
     }
     
-    public void realizaComando(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
+    public void interpretaComando(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
     {
         planejaMovimento(direcao, linhaIni, colunaIni);
 
@@ -229,7 +234,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
             board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
-            realizaComando(direcao, linhaFim, colunaFim, batch, stage);
+            interpretaComando(direcao, linhaFim, colunaFim, batch, stage);
             algoMudou = true;
         }
 
@@ -389,7 +394,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             {
                 if(Objects.equals(board.getId(i, j), 2048))
                 {
-                    jogo.setScreen(new TelaGanhou(jogo));
+                    game.setScreen(new TelaGanhou(jogo));
                 }
                 else if(Objects.equals(board.getId(i, j), 0))
                 {
@@ -400,7 +405,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         }
         if(vazioInexistente)
         {
-            jogo.setScreen(new TelaPerdeu(jogo));
+            game.setScreen(new TelaPerdeu(jogo));
         }
     }
 
