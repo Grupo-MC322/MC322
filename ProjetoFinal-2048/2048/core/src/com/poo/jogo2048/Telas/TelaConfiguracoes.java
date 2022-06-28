@@ -17,10 +17,10 @@ import com.poo.jogo2048.Criador;
 public class TelaConfiguracoes extends TelaAbstrata
 {
     private final ISettingScreenCreator game;
-    private final Criador jogo;
     private ISettingScreenControl control;
     private Stage stage;
     private SpriteBatch batch;
+    private final Criador jogo;
     private OrthographicCamera camera;
 
     private Texture txtrFundo;

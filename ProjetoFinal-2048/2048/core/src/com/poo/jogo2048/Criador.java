@@ -15,7 +15,7 @@ public class Criador extends Game implements ISettingScreenCreator, ICreatorCont
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
-	private int tamanhoTabuleiro;
+	private int tamanhoTabuleiro = 4;
 	private Controle controle;
 	private Music music;
 

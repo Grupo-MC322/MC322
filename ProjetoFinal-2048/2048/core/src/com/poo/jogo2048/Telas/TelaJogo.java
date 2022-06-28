@@ -98,6 +98,7 @@ public class TelaJogo extends TelaAbstrata
                     stage.addActor(tabuleiro.getBloco(linha, coluna).getImagem());
             }
         }
+
         stage.draw();
         stage.act();
 

@@ -37,7 +37,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 
     private boolean vazioInexistente;
     private boolean algoMudou;
-    
+
     public Controle(final Criador jogo)
     {
         this.jogo = jogo;
@@ -394,7 +394,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             {
                 if(Objects.equals(board.getId(i, j), 2048))
                 {
-                    game.setScreen(new TelaGanhou(jogo));
+                    jogo.setScreen(new TelaGanhou(jogo));
                 }
                 else if(Objects.equals(board.getId(i, j), 0))
                 {
@@ -405,7 +405,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         }
         if(vazioInexistente)
         {
-            game.setScreen(new TelaPerdeu(jogo));
+            jogo.setScreen(new TelaPerdeu(jogo));
         }
     }
 
