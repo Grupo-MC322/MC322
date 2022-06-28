@@ -16,7 +16,7 @@ import com.poo.jogo2048.PastaBlocos.*;
 import com.poo.jogo2048.Telas.TelaGanhou;
 import com.poo.jogo2048.Telas.TelaPerdeu;
 
-public class Controle
+public class Controle implements IGameScreenControl, ISettingScreenControl
 {
     final Criador jogo;
     private IBoardControl board;
@@ -28,8 +28,8 @@ public class Controle
     private boolean botaoTempoSelected;
     private boolean botao2xSelected;
 
-    private IBlocosTimer blocoBomba;
-    private IBlocosTimer blocoTempo;
+    private IBombControl bomb;
+    private ITimerControl timer;
 
     private int linhaFim = 0;
     private int colunaFim = 0;
@@ -43,8 +43,8 @@ public class Controle
         this.batch = jogo.getBatch();
         this.stage = jogo.getStage();
         
-        blocoBomba = BlocoBomba.getInstance();
-        blocoTempo = BlocoTempo.getInstance();
+        bomb = BlocoBomba.getInstance();
+        timer = BlocoTempo.getInstance();
     }
 
     // Adiciona um bloco entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro.
@@ -71,27 +71,27 @@ public class Controle
             {
                 blocoGerado = new BlocoGenerico(4);
             }
-            else if (index < 85 && blocoBomba.getAtivo() == false && getBotaoBombaSelected())
+            else if (index < 85 && bomb.getAtivo() == false && getBotaoSelected("bomba"))
             {
-                blocoGerado = blocoBomba;
+                blocoGerado = bomb;
                 
-                blocoBomba.setAtivo(true);
-                blocoBomba.setLinha(linha);
-                blocoBomba.setColuna(coluna);
+                bomb.setAtivo(true);
+                bomb.setLinha(linha);
+                bomb.setColuna(coluna);
             }
-            else if (index < 90 && blocoTempo.getAtivo() == false && getBotaoTempoSelected())
+            else if (index < 90 && timer.getAtivo() == false && getBotaoSelected("tempo"))
             {
-                blocoGerado = blocoTempo;
+                blocoGerado = timer;
 
-                blocoTempo.setAtivo(true);
-                blocoTempo.setLinha(linha);
-                blocoTempo.setColuna(coluna);
+                timer.setAtivo(true);
+                timer.setLinha(linha);
+                timer.setColuna(coluna);
             }
-            else if (index < 95 && getBotaoDeletaSelected())
+            else if (index < 95 && getBotaoSelected("deleta"))
             {
                 blocoGerado = new BlocoDeleta();
             }
-            else if (index < 100 && getBotao2xSelected())
+            else if (index < 100 && getBotaoSelected("2x"))
             {
                 blocoGerado = new BlocoDobro();
             }
@@ -178,10 +178,10 @@ public class Controle
 
         if(0 <= linhaFim && linhaFim < board.getTamanho() && 0 <= colunaFim && colunaFim < board.getTamanho())
         {
-            if(board.getBloco(linhaIni, colunaIni) instanceof IBlocosTimer && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
+            if(board.getBloco(linhaIni, colunaIni) instanceof IBlocosVidas && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
             {
-                ((IBlocosTimer) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
-                ((IBlocosTimer) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
+                ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
+                ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
             }
             movimenta(direcao, linhaIni, colunaIni, batch, stage);
         }
@@ -210,7 +210,7 @@ public class Controle
         }
     }
 
-    /* Realiza a movimentação de um bloco de uma posição inicial indicada para a posição final definida. */
+    // Realiza a movimentação de um bloco de uma posição inicial indicada para a posição final definida.
     private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
     {
         // animação
@@ -218,7 +218,7 @@ public class Controle
         float posicaoYBloco = ((500 * 0.05f) + (500 * 0.87f / board.getTamanho()) * colunaFim + (500 * 0.01f) * colunaFim);
         MoveToAction juntaBloco = new MoveToAction();
         juntaBloco.setPosition(posicaoXBloco,posicaoYBloco);
-        juntaBloco.setDuration(0.25f);
+        juntaBloco.setDuration(0.35f);
         juntaBloco.setInterpolation(Interpolation.smooth);
         board.getBloco(linhaIni, colunaIni).getImagem().addAction(juntaBloco);
         SequenceAction animaBloco = new SequenceAction(juntaBloco, Actions.removeActor());
@@ -290,53 +290,53 @@ public class Controle
 
     public void atualizaVidas()
     {
-        if (blocoBomba.getAtivo())
+        if (bomb.getAtivo())
         {
             // diminui 1
-            blocoBomba.setVida(-1);
-            board.getBloco(blocoBomba.getLinha(), blocoBomba.getColuna()).getImagem().addAction(Actions.removeActor());
+            bomb.setVida(-1);
+            board.getBloco(bomb.getLinha(), bomb.getColuna()).getImagem().addAction(Actions.removeActor());
 
             // setup das imagens para identificação do estado do bloco
-            if(blocoBomba.getVida() == 2)
+            if(bomb.getVida() == 2)
             {
-                blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_2:3.png"))));
+                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_2:3.png"))));
             }
-            else if(blocoBomba.getVida() == 1)
+            else if(bomb.getVida() == 1)
             {
-                blocoBomba.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
+                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
             }
         }
-        if (blocoTempo.getAtivo())
+        if (timer.getAtivo())
         {
             // diminui 1
-            blocoTempo.setVida(-1);
-            board.getBloco(blocoTempo.getLinha(), blocoTempo.getColuna()).getImagem().addAction(Actions.removeActor());
+            timer.setVida(-1);
+            board.getBloco(timer.getLinha(), timer.getColuna()).getImagem().addAction(Actions.removeActor());
 
             // setup das imagens para identificação do estado do bloco
-            if(blocoTempo.getVida() == 3)
+            if(timer.getVida() == 3)
             {
-                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
+                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
             }
-            else if(blocoTempo.getVida() == 2)
+            else if(timer.getVida() == 2)
             {
-                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
+                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
             }
-            else if(blocoTempo.getVida() == 1)
+            else if(timer.getVida() == 1)
             {
-                blocoTempo.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_1:4.png"))));
+                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_1:4.png"))));
             }
         }
-        if(blocoBomba.getVida() == 0)
+        if(bomb.getVida() == 0)
         {
             algoMudou = true;
-            blocoBomba.reset();
-            miraVizinhos(blocoBomba.getLinha(), blocoBomba.getColuna());
+            bomb.reset();
+            miraVizinhos(bomb.getLinha(), bomb.getColuna());
         }
-        if (blocoTempo.getVida() == 0)
+        if (timer.getVida() == 0)
         {
             algoMudou = true;
-            blocoTempo.reset();
-            board.setBloco(blocoTempo.getLinha(), blocoTempo.getColuna(), new BlocoGenerico(0));
+            timer.reset();
+            board.setBloco(timer.getLinha(), timer.getColuna(), new BlocoGenerico(0));
         }
     }
 
@@ -404,44 +404,40 @@ public class Controle
         }
     }
 
-    public boolean getBotaoBombaSelected()
+    public void setBotaoSelected(String idBotao, boolean selected)
     {
-        return botaoBombaSelected;
+        switch(idBotao)
+        {
+            case("bomba"):
+                botaoBombaSelected = selected;
+                break;
+            case("deleta"):
+                botaoDeletaSelected = selected;
+                break;
+            case("tempo"):
+                botaoTempoSelected = selected;
+                break;
+            case("2x"):
+                botao2xSelected = selected;
+                break;
+        }
     }
 
-    public void setBotaoBombaSelected(boolean botaoBombaSelected)
+    public boolean getBotaoSelected(String idBotao)
     {
-        this.botaoBombaSelected = botaoBombaSelected;
-    }
-
-    public boolean getBotaoDeletaSelected()
-    {
-        return botaoDeletaSelected;
-    }
-
-    public void setBotaoDeletaSelected(boolean botaoDeletaSelected)
-    {
-        this.botaoDeletaSelected = botaoDeletaSelected;
-    }
-
-    public boolean getBotaoTempoSelected()
-    {
-        return botaoTempoSelected;
-    }
-
-    public void setBotaoTempoSelected(boolean botaoTempoSelected)
-    {
-        this.botaoTempoSelected = botaoTempoSelected;
-    }
-
-    public boolean getBotao2xSelected()
-    {
-        return botao2xSelected;
-    }
-
-    public void setBotao2xSelected(boolean botao2xSelected)
-    {
-        this.botao2xSelected = botao2xSelected;
+        switch(idBotao)
+        {
+            case("bomba"):
+                return botaoBombaSelected;
+            case("deleta"):
+                return botaoDeletaSelected;
+            case("tempo"):
+                return botaoTempoSelected;
+            case("2x"):
+                return botao2xSelected;
+            default:
+                return false;
+        }
     }
 
     public void conectaTabuleiro(Tabuleiro tabuleiro)

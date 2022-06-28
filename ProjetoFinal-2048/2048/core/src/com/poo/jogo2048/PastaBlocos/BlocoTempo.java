@@ -4,27 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoTempo implements IBlocosTimer
+public class BlocoTempo implements ITimerControl
 {
-    private static IBlocosTimer instance;
+    private static ITimerControl instance;
     private String id = "tempo";
-    private int vida = 4;
-    private int linha;
-    private int coluna;
-    private boolean ativo = false;
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
+    private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;
     private float posY;
     private float size;
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
-    Image imagem = new Image(textura);
+    private int vida = 4;
+    private int linha;
+    private int coluna;
+    private boolean ativo = false;
+    
+    
 
     // para implementar o design pattern singleton, é necessário um construtor privado
     private BlocoTempo()
     {}
     
     // implementação do design pattern singleton, garantindo que só uma instância de bloco tempo exista
-    public static IBlocosTimer getInstance()
+    public static ITimerControl getInstance()
     {
         if (instance == null)
         {
@@ -37,6 +39,68 @@ public class BlocoTempo implements IBlocosTimer
     public Object getId()
     {
         return id;
+    }
+
+    public Texture getTextura() {
+        return textura;
+    }
+
+    public void setTextura(Texture textura) {
+        this.textura = textura;
+    }
+
+    public boolean getJuntado()
+    {
+        return juntado;
+    }
+
+    public void setJuntado(boolean info)
+    {
+        juntado = info;
+    }
+
+    public Image getImagem()
+    {
+        return imagem;
+    }
+
+    public void setImagem(Image imagem)
+    {
+        this.imagem = imagem;
+    }
+
+    public float getPosX()
+    {
+        return posX;
+    }
+
+    public void setPosX(float posX)
+    {
+        this.posX = posX;
+        this.getImagem().setX(posX);
+    }
+
+    public float getPosY()
+    {
+        return posY;
+    }
+
+    public void setPosY(float posY)
+    {
+        this.posY = posY;
+        this.getImagem().setY(posY);
+    }
+
+    public float getSize()
+    {
+        return size;
+    }
+
+    public void setSize(float size)
+    {
+        this.size = size;
+        this.getImagem().setWidth(size);
+        this.getImagem().setHeight(size);
     }
 
     // o bloco tempo tem 4 vidas até desaparecer
@@ -81,67 +145,6 @@ public class BlocoTempo implements IBlocosTimer
         ativo = info;
     }
 
-    public void setJuntado(boolean info)
-    {
-        juntado = info;
-    }
-    
-    public boolean getJuntado()
-    {
-        return juntado;
-    }
-
-    public Texture getTextura() {
-        return textura;
-    }
-
-    public void setTextura(Texture textura) {
-        this.textura = textura;
-    }
-
-    public Image getImagem()
-    {
-        return imagem;
-    }
-
-    public void setImagem(Image imagem)
-    {
-        this.imagem = imagem;
-    }
-
-    public void setPosX(float posX)
-    {
-        this.posX = posX;
-        this.getImagem().setX(posX);
-    }
-
-    public float getPosX()
-    {
-        return posX;
-    }
-
-    public void setPosY(float posY)
-    {
-        this.posY = posY;
-        this.getImagem().setY(posY);
-    }
-
-    public float getPosY()
-    {
-        return posY;
-    }
-
-    public void setSize(float size)
-    {
-        this.size = size;
-        this.getImagem().setWidth(size);
-        this.getImagem().setHeight(size);
-    }
-
-    public float getSize()
-    {
-        return size;
-    }
 
     // depois do bloco tempo sumir, seus atributos são renovados, esparando ser posto de volta ao tabuleiro
     public void reset()

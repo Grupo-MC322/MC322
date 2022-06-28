@@ -13,11 +13,11 @@ import com.poo.jogo2048.Criador;
 public class TelaInstrucoes extends TelaAbstrata
 {
     final Criador jogo;
-    OrthographicCamera camera;
     Stage stage;
-    int pagina = 1;
+    OrthographicCamera camera;
     Texture txtrFundo;
-
+    int pagina = 1;
+    
     public TelaInstrucoes(final Criador jogo)
     {
         this.jogo = jogo;

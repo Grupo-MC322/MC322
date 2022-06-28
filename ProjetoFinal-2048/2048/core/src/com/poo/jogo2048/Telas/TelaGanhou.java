@@ -14,9 +14,8 @@ import com.poo.jogo2048.Criador;
 public class TelaGanhou extends TelaAbstrata
 {
     final Criador jogo;
-
-    OrthographicCamera camera;
     Stage stage;
+    OrthographicCamera camera;
 
     public TelaGanhou(final Criador jogo)
     {

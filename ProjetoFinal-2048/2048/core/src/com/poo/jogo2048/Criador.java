@@ -15,7 +15,6 @@ public class Criador extends Game
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
-	private Tabuleiro tabuleiro;
 	private int tamanhoTabuleiro;
 	private Controle controle;
 	private Music musica;
@@ -56,16 +55,6 @@ public class Criador extends Game
 	public Stage getStage()
 	{
 		return stage;
-	}
-
-	public Tabuleiro getTabuleiro()
-	{
-		return tabuleiro;
-	}
-
-	public void setTabuleiro(Tabuleiro tabuleiro)
-	{
-		this.tabuleiro = tabuleiro;
 	}
 
 	public void setTamanhoTabuleiro(int tamanhoTabuleiro)

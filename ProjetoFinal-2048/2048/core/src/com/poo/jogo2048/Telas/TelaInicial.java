@@ -21,9 +21,9 @@ public class TelaInicial extends TelaAbstrata
     private OrthographicCamera camera;
 
     private Texture txtrFundo;
-    private Texture txtrBotaoConfig;
-    private float xBotaoConfig;
-    private float yBotaoConfig;
+    private Texture txtrBotaoJogar;
+    private float xBotaoJogar;
+    private float yBotaoJogar;
     private Texture txtrBotaoInstr;
     private float xBotaoInstr;
     private float yBotaoInstr;
@@ -40,9 +40,9 @@ public class TelaInicial extends TelaAbstrata
     
         txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_inicio.png"));
 
-        txtrBotaoConfig = new Texture(Gdx.files.internal("botoes/botao_jogar_1.png"));
-        xBotaoConfig = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
-        yBotaoConfig = stage.getHeight() * 0.44f;
+        txtrBotaoJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_1.png"));
+        xBotaoJogar = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
+        yBotaoJogar = stage.getHeight() * 0.44f;
 
         txtrBotaoInstr = new Texture(Gdx.files.internal("botoes/botao_instrucoes.png"));
         xBotaoInstr = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
@@ -62,7 +62,7 @@ public class TelaInicial extends TelaAbstrata
 		batch.begin();
         
         batch.draw(txtrFundo, 0, 0, 500, 500);
-        batch.draw(txtrBotaoConfig, xBotaoConfig, yBotaoConfig, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
+        batch.draw(txtrBotaoJogar, xBotaoJogar, yBotaoJogar, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         batch.draw(txtrBotaoInstr, xBotaoInstr, yBotaoInstr, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
 
         // configurações do stage
@@ -75,8 +75,8 @@ public class TelaInicial extends TelaAbstrata
     {
         // adicionando os atores
         // botão configurar
-        Image botaoConfig = new Image(txtrBotaoConfig);
-        botaoConfig.setPosition(xBotaoConfig, yBotaoConfig);
+        Image botaoConfig = new Image(txtrBotaoJogar);
+        botaoConfig.setPosition(xBotaoJogar, yBotaoJogar);
         botaoConfig.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         stage.addActor(botaoConfig);
 
@@ -107,7 +107,7 @@ public class TelaInicial extends TelaAbstrata
 	public void dispose()
     {
 		txtrFundo.dispose();
-		txtrBotaoConfig.dispose();
+		txtrBotaoJogar.dispose();
 		txtrBotaoInstr.dispose();
 	}
 

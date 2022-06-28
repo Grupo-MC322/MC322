@@ -75,14 +75,14 @@ public class BlocoGenerico implements IBlocos
         setId(id * 2);
     }
 
-    public void setJuntado(boolean info)
-    {
-        juntado = info;
-    }
-    
     public boolean getJuntado()
     {
         return juntado;
+    }
+
+    public void setJuntado(boolean info)
+    {
+        juntado = info;
     }
 
     public Image getImagem()
@@ -95,15 +95,19 @@ public class BlocoGenerico implements IBlocos
         this.imagem = imagem;
     }
 
+    public float getPosX()
+    {
+        return posX;
+    }
+
     public void setPosX(float posX)
     {
         this.posX = posX;
         this.getImagem().setX(posX);
     }
 
-    public float getPosX()
-    {
-        return posX;
+    public float getPosY() {
+        return posY;
     }
 
     public void setPosY(float posY)
@@ -112,8 +116,9 @@ public class BlocoGenerico implements IBlocos
         this.getImagem().setY(posY);
     }
 
-    public float getPosY() {
-        return posY;
+    public float getSize()
+    {
+        return size;
     }
 
     public void setSize(float size)
@@ -121,10 +126,5 @@ public class BlocoGenerico implements IBlocos
         this.size = size;
         this.getImagem().setWidth(size);
         this.getImagem().setHeight(size);
-    }
-
-    public float getSize()
-    {
-        return size;
     }
 }

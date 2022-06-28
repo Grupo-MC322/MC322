@@ -7,25 +7,24 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.poo.jogo2048.Controle;
 import com.poo.jogo2048.Tabuleiro;
 import com.poo.jogo2048.Criador;
+import com.poo.jogo2048.IGameScreenControl;
 
 public class TelaJogo extends TelaAbstrata
 {
     final Criador jogo;
-    Tabuleiro tabuleiro;
-    Controle controle;
-    Stage stage;
+    private Stage stage;
+    private OrthographicCamera camera;
+    private Tabuleiro tabuleiro;
+    private IGameScreenControl control;
     private char direcao;
-
-    OrthographicCamera camera;
 
     public TelaJogo(final Criador jogo)
     {
         // conexões
         this.jogo = jogo;
-        this.controle = jogo.getControle();
+        control = jogo.getControle();
         stage = jogo.getStage();
         stage.clear();
 
@@ -34,8 +33,7 @@ public class TelaJogo extends TelaAbstrata
 
         // criação do tabuleiro
         tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
-        jogo.setTabuleiro(tabuleiro);
-        controle.conectaTabuleiro(tabuleiro);
+        control.conectaTabuleiro(tabuleiro);
 
         // desenho inicial do tabuleiro
         for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
@@ -51,8 +49,8 @@ public class TelaJogo extends TelaAbstrata
         stage.draw();
 		
         // adicionando os dois primeiros blocos
-        controle.spawnBloco();
-        controle.spawnBloco();
+        control.spawnBloco();
+        control.spawnBloco();
     }
 
     private void leComando()
@@ -60,30 +58,26 @@ public class TelaJogo extends TelaAbstrata
         if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
         {
             direcao = 'a';
-            controle.realizaComando(direcao);
+            control.realizaComando(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
         {
             direcao = 'd';
-            controle.realizaComando(direcao);
+            control.realizaComando(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))
         {
             direcao = 'w';
-            controle.realizaComando(direcao);
+            control.realizaComando(direcao);
         }
             
         else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S))
         {
             direcao = 's';
-            controle.realizaComando(direcao);
+            control.realizaComando(direcao);
         }
-        // else if(Gdx.input.isKeyPressed())
-        // {
-        //     // System.out.println("Digite um movimento válido no teclado: W, A, S, D ou setas de direção")
-        // }
     }
 
     @Override

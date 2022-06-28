@@ -4,28 +4,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoBomba implements IBlocosTimer
+public class BlocoBomba implements IBombControl
 {
-    private static IBlocosTimer instance;
+    private static IBombControl instance;
     private String id = "bomba";
-    private int vida = 3;
-    private int linha;
-    private int coluna;
-    private boolean ativo = false;
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
+    private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;
     private float posY;
     private float size;
-
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
-    private Image imagem = new Image(textura);
+    private int vida = 3;
+    private int linha;
+    private int coluna;
+    private boolean ativo = false;
     
+
     // para implementar o design pattern singleton, é necessário um construtor privado
     private BlocoBomba()
     {}
     
     // implementação do design pattern singleton, garantindo que só uma instância de bomba exista
-    public static IBlocosTimer getInstance()
+    public static IBombControl getInstance()
     {
         if (instance == null)
         {
@@ -33,9 +33,72 @@ public class BlocoBomba implements IBlocosTimer
         }
         return instance;
     }
-        public Object getId()
+    
+    public Object getId()
     {
         return id;
+    }
+
+    public Texture getTextura() {
+        return textura;
+    }
+
+    public void setTextura(Texture textura) {
+        this.textura = textura;
+    }
+
+    public boolean getJuntado()
+    {
+        return juntado;
+    }
+
+    public void setJuntado(boolean info)
+    {
+        juntado = info;
+    }
+
+    public Image getImagem()
+    {
+        return imagem;
+    }
+
+    public void setImagem(Image imagem)
+    {
+        this.imagem = imagem;
+    }
+
+    public float getPosX()
+    {
+        return posX;
+    }
+
+    public void setPosX(float posX)
+    {
+        this.posX = posX;
+        this.getImagem().setX(posX);
+    }
+
+    public float getPosY()
+    {
+        return posY;
+    }
+
+    public void setPosY(float posY)
+    {
+        this.posY = posY;
+        this.getImagem().setY(posY);
+    }
+
+    public float getSize()
+    {
+        return size;
+    }
+
+    public void setSize(float size)
+    {
+        this.size = size;
+        this.getImagem().setWidth(size);
+        this.getImagem().setHeight(size);
     }
 
     // a bomba tem 3 vidas até explodir
@@ -47,17 +110,6 @@ public class BlocoBomba implements IBlocosTimer
     public void setVida(int mudanca)
     {
         vida += mudanca;
-    }
-
-    // a bomba pode estar ativa, ou seja, participando do tabuleiro, ou não ativa
-    public boolean getAtivo()
-    {
-        return ativo;
-    }
-
-    public void setAtivo(boolean info)
-    {
-        ativo = info;
     }
 
     public int getLinha()
@@ -80,66 +132,15 @@ public class BlocoBomba implements IBlocosTimer
         this.coluna = coluna;
     }
 
-    public void setJuntado(boolean info)
+    // a bomba pode estar ativa, ou seja, participando do tabuleiro, ou não ativa
+    public boolean getAtivo()
     {
-        juntado = info;
-    }
-    
-    public boolean getJuntado()
-    {
-        return juntado;
+        return ativo;
     }
 
-    public Texture getTextura() {
-        return textura;
-    }
-
-    public void setTextura(Texture textura) {
-        this.textura = textura;
-    }
-
-    public Image getImagem()
+    public void setAtivo(boolean info)
     {
-        return imagem;
-    }
-
-    public void setImagem(Image imagem)
-    {
-        this.imagem = imagem;
-    }
-
-    public void setPosX(float posX)
-    {
-        this.posX = posX;
-        this.getImagem().setX(posX);
-    }
-
-    public float getPosX()
-    {
-        return posX;
-    }
-
-    public void setPosY(float posY)
-    {
-        this.posY = posY;
-        this.getImagem().setY(posY);
-    }
-
-    public float getPosY()
-    {
-        return posY;
-    }
-
-    public void setSize(float size)
-    {
-        this.size = size;
-        this.getImagem().setWidth(size);
-        this.getImagem().setHeight(size);
-    }
-
-    public float getSize()
-    {
-        return size;
+        ativo = info;
     }
 
     // depois da bomba explodir, seus atributos são renovados, esparando ser posta de volta ao tabuleiro.

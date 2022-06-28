@@ -13,9 +13,8 @@ import com.poo.jogo2048.Criador;
 public class TelaPerdeu extends TelaAbstrata
 {
     final Criador jogo;
-
-    OrthographicCamera camera;
     Stage stage;
+    OrthographicCamera camera;
 
     public TelaPerdeu(final Criador jogo)
     {

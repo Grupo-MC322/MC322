@@ -10,17 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.poo.jogo2048.Controle;
+import com.poo.jogo2048.ISettingScreenControl;
 import com.poo.jogo2048.Criador;
 
 public class TelaConfiguracoes extends TelaAbstrata
 {
     private final Criador jogo;
-    private Controle controle;
+    private ISettingScreenControl control;
     private Stage stage;
     private SpriteBatch batch;
 
-    OrthographicCamera camera;
+    private OrthographicCamera camera;
 
     private Texture txtrFundo;
     private Texture txtr4x4;
@@ -36,7 +36,7 @@ public class TelaConfiguracoes extends TelaAbstrata
     public TelaConfiguracoes(final Criador jogo)
     {
         this.jogo = jogo;
-        this.controle = jogo.getControle();
+        control = jogo.getControle();
         jogo.getStage().clear();
         this.stage = jogo.getStage();
         this.batch = jogo.getBatch();
@@ -61,10 +61,10 @@ public class TelaConfiguracoes extends TelaAbstrata
         txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_2.png"));
 
         // setup inicial das opções de blocos
-        controle.setBotaoBombaSelected(true);
-        controle.setBotaoDeletaSelected(true);
-        controle.setBotaoTempoSelected(true);
-        controle.setBotao2xSelected(true);
+        control.setBotaoSelected("bomba", true);
+        control.setBotaoSelected("deleta", true);
+        control.setBotaoSelected("tempo", true);
+        control.setBotaoSelected("2x", true);
     }
 
     @Override
@@ -175,14 +175,14 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(controle.getBotaoBombaSelected())
+                if(control.getBotaoSelected("bomba"))
                 {
-                    controle.setBotaoBombaSelected(false);
+                    control.setBotaoSelected("bomba", false);;
                     txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba_unselected.png"));
                 }
                 else
                 {
-                    controle.setBotaoBombaSelected(true);
+                    control.setBotaoSelected("bomba", true);;
                     txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
                 }
             }
@@ -192,14 +192,14 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(controle.getBotaoDeletaSelected())
+                if(control.getBotaoSelected("deleta"))
                 {
-                    controle.setBotaoDeletaSelected(false);
+                    control.setBotaoSelected("deleta", false);;
                     txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta_unselected.png"));
                 }
                 else
                 {
-                    controle.setBotaoDeletaSelected(true);
+                    control.setBotaoSelected("deleta", true);;
                     txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
                 }
             }
@@ -209,14 +209,14 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(controle.getBotaoTempoSelected())
+                if(control.getBotaoSelected("tempo"))
                 {
-                    controle.setBotaoTempoSelected(false);
+                    control.setBotaoSelected("tempo", false);
                     txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo_unselected.png"));
                 }
                 else
                 {
-                    controle.setBotaoTempoSelected(true);
+                    control.setBotaoSelected("tempo", true);
                     txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
                 }
             }
@@ -226,14 +226,14 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(controle.getBotao2xSelected())
+                if(control.getBotaoSelected("2x"))
                 {
-                    controle.setBotao2xSelected(false);
+                    control.setBotaoSelected("2x", false);
                     txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x_unselected.png"));
                 }
                 else
                 {
-                    controle.setBotao2xSelected(true);
+                    control.setBotaoSelected("2x", true);
                     txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
                 }
             }

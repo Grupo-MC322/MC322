@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class BlocoDobro implements IBlocos
 {
     private String id = "2x";
-    private boolean juntado = false;
-    Texture textura = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
     private Image imagem = new Image(textura);
+    private boolean juntado = false;
     private float posX;
     private float posY;
     private float size;
@@ -18,28 +18,29 @@ public class BlocoDobro implements IBlocos
     {
         return id;
     }
-
-    public void setJuntado(boolean info)
-    {
-        juntado = info;
-    }
     
-    public boolean getJuntado()
-    {
-        return juntado;
-    }
-
     public Texture getTextura() {
         return textura;
-    }
-
-    public void setTextura(Texture textura) {
-        this.textura = textura;
     }
 
     public Image getImagem()
     {
         return imagem;
+    }
+
+    public boolean getJuntado()
+    {
+        return juntado;
+    }
+
+    public void setJuntado(boolean info)
+    {
+        juntado = info;
+    }
+
+    public float getPosX()
+    {
+        return posX;
     }
 
     public void setPosX(float posX)
@@ -48,9 +49,9 @@ public class BlocoDobro implements IBlocos
         this.getImagem().setX(posX);
     }
 
-    public float getPosX()
+    public float getPosY()
     {
-        return posX;
+        return posY;
     }
 
     public void setPosY(float posY)
@@ -59,9 +60,9 @@ public class BlocoDobro implements IBlocos
         this.getImagem().setY(posY);
     }
 
-    public float getPosY()
+    public float getSize()
     {
-        return posY;
+        return size;
     }
 
     public void setSize(float size)
@@ -69,10 +70,5 @@ public class BlocoDobro implements IBlocos
         this.size = size;
         this.getImagem().setWidth(size);
         this.getImagem().setHeight(size);
-    }
-
-    public float getSize()
-    {
-        return size;
     }
 }
