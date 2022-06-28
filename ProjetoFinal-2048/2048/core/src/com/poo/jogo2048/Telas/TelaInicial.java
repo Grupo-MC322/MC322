@@ -8,13 +8,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.poo.jogo2048.jogo2048;
+import com.poo.jogo2048.Criador;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 
 public class TelaInicial extends TelaAbstrata
 {
-    private final jogo2048 jogo;
+    private final Criador jogo;
     private Stage stage;
     private SpriteBatch batch;
 
@@ -28,7 +28,7 @@ public class TelaInicial extends TelaAbstrata
     private float xBotaoInstr;
     private float yBotaoInstr;
 
-    public TelaInicial(final jogo2048 jogo)
+    public TelaInicial(final Criador jogo)
     {
         this.jogo = jogo;
         jogo.getStage().clear();

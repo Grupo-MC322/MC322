@@ -3,7 +3,7 @@ package com.poo.jogo2048;
 import com.poo.jogo2048.PastaBlocos.BlocoGenerico;
 import com.poo.jogo2048.PastaBlocos.IBlocos;
 
-public class Tabuleiro
+public class Tabuleiro implements IBoardControl
 {
     private IBlocos[][] matriz;
     private int tamanho;

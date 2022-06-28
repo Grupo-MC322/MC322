@@ -9,16 +9,16 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.poo.jogo2048.jogo2048;
+import com.poo.jogo2048.Criador;
 
 public class TelaGanhou extends TelaAbstrata
 {
-    final jogo2048 jogo;
+    final Criador jogo;
 
     OrthographicCamera camera;
     Stage stage;
 
-    public TelaGanhou(final jogo2048 jogo)
+    public TelaGanhou(final Criador jogo)
     {
         // conexões
         this.jogo = jogo;

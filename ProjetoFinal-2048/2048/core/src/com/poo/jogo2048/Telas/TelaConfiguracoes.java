@@ -11,11 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.Controle;
-import com.poo.jogo2048.jogo2048;
+import com.poo.jogo2048.Criador;
 
 public class TelaConfiguracoes extends TelaAbstrata
 {
-    private final jogo2048 jogo;
+    private final Criador jogo;
     private Controle controle;
     private Stage stage;
     private SpriteBatch batch;
@@ -33,7 +33,7 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtr2x;
     private Texture txtrJogar;
 
-    public TelaConfiguracoes(final jogo2048 jogo)
+    public TelaConfiguracoes(final Criador jogo)
     {
         this.jogo = jogo;
         this.controle = jogo.getControle();

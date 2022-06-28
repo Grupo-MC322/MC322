@@ -8,16 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.poo.jogo2048.jogo2048;
+import com.poo.jogo2048.Criador;
 
 public class TelaPerdeu extends TelaAbstrata
 {
-    final jogo2048 jogo;
+    final Criador jogo;
 
     OrthographicCamera camera;
     Stage stage;
 
-    public TelaPerdeu(final jogo2048 jogo)
+    public TelaPerdeu(final Criador jogo)
     {
         // conexões
         this.jogo = jogo;

@@ -9,6 +9,6 @@ public class DesktopLauncher {
 		config.setTitle("2048");
 		config.setWindowedMode(500, 500);
 		config.setResizable(true);
-		new Lwjgl3Application(new jogo2048(), config);
+		new Lwjgl3Application(new Criador(), config);
 	}
 }

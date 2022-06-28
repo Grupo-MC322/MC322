@@ -18,8 +18,8 @@ import com.poo.jogo2048.Telas.TelaPerdeu;
 
 public class Controle
 {
-    final jogo2048 jogo;
-    private Tabuleiro tabuleiro;
+    final Criador jogo;
+    private IBoardControl board;
     private SpriteBatch batch;
     private Stage stage;
 
@@ -37,7 +37,7 @@ public class Controle
     private boolean vazioInexistente;
     private boolean algoMudou;
     
-    public Controle(final jogo2048 jogo)
+    public Controle(final Criador jogo)
     {
         this.jogo = jogo;
         this.batch = jogo.getBatch();
@@ -47,16 +47,16 @@ public class Controle
         blocoTempo = BlocoTempo.getInstance();
     }
 
-    /* Adiciona um bloco entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro. */
+    // Adiciona um bloco entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro.
     public void spawnBloco()
     {
         IBlocos blocoGerado = new BlocoGenerico(0);
         Random random = new Random();
-        int linha = random.nextInt(tabuleiro.getTamanho());
-		int coluna = random.nextInt(tabuleiro.getTamanho());
+        int linha = random.nextInt(board.getTamanho());
+		int coluna = random.nextInt(board.getTamanho());
 
         // definição das probabilidades de cada bloco ser adicionado
-		if (Objects.equals(tabuleiro.getId(linha, coluna), 0))
+		if (Objects.equals(board.getId(linha, coluna), 0))
 		{
 			int index = random.nextInt(100);
             if(index < 10)
@@ -101,9 +101,9 @@ public class Controle
             }
             
             // adicionando o novo bloco ao tabuleiro e animando
-            tabuleiro.setBloco(linha, coluna, blocoGerado);
-            tabuleiro.getBloco(linha, coluna).getImagem().setScale(.75f);
-			tabuleiro.getBloco(linha, coluna).getImagem().addAction(Actions.scaleTo(1, 1, .25f));
+            board.setBloco(linha, coluna, blocoGerado);
+            board.getBloco(linha, coluna).getImagem().setScale(.75f);
+			board.getBloco(linha, coluna).getImagem().addAction(Actions.scaleTo(1, 1, .25f));
 		}
 		else
 		{
@@ -117,9 +117,9 @@ public class Controle
 
 		if(direcao == 'w')
         {
-            for(int coluna = tabuleiro.getTamanho() - 1; coluna >= 0; coluna--)
+            for(int coluna = board.getTamanho() - 1; coluna >= 0; coluna--)
             {
-                for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+                for(int linha = 0; linha < board.getTamanho(); linha++)
                 {
                     jogada(linha, coluna, direcao);
                 }
@@ -127,9 +127,9 @@ public class Controle
         }
         else if(direcao == 's')
         {
-            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            for(int coluna = 0; coluna < board.getTamanho(); coluna++)
             {
-                for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
+                for(int linha = board.getTamanho() - 1; linha >= 0; linha--)
                 {
                     jogada(linha, coluna, direcao);
                 }
@@ -137,9 +137,9 @@ public class Controle
         }
         else if(direcao == 'a')
         {
-            for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+            for(int linha = 0; linha < board.getTamanho(); linha++)
             {
-                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                for(int coluna = 0; coluna < board.getTamanho(); coluna++)
                 {
                     jogada(linha, coluna, direcao);
                 }
@@ -147,9 +147,9 @@ public class Controle
         }
         else if(direcao == 'd')
         {
-            for(int linha = tabuleiro.getTamanho() - 1; linha >= 0; linha--)
+            for(int linha = board.getTamanho() - 1; linha >= 0; linha--)
             {
-                for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+                for(int coluna = 0; coluna < board.getTamanho(); coluna++)
                 {
                     jogada(linha, coluna, direcao);
                 }
@@ -166,7 +166,7 @@ public class Controle
 
     private void jogada(int linha, int coluna, char direcao)
     {
-        if(!Objects.equals(tabuleiro.getId(linha, coluna), 0) && tabuleiro.getBloco(linha, coluna).getJuntado() == false)
+        if(!Objects.equals(board.getId(linha, coluna), 0) && board.getBloco(linha, coluna).getJuntado() == false)
         {
             realizaComando(direcao, linha, coluna, batch, stage);
         }
@@ -176,12 +176,12 @@ public class Controle
     {
         planejaMovimento(direcao, linhaIni, colunaIni);
 
-        if(0 <= linhaFim && linhaFim < tabuleiro.getTamanho() && 0 <= colunaFim && colunaFim < tabuleiro.getTamanho())
+        if(0 <= linhaFim && linhaFim < board.getTamanho() && 0 <= colunaFim && colunaFim < board.getTamanho())
         {
-            if(tabuleiro.getBloco(linhaIni, colunaIni) instanceof IBlocosTimer && (Objects.equals(tabuleiro.getId(linhaFim, colunaFim), 0) || Objects.equals(tabuleiro.getId(linhaFim, colunaFim), "deleta") || Objects.equals(tabuleiro.getId(linhaFim, colunaFim), "2x")))
+            if(board.getBloco(linhaIni, colunaIni) instanceof IBlocosTimer && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
             {
-                ((IBlocosTimer) tabuleiro.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
-                ((IBlocosTimer) tabuleiro.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
+                ((IBlocosTimer) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
+                ((IBlocosTimer) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
             }
             movimenta(direcao, linhaIni, colunaIni, batch, stage);
         }
@@ -214,76 +214,76 @@ public class Controle
     private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
     {
         // animação
-        float posicaoXBloco = ((500 * 0.05f) + (500 * 0.87f / tabuleiro.getTamanho()) * linhaFim + (500 * 0.01f) * linhaFim);
-        float posicaoYBloco = ((500 * 0.05f) + (500 * 0.87f / tabuleiro.getTamanho()) * colunaFim + (500 * 0.01f) * colunaFim);
+        float posicaoXBloco = ((500 * 0.05f) + (500 * 0.87f / board.getTamanho()) * linhaFim + (500 * 0.01f) * linhaFim);
+        float posicaoYBloco = ((500 * 0.05f) + (500 * 0.87f / board.getTamanho()) * colunaFim + (500 * 0.01f) * colunaFim);
         MoveToAction juntaBloco = new MoveToAction();
         juntaBloco.setPosition(posicaoXBloco,posicaoYBloco);
         juntaBloco.setDuration(0.25f);
         juntaBloco.setInterpolation(Interpolation.smooth);
-        tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(juntaBloco);
+        board.getBloco(linhaIni, colunaIni).getImagem().addAction(juntaBloco);
         SequenceAction animaBloco = new SequenceAction(juntaBloco, Actions.removeActor());
 
         // quando está vazio na frente, livre para continuar se movendo
-        if(Objects.equals(tabuleiro.getId(linhaFim, colunaFim), 0))
+        if(Objects.equals(board.getId(linhaFim, colunaFim), 0))
         {
-            tabuleiro.setBloco(linhaFim, colunaFim, tabuleiro.getBloco(linhaIni, colunaIni));
-            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
+            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             realizaComando(direcao, linhaFim, colunaFim, batch, stage);
             algoMudou = true;
         }
 
         // quando ambos os blocos são iguais e podem se juntar
-        else if(Objects.equals(tabuleiro.getId(linhaFim, colunaFim), tabuleiro.getId(linhaIni, colunaIni)))
+        else if(Objects.equals(board.getId(linhaFim, colunaFim), board.getId(linhaIni, colunaIni)))
         {
-            tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            if(tabuleiro.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
+            if(board.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
             {
-                ((BlocoGenerico) tabuleiro.getBloco(linhaFim, colunaFim)).dobra();
+                ((BlocoGenerico) board.getBloco(linhaFim, colunaFim)).dobra();
             }
-            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
-            tabuleiro.getBloco(linhaFim, colunaFim).setJuntado(true);
+            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.getBloco(linhaFim, colunaFim).setJuntado(true);
             algoMudou = true;
         }
 
         // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
-        else if(Objects.equals(tabuleiro.getId(linhaFim, colunaFim), "deleta") || Objects.equals(tabuleiro.getId(linhaIni, colunaIni), "deleta"))
+        else if(Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaIni, colunaIni), "deleta"))
         {
-            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
-            tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            tabuleiro.setBloco(linhaFim, colunaFim, new BlocoGenerico(0));
+            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
+            board.setBloco(linhaFim, colunaFim, new BlocoGenerico(0));
             algoMudou = true;
         }
 
         // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
-        else if(Objects.equals(tabuleiro.getId(linhaFim, colunaFim), "2x"))
+        else if(Objects.equals(board.getId(linhaFim, colunaFim), "2x"))
         {
-            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            if(tabuleiro.getBloco(linhaIni, colunaIni) instanceof BlocoGenerico)
+            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            if(board.getBloco(linhaIni, colunaIni) instanceof BlocoGenerico)
             {
-                ((BlocoGenerico) tabuleiro.getBloco(linhaIni, colunaIni)).dobra();
+                ((BlocoGenerico) board.getBloco(linhaIni, colunaIni)).dobra();
             }
-            tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            tabuleiro.setBloco(linhaFim, colunaFim, tabuleiro.getBloco(linhaIni, colunaIni));
-            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(Actions.removeActor());
-            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
-            tabuleiro.getBloco(linhaIni, colunaIni).setJuntado(true);
+            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
+            board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
+            board.getBloco(linhaIni, colunaIni).getImagem().addAction(Actions.removeActor());
+            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.getBloco(linhaIni, colunaIni).setJuntado(true);
             algoMudou = true;
         }
         
         // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(Objects.equals(tabuleiro.getId(linhaIni, colunaIni), "2x"))
+        else if(Objects.equals(board.getId(linhaIni, colunaIni), "2x"))
         {
-            tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
-            tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            if(tabuleiro.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
+            if(board.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
             {
-                ((BlocoGenerico) tabuleiro.getBloco(linhaFim, colunaFim)).dobra();
+                ((BlocoGenerico) board.getBloco(linhaFim, colunaFim)).dobra();
             }
-            tabuleiro.getBloco(linhaFim, colunaFim).setJuntado(true);
+            board.getBloco(linhaFim, colunaFim).setJuntado(true);
             algoMudou = true;
         }
     }
@@ -294,7 +294,7 @@ public class Controle
         {
             // diminui 1
             blocoBomba.setVida(-1);
-            tabuleiro.getBloco(blocoBomba.getLinha(), blocoBomba.getColuna()).getImagem().addAction(Actions.removeActor());
+            board.getBloco(blocoBomba.getLinha(), blocoBomba.getColuna()).getImagem().addAction(Actions.removeActor());
 
             // setup das imagens para identificação do estado do bloco
             if(blocoBomba.getVida() == 2)
@@ -310,7 +310,7 @@ public class Controle
         {
             // diminui 1
             blocoTempo.setVida(-1);
-            tabuleiro.getBloco(blocoTempo.getLinha(), blocoTempo.getColuna()).getImagem().addAction(Actions.removeActor());
+            board.getBloco(blocoTempo.getLinha(), blocoTempo.getColuna()).getImagem().addAction(Actions.removeActor());
 
             // setup das imagens para identificação do estado do bloco
             if(blocoTempo.getVida() == 3)
@@ -336,7 +336,7 @@ public class Controle
         {
             algoMudou = true;
             blocoTempo.reset();
-            tabuleiro.setBloco(blocoTempo.getLinha(), blocoTempo.getColuna(), new BlocoGenerico(0));
+            board.setBloco(blocoTempo.getLinha(), blocoTempo.getColuna(), new BlocoGenerico(0));
         }
     }
 
@@ -372,30 +372,30 @@ public class Controle
 
     private void explode(int linha, int coluna)
     {
-        if(linha >= 0 && linha < tabuleiro.getTamanho() && coluna >= 0 && coluna < tabuleiro.getTamanho())
+        if(linha >= 0 && linha < board.getTamanho() && coluna >= 0 && coluna < board.getTamanho())
         {
             SequenceAction animaExplosao = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
-            tabuleiro.getBloco(linha, coluna).getImagem().addAction(animaExplosao);
-            tabuleiro.setBloco(linha, coluna, new BlocoGenerico(0));
+            board.getBloco(linha, coluna).getImagem().addAction(animaExplosao);
+            board.setBloco(linha, coluna, new BlocoGenerico(0));
         }
     }
 
     public void percorreTabuleiro()
     {
         vazioInexistente = true;
-        for(int i = 0; i < tabuleiro.getTamanho(); i++)
+        for(int i = 0; i < board.getTamanho(); i++)
         {
-            for(int j = 0; j < tabuleiro.getTamanho(); j++)
+            for(int j = 0; j < board.getTamanho(); j++)
             {
-                if(Objects.equals(tabuleiro.getId(i, j), 2048))
+                if(Objects.equals(board.getId(i, j), 2048))
                 {
                     jogo.setScreen(new TelaGanhou(jogo));
                 }
-                else if(Objects.equals(tabuleiro.getId(i, j), 0))
+                else if(Objects.equals(board.getId(i, j), 0))
                 {
                     vazioInexistente = false;
                 }
-                tabuleiro.getBloco(i, j).setJuntado(false);
+                board.getBloco(i, j).setJuntado(false);
             }
         }
         if(vazioInexistente)
@@ -444,11 +444,8 @@ public class Controle
         this.botao2xSelected = botao2xSelected;
     }
 
-    public void setTabuleiro(Tabuleiro tabuleiro) {
-        this.tabuleiro = tabuleiro;
+    public void conectaTabuleiro(Tabuleiro tabuleiro)
+    {
+        board = tabuleiro;
     }
 }
-
-
-
-// fazer exceções para entradas, por exemplo, de direção do movimenti

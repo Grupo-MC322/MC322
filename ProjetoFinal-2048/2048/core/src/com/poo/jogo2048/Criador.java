@@ -10,13 +10,13 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.poo.jogo2048.Telas.TelaInicial;
 
 
-public class jogo2048 extends Game
+public class Criador extends Game
 {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
 	private Tabuleiro tabuleiro;
-	private int tamanhoTabuleiro = 4;
+	private int tamanhoTabuleiro;
 	private Controle controle;
 	private Music musica;
 
@@ -48,19 +48,23 @@ public class jogo2048 extends Game
 		this.setScreen(new TelaInicial(this));
 	}
 
-	public SpriteBatch getBatch() {
+	public SpriteBatch getBatch()
+	{
 		return batch;
 	}
 
-	public Stage getStage() {
+	public Stage getStage()
+	{
 		return stage;
 	}
 
-	public Tabuleiro getTabuleiro() {
+	public Tabuleiro getTabuleiro()
+	{
 		return tabuleiro;
 	}
 
-	public void setTabuleiro(Tabuleiro tabuleiro) {
+	public void setTabuleiro(Tabuleiro tabuleiro)
+	{
 		this.tabuleiro = tabuleiro;
 	}
 
@@ -74,13 +78,14 @@ public class jogo2048 extends Game
 		return tamanhoTabuleiro;
 	}
 
-	public Controle getControle() {
+	public Controle getControle()
+	{
 		return controle;
 	}
 
 	
 	@Override
-	public void dispose ()
+	public void dispose()
 	{
 		batch.dispose();
 	}

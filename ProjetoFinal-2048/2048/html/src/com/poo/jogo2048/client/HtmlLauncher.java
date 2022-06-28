@@ -3,7 +3,7 @@ package com.poo.jogo2048.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import com.poo.jogo2048.jogo2048;
+import com.poo.jogo2048.Criador;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -17,6 +17,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new jogo2048();
+                return new Criador();
         }
 }
