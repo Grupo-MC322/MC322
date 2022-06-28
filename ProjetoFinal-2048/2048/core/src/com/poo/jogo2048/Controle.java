@@ -13,13 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.poo.jogo2048.PastaBlocos.*;
-import com.poo.jogo2048.Telas.TelaGanhou;
 import com.poo.jogo2048.Telas.TelaPerdeu;
 
 public class Controle implements IGameScreenControl, ISettingScreenControl
 {
-    final ICreatorControl game;
-    final Criador jogo;
+    private final ICreatorControl game;
+    private final Criador jogo;
     private Stage stage;
     private SpriteBatch batch;
     private IBoardControl board;
@@ -37,6 +36,8 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 
     private boolean vazioInexistente;
     private boolean algoMudou;
+
+    private boolean ganhou = false;
 
     public Controle(final Criador jogo)
     {
@@ -392,9 +393,9 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         {
             for(int j = 0; j < board.getTamanho(); j++)
             {
-                if(Objects.equals(board.getId(i, j), 2048))
+                if(Objects.equals(board.getId(i, j), 16))
                 {
-                    jogo.setScreen(new TelaGanhou(jogo));
+                    ganhou = true;
                 }
                 else if(Objects.equals(board.getId(i, j), 0))
                 {
@@ -448,5 +449,14 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     public void conectaTabuleiro(Tabuleiro tabuleiro)
     {
         board = tabuleiro;
+    }
+
+    public boolean getGanhou()
+    {
+        return ganhou;
+    }
+
+    public void setGanhou(boolean ganhou) {
+        this.ganhou = ganhou;
     }
 }

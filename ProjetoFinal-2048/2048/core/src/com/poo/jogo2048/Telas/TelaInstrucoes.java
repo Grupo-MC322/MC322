@@ -1,6 +1,7 @@
 package com.poo.jogo2048.Telas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -103,6 +104,24 @@ public class TelaInstrucoes extends TelaAbstrata
     @Override
     public void render(float delta)
     {
+        // input das teclas para mudar as páginas
+        if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
+        {
+            if(pagina < 4)
+            {
+                pagina++;
+                criaStage();
+            }
+        }
+        else if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
+        {
+            if(pagina > 1)
+            {
+                pagina--;
+                criaStage();
+            }
+        }
+
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
