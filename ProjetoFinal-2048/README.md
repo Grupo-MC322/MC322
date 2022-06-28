@@ -19,14 +19,10 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 ## Slides do projeto
 
 ### Slides da prévia
-> (pdf) https://drive.google.com/file/d/1xMluYj1Z1OJNHPcvM18lPPQy0MTZXUy0/view?usp=sharing
-> 
-> (slides interativo)https://www.canva.com/design/DAFBkFfnESE/NaXgOqQKhrpLeGiPTONJdQ/view?utm_content=DAFBkFfnESE&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu
+> (slides)https://www.canva.com/design/DAFBkFfnESE/NaXgOqQKhrpLeGiPTONJdQ/view?utm_content=DAFBkFfnESE&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu
 
 ### Slides da Apresentação Final
-> (pdf)
-> 
-> (slides interativos) https://www.canva.com/design/DAFE2QOQieI/DgoEiCKvg8lAzDl2039lpw/view?utm_content=DAFE2QOQieI&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu
+> (slides) https://www.canva.com/design/DAFE2QOQieI/DgoEiCKvg8lAzDl2039lpw/view?utm_content=DAFE2QOQieI&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu
 
 ## Diagramas
 
