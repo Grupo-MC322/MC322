@@ -2,7 +2,6 @@ package com.poo.jogo2048.Telas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,9 +11,8 @@ import com.poo.jogo2048.Criador;
 
 public class TelaPerdeu extends TelaAbstrata
 {
-    final Criador jogo;
-    Stage stage;
-    OrthographicCamera camera;
+    private final Criador jogo;
+    private Stage stage;
 
     public TelaPerdeu(final Criador jogo)
     {

@@ -75,10 +75,4 @@ public class Criador extends Game implements ISettingScreenCreator, ICreatorCont
 	public Music getMusic() {
 		return music;
 	}
-	
-	@Override
-	public void dispose()
-	{
-		batch.dispose();
-	}
 }

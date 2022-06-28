@@ -13,7 +13,6 @@ import com.poo.jogo2048.IGameScreenControl;
 
 public class TelaJogo extends TelaAbstrata
 {
-    final Criador jogo;
     private Stage stage;
     private OrthographicCamera camera;
     private Tabuleiro tabuleiro;
@@ -23,7 +22,6 @@ public class TelaJogo extends TelaAbstrata
     public TelaJogo(final Criador jogo)
     {
         // conexões
-        this.jogo = jogo;
         control = jogo.getControle();
         stage = jogo.getStage();
         stage.clear();
