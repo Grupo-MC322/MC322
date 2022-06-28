@@ -9,20 +9,22 @@ public class BlocoBomba implements IBlocosTimer
     private static IBlocosTimer instance;
     private String id = "bomba";
     private int vida = 3;
-    private int coordX;
-    private int coordY;
+    private int linha;
+    private int coluna;
     private boolean ativo = false;
     private boolean juntado = false;
     private float posX;
     private float posY;
     private float size;
 
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba_1:3.png"));
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
     private Image imagem = new Image(textura);
     
+    // para implementar o design pattern singleton, é necessário um construtor privado
     private BlocoBomba()
     {}
     
+    // implementação do design pattern singleton, garantindo que só uma instância de bomba exista
     public static IBlocosTimer getInstance()
     {
         if (instance == null)
@@ -31,12 +33,12 @@ public class BlocoBomba implements IBlocosTimer
         }
         return instance;
     }
-    
-    public Object getId()
+        public Object getId()
     {
         return id;
     }
 
+    // a bomba tem 3 vidas até explodir
     public int getVida()
     {
         return vida;
@@ -47,6 +49,7 @@ public class BlocoBomba implements IBlocosTimer
         vida += mudanca;
     }
 
+    // a bomba pode estar ativa, ou seja, participando do tabuleiro, ou não ativa
     public boolean getAtivo()
     {
         return ativo;
@@ -57,26 +60,27 @@ public class BlocoBomba implements IBlocosTimer
         ativo = info;
     }
 
+    // como as bombas não se juntam com outras bombas, este método implementado pela interface fica vazio
     public void junta() {}
 
-    public int getCoordX()
+    public int getLinha()
     {
-        return coordX;
+        return linha;
     }
 
-    public void setCoordX(int x)
+    public void setLinha(int linha)
     {
-        coordX = x;
+        this.linha = linha;
     }
 
-    public int getCoordY()
+    public int getColuna()
     {
-        return coordY;
+        return coluna;
     }
 
-    public void setCoordY(int y)
+    public void setColuna(int coluna)
     {
-        coordY = y;
+        this.coluna = coluna;
     }
 
     public void setJuntado(boolean info)
@@ -141,6 +145,7 @@ public class BlocoBomba implements IBlocosTimer
         return size;
     }
 
+    // depois da bomba explodir, seus atributos são renovados, esparando e ser posta de volta ao tabuleiro.
     public void reset()
     {
         setVida(3);

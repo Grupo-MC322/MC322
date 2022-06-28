@@ -4,41 +4,102 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.poo.jogo2048.jogo2048;
 
 public class TelaInstrucoes extends TelaAbstrata
 {
+    final jogo2048 jogo;
     OrthographicCamera camera;
     Stage stage;
+    int pagina = 1;
+    Texture txtrFundo;
 
     public TelaInstrucoes(final jogo2048 jogo)
     {
+        this.jogo = jogo;
         jogo.getStage().clear();
         this.stage = jogo.getStage();
+
+        criaStage();
+    }
+
+    public void criaStage()
+    {
+        stage.clear();
+
+        /* adicionando os atores */
+        // fundo
+        if(pagina == 1)
+            txtrFundo = new Texture(Gdx.files.absolute("telas/fundo_instrucoes_1:4.png"));
+        else if(pagina == 2)
+            txtrFundo = new Texture(Gdx.files.absolute("telas/fundo_instrucoes_2:4.png"));
+        else if(pagina == 3)
+            txtrFundo = new Texture(Gdx.files.absolute("telas/fundo_instrucoes_3:4.png"));
+        else if(pagina == 4)
+            txtrFundo = new Texture(Gdx.files.absolute("telas/fundo_instrucoes_4:4.png"));
+
+        Image imgFundo = new Image(txtrFundo);
+        imgFundo.setPosition(0, 0);
+        imgFundo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.addActor(imgFundo);
+
+        // botão próxima página
+        Texture txtrBotaoProx = new Texture(Gdx.files.absolute("botoes/botao_proximo.png"));
+        Image botaoProx = new Image(txtrBotaoProx);
+        botaoProx.setPosition((stage.getWidth() / 2) + (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
+        botaoProx.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
+        stage.addActor(botaoProx);
+
+        // botão página anterior
+        Texture txtrBotaoAnt = new Texture(Gdx.files.absolute("botoes/botao_anterior.png"));
+        Image botaoAnt = new Image(txtrBotaoAnt);
+        botaoAnt.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.11f) - (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
+        botaoAnt.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
+        stage.addActor(botaoAnt);
+
+        // botão voltar
+        Texture txtrBotaoVoltar = new Texture(Gdx.files.absolute("botoes/botao_voltar.png"));
+        Image botaoVoltar = new Image(txtrBotaoVoltar);
+        botaoVoltar.setPosition((stage.getWidth() * 0.05f), stage.getHeight() * 0.85f);
+        botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+        stage.addActor(botaoVoltar);
         
-        Texture texture = new Texture(Gdx.files.absolute("blocos/1.png"));
-    
-        int X_left= Gdx.graphics.getWidth()/3-texture.getWidth()/2;
-        int X_right = Gdx.graphics.getWidth()*2/3-texture.getWidth()/2;
-        int Y_bottom = Gdx.graphics.getHeight()/3-texture.getHeight()/2;
-    
-        Image image1 = new Image(texture);
-        image1.setPosition(X_left,Y_bottom);
-        image1.setOrigin(image1.getWidth()/2,image1.getHeight()/2);
-        stage.addActor(image1);
-    
-        MoveToAction moveBottomRightAction = new MoveToAction();
-        moveBottomRightAction.setPosition(X_right,Y_bottom);
-        moveBottomRightAction.setDuration(1);
-        moveBottomRightAction.setInterpolation(Interpolation.smooth);
-        SequenceAction acao =  new SequenceAction(moveBottomRightAction, Actions.removeActor());
-        image1.addAction(acao);
+        /* configurações de input dos botões */
+        botaoProx.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(pagina < 4)
+                {
+                    pagina++;
+                    criaStage();
+                }
+            }
+        });
+
+        botaoAnt.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
+                if(pagina > 1)
+                {
+                    pagina--;
+                    criaStage();
+                }
+            }
+        });
+
+        botaoVoltar.addListener(new ClickListener()
+        {
+            public void clicked(InputEvent event, float x, float y)
+            {
+                jogo.setScreen(new TelaInicial(jogo));
+            }
+        });
     }
     
     @Override

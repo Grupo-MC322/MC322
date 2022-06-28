@@ -2,13 +2,16 @@ package com.poo.jogo2048;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.poo.jogo2048.Telas.TelaInicial;
 
 
 public class jogo2048 extends Game
 {
+	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
 	private Tabuleiro tabuleiro;
@@ -18,8 +21,10 @@ public class jogo2048 extends Game
 	@Override
 	public void create()
 	{
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 600, 600);
 		batch = new SpriteBatch();
-		stage = new Stage();
+		stage = new Stage(new StretchViewport(camera.viewportWidth, camera.viewportHeight));
 		controle = new Controle(this);
 
 		Gdx.input.setInputProcessor(stage);

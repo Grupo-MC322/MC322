@@ -5,8 +5,6 @@ import java.util.Objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.Controle;
@@ -19,38 +17,40 @@ public class TelaJogo extends TelaAbstrata
     Tabuleiro tabuleiro;
     Controle controle;
     Stage stage;
-    SpriteBatch batch;
     private char direcao;
 
     OrthographicCamera camera;
 
-    private Texture txtrTabuleiro;
-
     public TelaJogo(final jogo2048 jogo)
     {
-        stage = new Stage();
-
+        // conexões
         this.jogo = jogo;
         this.controle = jogo.getControle();
-        this.batch = jogo.getBatch();
+        stage = jogo.getStage();
+        stage.clear();
 
         camera = new OrthographicCamera();
-		camera.setToOrtho(false, 400, 400);
+		camera.setToOrtho(false, 600, 600);
 
+        // criação do tabuleiro
         tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
         jogo.setTabuleiro(tabuleiro);
         controle.setTabuleiro(tabuleiro);
 
-        txtrTabuleiro = new Texture(Gdx.files.internal("tabuleiro_4x4.png"));
-        // if(tabuleiro.getTamanho() == 4)
-        // {
-        //     txtrTabuleiro = new Texture(Gdx.files.internal("tabuleiro_4x4.png"));
-        // }
-
-        // desenho inicial do tabuleiro vazio
-        // configurações de camera
+        // desenho inicial do tabuleiro
+        for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+        {
+            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            {
+                tabuleiro.getBloco(linha, coluna).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * linha + (camera.viewportWidth * 0.01) * linha));
+                tabuleiro.getBloco(linha, coluna).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * coluna + (camera.viewportHeight * 0.01) * coluna));
+                tabuleiro.getBloco(linha, coluna).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+                stage.addActor(tabuleiro.getBloco(linha, coluna).getImagem());
+            }
+        }
+        stage.draw();
 		
-
+        // adicionando os dois primeiros blocos
         controle.spawnBloco();
         controle.spawnBloco();
     }
@@ -93,14 +93,6 @@ public class TelaJogo extends TelaAbstrata
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
 
         camera.update();
-		batch.setProjectionMatrix(camera.combined);
-
-        batch.begin();
-        
-        
-        //batch.draw(txtrTabuleiro, 0, 0, camera.viewportWidth, camera.viewportHeight);
-
-        batch.end();
         
         // desenho do tabuleiro
         for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
@@ -115,10 +107,10 @@ public class TelaJogo extends TelaAbstrata
                     stage.addActor(tabuleiro.getBloco(linha, coluna).getImagem());
             }
         }
-
         stage.draw();
         stage.act();
 
+        // leitura da próxima jogada
         leComando();
 	}
 }

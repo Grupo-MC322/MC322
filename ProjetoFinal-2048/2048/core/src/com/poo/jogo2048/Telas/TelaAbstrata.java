@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public abstract class TelaAbstrata extends Stage implements Screen
 {
-
     protected TelaAbstrata()
     {
         super(new StretchViewport(400f, 400f, new OrthographicCamera()));

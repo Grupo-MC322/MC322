@@ -36,17 +36,17 @@ public class TelaInicial extends TelaAbstrata
         this.batch = jogo.getBatch();
 
         camera = new OrthographicCamera();
-		camera.setToOrtho(false, 400, 400);
+		camera.setToOrtho(false, 600, 600);
     
-        txtrFundo = new Texture(Gdx.files.internal("fundo_tela_inicio.png"));
+        txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_inicio.png"));
 
-        txtrBotaoConfig = new Texture(Gdx.files.internal("botao_configurar.png"));
-        xBotaoConfig = (float) ((stage.getWidth() / 2) - (stage.getWidth() * 0.5 / 2));
-        yBotaoConfig = (float) (stage.getHeight() * 0.44);
+        txtrBotaoConfig = new Texture(Gdx.files.internal("botoes/botao_configurar.png"));
+        xBotaoConfig = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
+        yBotaoConfig = stage.getHeight() * 0.44f;
 
-        txtrBotaoInstr = new Texture(Gdx.files.internal("botao_instrucoes.png"));
-        xBotaoInstr = (float) ((stage.getWidth() / 2) - (stage.getWidth() * 0.5 / 2));
-        yBotaoInstr = (float) (stage.getHeight() * 0.27);
+        txtrBotaoInstr = new Texture(Gdx.files.internal("botoes/botao_instrucoes.png"));
+        xBotaoInstr = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
+        yBotaoInstr = stage.getHeight() * 0.27f;
 
     }
 
@@ -61,9 +61,9 @@ public class TelaInicial extends TelaAbstrata
         // configurações do batch
 		batch.begin();
         
-        batch.draw(txtrFundo, 0, 0, 400, 400);
-        batch.draw(txtrBotaoConfig, xBotaoConfig, yBotaoConfig, (float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
-        batch.draw(txtrBotaoInstr, xBotaoInstr, yBotaoInstr, (float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
+        batch.draw(txtrFundo, 0, 0, 600, 600);
+        batch.draw(txtrBotaoConfig, xBotaoConfig, yBotaoConfig, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
+        batch.draw(txtrBotaoInstr, xBotaoInstr, yBotaoInstr, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
 
         // configurações do stage
         criaStage();
@@ -77,13 +77,13 @@ public class TelaInicial extends TelaAbstrata
         // botão configurar
         Image botaoConfig = new Image(txtrBotaoConfig);
         botaoConfig.setPosition(xBotaoConfig, yBotaoConfig);
-        botaoConfig.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
+        botaoConfig.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         stage.addActor(botaoConfig);
 
         // botão instruções
         Image botaoInstr = new Image(txtrBotaoInstr);
         botaoInstr.setPosition(xBotaoInstr, yBotaoInstr);
-        botaoInstr.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
+        botaoInstr.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         stage.addActor(botaoInstr);
 
         // configurações de input dos botões
@@ -98,7 +98,7 @@ public class TelaInicial extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setScreen(new TelaGanhou(jogo));
+                jogo.setScreen(new TelaInstrucoes(jogo));
             }
         });
     }

@@ -8,10 +8,10 @@ public interface IBlocosTimer extends IBlocos
     public void setVida(int mudanca);
     public boolean getAtivo();
     public void setAtivo(boolean info);
-    public int getCoordX();
-    public void setCoordX(int x);
-    public int getCoordY();
-    public void setCoordY(int y);
+    public int getLinha();
+    public void setLinha(int x);
+    public int getColuna();
+    public void setColuna(int y);
     public void setImagem(Image imagem);
     public void reset();
 }

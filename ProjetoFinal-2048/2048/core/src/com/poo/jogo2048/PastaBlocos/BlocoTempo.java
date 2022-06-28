@@ -9,8 +9,8 @@ public class BlocoTempo implements IBlocosTimer
     private static IBlocosTimer instance;
     private String id = "tempo";
     private int vida = 4;
-    private int coordX;
-    private int coordY;
+    private int linha;
+    private int coluna;
     private boolean ativo = false;
     private boolean juntado = false;
     private float posX;
@@ -44,27 +44,27 @@ public class BlocoTempo implements IBlocosTimer
 
     public void setVida(int mudanca)
     {
-        vida = vida + mudanca;
+        vida += mudanca;
     }
 
-    public int getCoordX()
+    public int getLinha()
     {
-        return coordX;
+        return linha;
     }
 
-    public void setCoordX(int x)
+    public void setLinha(int linha)
     {
-        coordX = x;
+        this.linha = linha;
     }
 
-    public int getCoordY()
+    public int getColuna()
     {
-        return coordY;
+        return coluna;
     }
 
-    public void setCoordY(int y)
+    public void setColuna(int coluna)
     {
-        coordY = y;
+        this.coluna = coluna;
     }
 
     public boolean getAtivo()

@@ -43,22 +43,22 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         // configurações de camera
         camera = new OrthographicCamera();
-		camera.setToOrtho(false, 400, 400);
+		camera.setToOrtho(false, 600, 600);
     
         // setup inicial das texturas
-        txtrFundo = new Texture(Gdx.files.internal("fundo_configuracoes.png"));
+        txtrFundo = new Texture(Gdx.files.internal("telas/fundo_configuracoes.png"));
 
-        txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4.png"));
-        txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
-        txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
-        txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
+        txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4.png"));
+        txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
+        txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
+        txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
 
         txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
         txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
         txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
         txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
-        txtrJogar = new Texture(Gdx.files.internal("botao_jogar.png"));
+        txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar.png"));
 
         // setup inicial das opções de blocos
         controle.setBotaoBombaSelected(true);
@@ -103,12 +103,20 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         // botão jogar
         Image botaoJogar = new Image(txtrJogar);
-        botaoJogar.setX((float) (400 / 2 - 0.37 * 200));
-        botaoJogar.setY((float) (0.1 * 400));
-        botaoJogar.setWidth((float) (0.37 * 400));
-        botaoJogar.setHeight((float) (0.1 * 400));
+        botaoJogar.setX(600 / 2 - 0.37f * 300);
+        botaoJogar.setY(0.1f * 600);
+        botaoJogar.setWidth((float) (0.37 * 600));
+        botaoJogar.setHeight((float) (0.1 * 600));
         botaoJogar.draw(batch, 1);
         stage.addActor(botaoJogar);
+
+        // botão voltar
+        Texture txtrBotaoVoltar = new Texture(Gdx.files.absolute("botoes/botao_voltar.png"));
+        Image botaoVoltar = new Image(txtrBotaoVoltar);
+        botaoVoltar.setPosition((stage.getWidth() * 0.05f), stage.getHeight() * 0.85f);
+        botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+        botaoVoltar.draw(batch, 1);
+        stage.addActor(botaoVoltar);
 
         // configurações de input dos botões
         botao4x4.addListener(new ClickListener()
@@ -117,10 +125,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             {
                 jogo.setTamanhoTabuleiro(4);
                 
-                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
             }
         });
 
@@ -130,10 +138,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             {
                 jogo.setTamanhoTabuleiro(5);
 
-                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
             }
         });
 
@@ -143,10 +151,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             {
                 jogo.setTamanhoTabuleiro(6);
 
-                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7_unselected.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
             }
         });
 
@@ -156,10 +164,10 @@ public class TelaConfiguracoes extends TelaAbstrata
             {
                 jogo.setTamanhoTabuleiro(7);
 
-                txtr4x4 = new Texture(Gdx.files.internal("selecao_4x4_unselected.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("selecao_5x5_unselected.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("selecao_6x6_unselected.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("selecao_7x7.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7.png"));
             }
         });
 
@@ -230,6 +238,9 @@ public class TelaConfiguracoes extends TelaAbstrata
                 }
             }
         });
+
+        // conexão para o botão voltar inicializar a tela inicial
+        adicionaConexao(botaoVoltar, "inicial");
 
         // conexão para o botao jogar inicializar a tela jogo
         adicionaConexao(botaoJogar, "jogo");
