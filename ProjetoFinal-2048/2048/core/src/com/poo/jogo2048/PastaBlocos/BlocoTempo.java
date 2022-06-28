@@ -19,9 +19,11 @@ public class BlocoTempo implements IBlocosTimer
     private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
     Image imagem = new Image(textura);
 
+    // para implementar o design pattern singleton, é necessário um construtor privado
     private BlocoTempo()
     {}
     
+    // implementação do design pattern singleton, garantindo que só uma instância de bloco tempo exista
     public static IBlocosTimer getInstance()
     {
         if (instance == null)
@@ -37,6 +39,7 @@ public class BlocoTempo implements IBlocosTimer
         return id;
     }
 
+    // o bloco tempo tem 4 vidas até desaparecer
     public int getVida()
     {
         return vida;
@@ -67,6 +70,7 @@ public class BlocoTempo implements IBlocosTimer
         this.coluna = coluna;
     }
 
+    // o bloco tempo pode estar ativo, ou seja, participando do tabuleiro, ou não ativo
     public boolean getAtivo()
     {
         return ativo;
@@ -76,8 +80,6 @@ public class BlocoTempo implements IBlocosTimer
     {
         ativo = info;
     }
-
-    public void junta() {}
 
     public void setJuntado(boolean info)
     {
@@ -141,6 +143,7 @@ public class BlocoTempo implements IBlocosTimer
         return size;
     }
 
+    // depois do bloco tempo sumir, seus atributos são renovados, esparando ser posto de volta ao tabuleiro
     public void reset()
     {
         vida = 4;

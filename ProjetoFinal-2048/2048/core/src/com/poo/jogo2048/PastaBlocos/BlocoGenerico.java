@@ -70,7 +70,7 @@ public class BlocoGenerico implements IBlocos
         }
     }
 
-    public void junta()
+    public void dobra()
     {
         setId(id * 2);
     }

@@ -19,8 +19,6 @@ public class BlocoDeleta implements IBlocos
         return id;
     }
 
-    public void junta() {}
-
     public void setJuntado(boolean info)
     {
         juntado = info;

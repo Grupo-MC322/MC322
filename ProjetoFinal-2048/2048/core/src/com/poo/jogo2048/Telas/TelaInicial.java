@@ -36,11 +36,11 @@ public class TelaInicial extends TelaAbstrata
         this.batch = jogo.getBatch();
 
         camera = new OrthographicCamera();
-		camera.setToOrtho(false, 600, 600);
+		camera.setToOrtho(false, 500, 500);
     
         txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_inicio.png"));
 
-        txtrBotaoConfig = new Texture(Gdx.files.internal("botoes/botao_configurar.png"));
+        txtrBotaoConfig = new Texture(Gdx.files.internal("botoes/botao_jogar_1.png"));
         xBotaoConfig = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
         yBotaoConfig = stage.getHeight() * 0.44f;
 
@@ -61,7 +61,7 @@ public class TelaInicial extends TelaAbstrata
         // configurações do batch
 		batch.begin();
         
-        batch.draw(txtrFundo, 0, 0, 600, 600);
+        batch.draw(txtrFundo, 0, 0, 500, 500);
         batch.draw(txtrBotaoConfig, xBotaoConfig, yBotaoConfig, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         batch.draw(txtrBotaoInstr, xBotaoInstr, yBotaoInstr, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
 

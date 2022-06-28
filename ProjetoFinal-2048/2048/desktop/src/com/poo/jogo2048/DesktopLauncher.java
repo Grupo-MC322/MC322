@@ -7,7 +7,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("2048");
-		config.setWindowedMode(600, 600);
+		config.setWindowedMode(500, 500);
 		config.setResizable(true);
 		new Lwjgl3Application(new jogo2048(), config);
 	}

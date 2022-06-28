@@ -182,7 +182,6 @@ public class Controle
             {
                 ((IBlocosTimer) tabuleiro.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
                 ((IBlocosTimer) tabuleiro.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
-                Gdx.app.log(tabuleiro.getBloco(linhaIni, colunaIni).getId().toString(), "\nini: "+linhaIni+colunaIni+"\nfim: "+linhaFim+colunaFim);
             }
             movimenta(direcao, linhaIni, colunaIni, batch, stage);
         }
@@ -215,8 +214,8 @@ public class Controle
     private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
     {
         // animação
-        float posicaoXBloco = ((600 * 0.05f) + (600 * 0.87f / tabuleiro.getTamanho()) * linhaFim + (600 * 0.01f) * linhaFim);
-        float posicaoYBloco = ((600 * 0.05f) + (600 * 0.87f / tabuleiro.getTamanho()) * colunaFim + (600 * 0.01f) * colunaFim);
+        float posicaoXBloco = ((500 * 0.05f) + (500 * 0.87f / tabuleiro.getTamanho()) * linhaFim + (500 * 0.01f) * linhaFim);
+        float posicaoYBloco = ((500 * 0.05f) + (500 * 0.87f / tabuleiro.getTamanho()) * colunaFim + (500 * 0.01f) * colunaFim);
         MoveToAction juntaBloco = new MoveToAction();
         juntaBloco.setPosition(posicaoXBloco,posicaoYBloco);
         juntaBloco.setDuration(0.25f);
@@ -238,7 +237,10 @@ public class Controle
         else if(Objects.equals(tabuleiro.getId(linhaFim, colunaFim), tabuleiro.getId(linhaIni, colunaIni)))
         {
             tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            tabuleiro.getBloco(linhaFim, colunaFim).junta();
+            if(tabuleiro.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+            {
+                ((BlocoGenerico) tabuleiro.getBloco(linhaFim, colunaFim)).dobra();
+            }
             tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
             tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             tabuleiro.getBloco(linhaFim, colunaFim).setJuntado(true);
@@ -259,7 +261,10 @@ public class Controle
         else if(Objects.equals(tabuleiro.getId(linhaFim, colunaFim), "2x"))
         {
             tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            tabuleiro.getBloco(linhaIni, colunaIni).junta();
+            if(tabuleiro.getBloco(linhaIni, colunaIni) instanceof BlocoGenerico)
+            {
+                ((BlocoGenerico) tabuleiro.getBloco(linhaIni, colunaIni)).dobra();
+            }
             tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
             tabuleiro.setBloco(linhaFim, colunaFim, tabuleiro.getBloco(linhaIni, colunaIni));
             tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(Actions.removeActor());
@@ -274,7 +279,10 @@ public class Controle
             tabuleiro.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
             tabuleiro.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
             tabuleiro.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            tabuleiro.getBloco(linhaFim, colunaFim).junta();
+            if(tabuleiro.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+            {
+                ((BlocoGenerico) tabuleiro.getBloco(linhaFim, colunaFim)).dobra();
+            }
             tabuleiro.getBloco(linhaFim, colunaFim).setJuntado(true);
             algoMudou = true;
         }

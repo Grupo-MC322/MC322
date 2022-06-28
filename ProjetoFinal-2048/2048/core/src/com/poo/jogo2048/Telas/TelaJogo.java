@@ -30,7 +30,7 @@ public class TelaJogo extends TelaAbstrata
         stage.clear();
 
         camera = new OrthographicCamera();
-		camera.setToOrtho(false, 600, 600);
+		camera.setToOrtho(false, 500, 500);
 
         // criação do tabuleiro
         tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
@@ -83,7 +83,6 @@ public class TelaJogo extends TelaAbstrata
         // else if(Gdx.input.isKeyPressed())
         // {
         //     // System.out.println("Digite um movimento válido no teclado: W, A, S, D ou setas de direção")
-            
         // }
     }
 

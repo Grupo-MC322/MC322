@@ -60,9 +60,6 @@ public class BlocoBomba implements IBlocosTimer
         ativo = info;
     }
 
-    // como as bombas não se juntam com outras bombas, este método implementado pela interface fica vazio
-    public void junta() {}
-
     public int getLinha()
     {
         return linha;
@@ -145,7 +142,7 @@ public class BlocoBomba implements IBlocosTimer
         return size;
     }
 
-    // depois da bomba explodir, seus atributos são renovados, esparando e ser posta de volta ao tabuleiro.
+    // depois da bomba explodir, seus atributos são renovados, esparando ser posta de volta ao tabuleiro.
     public void reset()
     {
         setVida(3);

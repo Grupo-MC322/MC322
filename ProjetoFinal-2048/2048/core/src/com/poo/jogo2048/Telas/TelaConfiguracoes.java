@@ -43,7 +43,7 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         // configurações de camera
         camera = new OrthographicCamera();
-		camera.setToOrtho(false, 600, 600);
+		camera.setToOrtho(false, 500, 500);
     
         // setup inicial das texturas
         txtrFundo = new Texture(Gdx.files.internal("telas/fundo_configuracoes.png"));
@@ -58,7 +58,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
         txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
 
-        txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar.png"));
+        txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_2.png"));
 
         // setup inicial das opções de blocos
         controle.setBotaoBombaSelected(true);
@@ -103,10 +103,10 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         // botão jogar
         Image botaoJogar = new Image(txtrJogar);
-        botaoJogar.setX(600 / 2 - 0.37f * 300);
-        botaoJogar.setY(0.1f * 600);
-        botaoJogar.setWidth((float) (0.37 * 600));
-        botaoJogar.setHeight((float) (0.1 * 600));
+        botaoJogar.setX(500 / 2 - 0.37f * 500 / 2);
+        botaoJogar.setY(0.1f * 500);
+        botaoJogar.setWidth((float) (0.37 * 500));
+        botaoJogar.setHeight((float) (0.1 * 500));
         botaoJogar.draw(batch, 1);
         stage.addActor(botaoJogar);
 
@@ -290,11 +290,4 @@ public class TelaConfiguracoes extends TelaAbstrata
             });
         }
     }
-
-
-    @Override
-	public void dispose() {
-		// FAZER DISPOSE DAS TEXTURASSSSS AAAAAAAAAAAAAAAAAAAAAAA
-	}
-    
 }
