@@ -19,9 +19,9 @@ import com.poo.jogo2048.Telas.TelaPerdeu;
 public class Controle implements IGameScreenControl, ISettingScreenControl
 {
     final Criador jogo;
-    private IBoardControl board;
-    private SpriteBatch batch;
     private Stage stage;
+    private SpriteBatch batch;
+    private IBoardControl board;
 
     private boolean botaoBombaSelected;
     private boolean botaoDeletaSelected;

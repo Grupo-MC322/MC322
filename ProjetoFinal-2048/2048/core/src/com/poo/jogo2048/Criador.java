@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.poo.jogo2048.Telas.TelaInicial;
 
 
-public class Criador extends Game
+public class Criador extends Game implements ISettingScreenCreator
 {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;

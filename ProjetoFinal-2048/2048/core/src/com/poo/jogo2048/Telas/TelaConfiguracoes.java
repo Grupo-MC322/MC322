@@ -11,10 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.jogo2048.ISettingScreenControl;
+import com.poo.jogo2048.ISettingScreenCreator;
 import com.poo.jogo2048.Criador;
 
 public class TelaConfiguracoes extends TelaAbstrata
 {
+    private final ISettingScreenCreator game;
     private final Criador jogo;
     private ISettingScreenControl control;
     private Stage stage;
@@ -35,11 +37,12 @@ public class TelaConfiguracoes extends TelaAbstrata
 
     public TelaConfiguracoes(final Criador jogo)
     {
+        game = jogo;
         this.jogo = jogo;
-        control = jogo.getControle();
-        jogo.getStage().clear();
-        this.stage = jogo.getStage();
-        this.batch = jogo.getBatch();
+        control = game.getControle();
+        game.getStage().clear();
+        this.stage = game.getStage();
+        this.batch = game.getBatch();
 
         // configurações de camera
         camera = new OrthographicCamera();
@@ -123,7 +126,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setTamanhoTabuleiro(4);
+                game.setTamanhoTabuleiro(4);
                 
                 txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
@@ -136,7 +139,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setTamanhoTabuleiro(5);
+                game.setTamanhoTabuleiro(5);
 
                 txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5.png"));
@@ -149,7 +152,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setTamanhoTabuleiro(6);
+                game.setTamanhoTabuleiro(6);
 
                 txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
@@ -162,7 +165,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setTamanhoTabuleiro(7);
+                game.setTamanhoTabuleiro(7);
 
                 txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
@@ -267,7 +270,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             botao.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    jogo.setScreen(new TelaInicial(jogo));
+                    game.setScreen(new TelaInicial(jogo));
                 }
             });
         } 
@@ -276,7 +279,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             botao.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    jogo.setScreen(new TelaJogo(jogo));
+                    game.setScreen(new TelaJogo(jogo));
                 }
             });
         }
@@ -285,7 +288,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             botao.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    jogo.setScreen(new TelaInstrucoes(jogo));
+                    game.setScreen(new TelaInstrucoes(jogo));
                 }
             });
         }
