@@ -26,7 +26,7 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 ### Slides da Apresentação Final
 > (pdf)
 > 
-> (slides interativos)
+> (slides interativos) https://www.canva.com/design/DAFE2QOQieI/DgoEiCKvg8lAzDl2039lpw/view?utm_content=DAFE2QOQieI&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu
 
 ## Diagramas
 
