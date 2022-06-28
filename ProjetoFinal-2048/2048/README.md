@@ -17,7 +17,7 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 ## Slides do projeto
 
 ### Slides da prévia
-> link
+> (pdf) https://drive.google.com/file/d/1xMluYj1Z1OJNHPcvM18lPPQy0MTZXUy0/view?usp=sharing
 
 ### Slides da Apresentação Final
 >

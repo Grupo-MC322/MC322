@@ -393,7 +393,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         {
             for(int j = 0; j < board.getTamanho(); j++)
             {
-                if(Objects.equals(board.getId(i, j), 16))
+                if(Objects.equals(board.getId(i, j), 2048))
                 {
                     ganhou = true;
                 }
