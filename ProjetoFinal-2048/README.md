@@ -27,4 +27,4 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 ## Diagramas
 
 ### Diagrama Geral da Arquitetura do Jogo
-Quando [este arquivo](https://drive.google.com/file/d/1kIefUAAOxpeZK-sIDVDN-f2Am7_HBjts/view?usp=sharing) for aberto, faça o seu download. Para conseguir visualizar o download, entre no site [diagrams.net](https://www.diagrams.net/), depois clique em "Start Now", "Open Existing Diagram" para aí abrir o arquivo completo.
+> (diagrama) [diagrama.pdf](diagrama.pdf)
