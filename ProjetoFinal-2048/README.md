@@ -245,9 +245,9 @@ O diagrama acima está dividido em três seções que englobam o modelo MVC. Est
 
 
 ### Diagrama Geral de Componentes
-![Diagrama Analise](diagrama-componentes-analise.png)
+![Diagrama geral componentes](diagramas/diagrama-geral-componentes.png)
 
-descrição breve
+O diagrama mostra os componentes principais do jogo e como cada um se interliga para transmitir as informações durante o jogo e as interfaces que os relacionam.
 
 ### Componente `<nome do componente>`
 Resumo do papel do componente e serviços que ele oferece.
