@@ -31,7 +31,7 @@ A ideia do jogo começou com a gente procurando no celular um jogo que conhecess
 
 ## Destaques de Código
 ### Movimentação
-> É a função que realiza as movimentações no jogo. Tem uma seção inicial que é responsável pelas animações e alterações gráficas e, depois, segue para uma segue para uma sequência de condições para cada tipo de movimentação possível. Destaca-se, também, o uso de recursão entre funções responsáveis pela movimentação, como no primeiro caso, explicitado abaixo.
+É a função que realiza as movimentações no jogo. Tem uma seção inicial que é responsável pelas animações e alterações gráficas e, depois, segue para uma segue para uma sequência de condições para cada tipo de movimentação possível. Destaca-se, também, o uso de recursão entre funções responsáveis pela movimentação, como no primeiro caso, explicitado abaixo.
 
 ```java
 private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
@@ -71,9 +71,9 @@ private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch ba
 ```
 
 ### Uso de Object
-> Para cada bloco foi designado um id específico, que o caracterizaria e permitiria que realizássemos ações relacionadas a ele (ex: juntar dois blocos de número 4, que teriam o mesmo id = 4).
-> No início, quando tínhamos apenas blocos numéricos, o id era definido como int, mas, ao adicionarmos os blocos especiais, observamos que não seria intuitivo designarmos um número genérico para os blocos bomba, deleta e tempo.
-> A solução foi implementarmos o id como um Object, fazendo com que pudéssemos continuar usando os inteiros com ids, para os blocos numéricos, e, também, implementar Strings que identificassem cada bloco especial.
+Para cada bloco foi designado um id específico, que o caracterizaria e permitiria que realizássemos ações relacionadas a ele (ex: juntar dois blocos de número 4, que teriam o mesmo id = 4).
+No início, quando tínhamos apenas blocos numéricos, o id era definido como int, mas, ao adicionarmos os blocos especiais, observamos que não seria intuitivo designarmos um número genérico para os blocos bomba, deleta e tempo.
+A solução foi implementarmos o id como um Object, fazendo com que pudéssemos continuar usando os inteiros com ids, para os blocos numéricos, e, também, implementar Strings que identificassem cada bloco especial.
 
 ```java
 public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
@@ -82,9 +82,9 @@ public Object getId(); // cada bloco tem o seu ID, algo que o identifique, poden
 
 ## Destaques de Orientação a Objetos
 ### Herança de interfaces
-> No projeto, a herança de interfaces foi largamente utilizada para a definição das interfaces dos blocos, já que cada classe de blocos teria que implementar métodos gerais a todos os blocos e alguns específicos às suas características.
+No projeto, a herança de interfaces foi largamente utilizada para a definição das interfaces dos blocos, já que cada classe de blocos teria que implementar métodos gerais a todos os blocos e alguns específicos às suas características.
 
-DIAGRAMA AQUI
+![Diagrama heranca de interfaces](diagramas/diagrama-heranca-de-interfaces.png)
 
 ```java
 // interface geral a todos os blocos
@@ -116,10 +116,10 @@ public interface ITimerControl extends IBlocosVidas
 ```
 
 ### Interfaces
-> Foram criadas algumas interfaces mais específicas para que pudéssemos implementar um filtro de visão de outras classes em relação ao controle. Isso fica evidente, por exemplo, na interface IGameScreenControl, que filtra os métodos do Controle que a TelaJogo pode acessar.
-> Além das classes de telas, também utilizamos esse método de criação de interfaces para as conexões entre as classes Tabuleiro e Controle e entre o Controle e o Criador.
+Foram criadas algumas interfaces mais específicas para que pudéssemos implementar um filtro de visão de outras classes em relação ao controle. Isso fica evidente, por exemplo, na interface IGameScreenControl, que filtra os métodos do Controle que a TelaJogo pode acessar.
+Além das classes de telas, também utilizamos esse método de criação de interfaces para as conexões entre as classes Tabuleiro e Controle e entre o Controle e o Criador.
 
-DIAGRAMA AQUI
+![Diagrama interfaces destaques](diagramas/diagrama-interfaces-destaques.png)
 
 ```java
 // exemplos de interfaces para telas
@@ -152,7 +152,7 @@ public interface IBoardControl
 ### Classe abstrata
 > Criamos uma classe abstrata TelaAbstrata, que seria herdada por todas as outras telas do jogo. Dessa forma, seria possível definirmos os métodos requeridos pela interface Screen do LibGDX apenas uma vez e não teríamos que fazer um método render( ) diferente para cada uma das telas, por exemplo. Não tivemos tempo de finalizarmos toda essa estruturação, pois cada tela tinha suas especificidades de input e de visualização, mas esse seria um dos principais ajustes a serem feitos futuramente, para que as classes do View ficassem ainda melhor estruturadas.
 
-DIAGRAMA AQUI
+![Diagrama classe abstrata](diagramas/diagrama-classe-abstrata.png)
 
 ```java
 public abstract class TelaAbstrata extends Stage implements Screen
@@ -184,10 +184,10 @@ public abstract class TelaAbstrata extends Stage implements Screen
 ```
 ## Destaques de Pattern
 ### Facade
-> Implementamos, na classe Criador, o método create( ), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
-> Em algumas telas, foi implementado, também, o método criaStage( ), que também é relacionado a criação de elementos da interface visual, reunindo diversas ações que são realizadas quando chamado.
+Implementamos, na classe Criador, o método create( ), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
+Em algumas telas, foi implementado, também, o método criaStage( ), que também é relacionado a criação de elementos da interface visual, reunindo diversas ações que são realizadas quando chamado.
 
-DIAGRAMA
+![Diagrama facade](diagramas/diagrama-facade.png)
 
 ```java
 public void create()
