@@ -184,7 +184,7 @@ public abstract class TelaAbstrata extends Stage implements Screen
 ```
 ## Destaques de Pattern
 ### Facade
-Implementamos, na classe Criador, o método create( ), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
+Implementamos, na classe Criador, o método create(), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
 Em algumas telas, foi implementado, também, o método criaStage( ), que também é relacionado a criação de elementos da interface visual, reunindo diversas ações que são realizadas quando chamado.
 
 ![Diagrama facade](diagramas/diagrama-facade.png)
@@ -232,7 +232,123 @@ Seria adequado, também, como já mencionado no destaque da classe abstrata, com
 
 Com relação ao jogo em si, poderiam ser criados, no futuro, novos blocos especiais, blocos  numéricos que vão além de 2048 (4096, 8192, …) para caso o jogador, ao chegar em 2048, desejasse continuar jogando e, queríamos, por fim, ter implementado um sistema de pontuação, que seria acompanhado de um ranking de jogadores.
 
+
 ## Diagramas
 
 ### Diagrama Geral da Arquitetura do Jogo
 > [diagrama.pdf](diagrama.pdf)
+
+O diagrama acima está dividido em três seções que englobam o modelo MVC. Estão presentes todas as estruturas, classes e interfaces implementadas no jogo. Foram apenas omitidos os design patterns e os componentes, já que o detalhamento destes é feito neste arquivo, com diagramas individuais para cada um deles.
+
+### Diagrama Geral de Componentes
+![Diagrama Analise](diagrama-componentes-analise.png)
+
+descrição breve
+
+### Componente `<nome do componente>`
+Resumo do papel do componente e serviços que ele oferece.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `<nome dos membros que criaram o componente>`
+Interfaces | `<listagem das interfaces do componente>`
+
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IDataSet extends ITableProducer, IDataSetProperties {
+}
+~~~
+
+### Detalhamento das Interfaces
+
+#### Interface `<IBlocos>`
+Interface implementada por todas as classes de blocos, que define os métodos essenciais a elas.
+
+```java
+public interface IBlocos
+{
+    public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
+    public Image getImagem();
+    public boolean getJuntado();
+    public void setJuntado(boolean info);
+    public float getPosX();
+    public void setPosX(float posX);
+    public float getPosY();
+    public void setPosY(float posY);
+    public float getSize();
+    public void setSize(float size);
+}
+```
+
+Método | Objetivo
+-------| --------
+`<getId>` | Retorna o id do bloco.
+`<getImage>` | Retorna a imagem do bloco (necessária para ser posicionada na tela).
+`<getJuntado>` | Retorna se o bloco já foi juntado com outro durante a rodada, para que os blocos não se juntem infinitamente.
+`<setJuntado>` | Define se o bloco já foi juntado ou não através do parâmetro `<info>`.
+`<getPosX>` | Retorna a posição X em que o bloco está localizado na tela (em relação à interface gráfica).
+`<setPosX>` | Define a posição X em que o bloco está localizado na tela (em relação à interface gráfica) através do parâmetro `<posX>`.
+`<getPosY>` | Retorna a posição Y em que o bloco está localizado na tela (em relação à interface gráfica).
+`<setPosY>` | Define a posição Y em que o bloco está localizado na tela (em relação à interface gráfica) através do parâmetro `<posY>`.
+`<getSize>` | Retorna o tamanho do bloco na tela (em relação à interface gráfica).
+`<setSize>` | Define o tamanho do bloco na tela (em relação à interface gráfica) através do parâmetro `<size>`.
+
+#### Interface `<IBlocosVidas>`
+Interface implementada por todas as classes de blocos que possuem "vida" (blocos bomba e tempo), definindo todos os métodos essenciais a elas.
+
+```java
+public interface IBlocosVidas extends IBlocos
+{
+    public void setImagem(Image imagem);
+    public int getVida();
+    public void setVida(int mudanca);
+    public boolean getAtivo();
+    public void setAtivo(boolean info);
+    public int getLinha();
+    public void setLinha(int linha);
+    public int getColuna();
+    public void setColuna(int coluna);
+    public void reset();
+}
+```
+
+Método | Objetivo
+-------| --------
+`<setImage>` | Define a imagem do bloco (necessária para ser posicionada na tela) através do parâmetro `<imagem>`.
+`<getVida>` | Retorna a vida atual do bloco.
+`<setVida>` | Adiciona `<mudanca>` à vida atual do bloco.
+`<getAtivo>` | Retorna `<true>` caso o bloco em questão esteja no tabuleiro e `<false>` caso não haja nenhum bloco ativo. É importante já que só pode haver uma instância de cada bloco que possui vida por vez no tabuleiro.
+`<setAtivo>` | Define `<true>` caso o bloco em questão esteja no tabuleiro e `<false>` caso não haja nenhum bloco ativo através do parâmetro `<info>`.
+`<getLinha>` | Retorna a linha do tabuleiro em que o bloco está posicionado. É importante rastrearmos a posição do bloco bomba para explodirmos os blocos ao seu redor.
+`<setLinha>` | Define a linha do tabuleiro em que o bloco está posicionado através do parâmetro `<coluna>`.
+`<getColuna>` | Retorna a coluna do tabuleiro em que o bloco está posicionado.
+`<setColuna>` | Define a coluna do tabuleiro em que o bloco está posicionado através do parâmetro `<coluna>`.
+`<reset>` | Redefine as vidas do bloco, define que ele não está no tabuleiro e define a sua imagem inicial.
+
+#### Interface `<IBombControl>`
+Interface implementada pela classe <BlocoBomba>, utilizada para que possamos obter instâncias do bloco bomba separadamente do bloco tempo.
+
+```java
+public interface IBombControl extends IBlocosVidas
+{}
+```
+
+#### Interface `<ITimerControl>`
+Interface implementada pela classe <BlocoTempo>, utilizada para que possamos obter instâncias do bloco tempo separadamente do bloco bomba.
+
+```java
+public interface ITimerControl extends IBlocosVidas
+{}
+```
+
+
