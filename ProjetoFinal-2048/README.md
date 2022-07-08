@@ -26,7 +26,8 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 
 ### Relatório de Evolução
 A ideia do jogo começou com a gente procurando no celular um jogo que conhecessemos bem, enxergássemos viabilidade de programá-lo e gostássemos bastante, de modo que o esforço do trabalho fosse um divertimento a cada conquista e não um sacrifício a cada bug. Então achamos o 2048! A estrutura que imediatamente pensamos para o jogo original era simples, já que não havia blocos especiais, apenas numéricos que dobravam até chegar em 2048. Haveria apenas uma interface IBlocos, uma classe Tabuleiro, uma Blocos, uma Controle, uma Montador e as classes relacionadas ao framework. Para a escolha deste, ouvimos os nossos amigos falando sobre o [LibGDX](https://libgdx.com/), ótimo e completo para desenvolvimento em Java com um tutorial de qualidade no próprio site. Até aí, o projeto parecia simples e começou bem, até que terminamos em menos de um dia as 4 principais classes do programa. Faltava algo; bugs, dificuldades, madrugadas viradas com café e lágrimas NÃO ESTAVAM APARECENDO e estávamos frustados com isso, porque é isso que queremos como programadores: bugs para resolver e debugar para que a vitória venha sofrida!
- Até que começamos a planejar os blocos especiais e cada ideia maluca de funcionalidade nova vinha atrelada a uma nova classe, novas interfaces e relação com design pattterns! Alguns blocos especiais, como o Deleta e o Dobro, foram mais tranquilos, pois já se enquadravam à estrutura do jogo. Outros blocos, como o Bomba e o Tempo, tomaram sozinhos 60% do esforço do trabalho inteiro e 90% dos bugs impossíveis, pois antes não era necessário monitorar as vidas e as coordenadas de cada bloco, (a ser continuado...)
+Até que começamos a planejar os blocos especiais e cada ideia maluca de funcionalidade nova vinha atrelada a uma nova classe, novas interfaces e relação com design pattterns! Alguns blocos especiais, como o Deleta e o Dobro, foram mais tranquilos, pois já se enquadravam à estrutura do jogo. Outros blocos, como o Bomba e o Tempo, tomaram sozinhos 60% do esforço do trabalho inteiro e 90% dos bugs impossíveis, pois antes não era necessário monitorar as vidas e as coordenadas de cada bloco. Também encontramos outra barreira gigante que foi a implementação da interface gráfica e de animações, já que não tínhamos experiência prévia nenhuma trabalhando com isso.
+Depois de muitas pesquisas, noites viradas e *várias* chamadas que duraram horas finalmente conseguimos ajeitar tudo e fazer o jogo funcionar como queríamos! Bem, ainda pode melhorar bastante, como discutiremos mais adiante, mas foi incrívelmente recompensador ver um projeto com um escopo maior como esse ir se moldando até ser entregue. Agradecemos imensamente à equipe da disciplina pela oportunidade e esperamos que vocês gostem do jogo tanto quando nós! ;)
 
 
 ## Destaques de Código
@@ -233,12 +234,15 @@ Seria adequado, também, como já mencionado no destaque da classe abstrata, com
 Com relação ao jogo em si, poderiam ser criados, no futuro, novos blocos especiais, blocos  numéricos que vão além de 2048 (4096, 8192, …) para caso o jogador, ao chegar em 2048, desejasse continuar jogando e, queríamos, por fim, ter implementado um sistema de pontuação, que seria acompanhado de um ranking de jogadores.
 
 
+
+
 ## Diagramas
 
 ### Diagrama Geral da Arquitetura do Jogo
 > [diagrama.pdf](diagrama.pdf)
 
 O diagrama acima está dividido em três seções que englobam o modelo MVC. Estão presentes todas as estruturas, classes e interfaces implementadas no jogo. Foram apenas omitidos os design patterns e os componentes, já que o detalhamento destes é feito neste arquivo, com diagramas individuais para cada um deles.
+
 
 ### Diagrama Geral de Componentes
 ![Diagrama Analise](diagrama-componentes-analise.png)
@@ -269,7 +273,10 @@ public interface IDataSet extends ITableProducer, IDataSetProperties {
 }
 ~~~
 
-### Detalhamento das Interfaces
+
+
+
+## Detalhamento das Interfaces
 
 #### Interface `IBlocos`
 Interface implementada por todas as classes de blocos, que define os métodos essenciais a elas.
