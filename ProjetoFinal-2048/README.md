@@ -12,9 +12,8 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 * `Raphael Ferezin Kitahara` - `244839`
 
 ## Arquivo Executável do Jogo
-> [google drive](https://drive.google.com/file/d/1i9GrHzZoogG3aWtwO08b4Cybgek3g0Mo/view?usp=sharing)
-> 
 > [arquivo github](2048.jar)
+> [google drive](https://drive.google.com/file/d/1i9GrHzZoogG3aWtwO08b4Cybgek3g0Mo/view?usp=sharing)
 
 ## Slides do projeto
 
@@ -230,7 +229,7 @@ Como mencionado, não tínhamos experiência prévia com interface gráfica, mas
 
 Seria adequado, também, como já mencionado no destaque da classe abstrata, compartimentar melhor as estruturas de cada tela e generalizá-las para que o uso da TelaAbstrata se torne mais eficiente.
 
-Com relação ao jogo em si, poderiam ser criados, no futuro, novos blocos especiais, blocos  numéricos que vão além de 2048 (4096, 8192, …) para caso o jogador, ao chegar em 2048, desejar continuar jogando e queríamos, por fim, ter implementado um sistema de pontuação, que seria acompanhado de um ranking de jogadores.
+Com relação ao jogo em si, poderiam ser criados, no futuro, novos blocos especiais, blocos  numéricos que vão além de 2048 (4096, 8192, …) para caso o jogador, ao chegar em 2048, desejasse continuar jogando e, queríamos, por fim, ter implementado um sistema de pontuação, que seria acompanhado de um ranking de jogadores.
 
 ## Diagramas
 
