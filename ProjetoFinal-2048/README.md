@@ -303,6 +303,7 @@ Método | Objetivo
 `<getSize>` | Retorna o tamanho do bloco na tela (em relação à interface gráfica).
 `<setSize>` | Define o tamanho do bloco na tela (em relação à interface gráfica) através do parâmetro `<size>`.
 
+
 #### Interface `<IBlocosVidas>`
 Interface implementada por todas as classes de blocos que possuem "vida" (blocos bomba e tempo), definindo todos os métodos essenciais a elas.
 
@@ -330,21 +331,23 @@ Método | Objetivo
 `<getAtivo>` | Retorna `<true>` caso o bloco em questão esteja no tabuleiro e `<false>` caso não haja nenhum bloco ativo. É importante já que só pode haver uma instância de cada bloco que possui vida por vez no tabuleiro.
 `<setAtivo>` | Define `<true>` caso o bloco em questão esteja no tabuleiro e `<false>` caso não haja nenhum bloco ativo através do parâmetro `<info>`.
 `<getLinha>` | Retorna a linha do tabuleiro em que o bloco está posicionado. É importante rastrearmos a posição do bloco bomba para explodirmos os blocos ao seu redor.
-`<setLinha>` | Define a linha do tabuleiro em que o bloco está posicionado através do parâmetro `<coluna>`.
+`<setLinha>` | Define a linha do tabuleiro em que o bloco está posicionado através do parâmetro `<linha>`.
 `<getColuna>` | Retorna a coluna do tabuleiro em que o bloco está posicionado.
 `<setColuna>` | Define a coluna do tabuleiro em que o bloco está posicionado através do parâmetro `<coluna>`.
 `<reset>` | Redefine as vidas do bloco, define que ele não está no tabuleiro e define a sua imagem inicial.
 
+
 #### Interface `<IBombControl>`
-Interface implementada pela classe <BlocoBomba>, utilizada para que possamos obter instâncias do bloco bomba separadamente do bloco tempo.
+Interface implementada pela classe `<BlocoBomba>`, utilizada para que possamos obter instâncias do bloco bomba separadamente do bloco tempo.
 
 ```java
 public interface IBombControl extends IBlocosVidas
 {}
 ```
 
+
 #### Interface `<ITimerControl>`
-Interface implementada pela classe <BlocoTempo>, utilizada para que possamos obter instâncias do bloco tempo separadamente do bloco bomba.
+Interface implementada pela classe `<BlocoTempo>`, utilizada para que possamos obter instâncias do bloco tempo separadamente do bloco bomba.
 
 ```java
 public interface ITimerControl extends IBlocosVidas
@@ -352,3 +355,110 @@ public interface ITimerControl extends IBlocosVidas
 ```
 
 
+#### Interface `<IBoardControl>`
+Interface que serve como um "filtro de visão" dos métodos do tabuleiro para o controle.
+
+```java
+public interface IBoardControl
+{
+    public int getTamanho();
+    public Object getId(int linha, int coluna);
+    public IBlocos getBloco(int linha, int coluna);
+    public void setBloco(int linha, int coluna, IBlocos bloco);
+}
+```
+
+Método | Objetivo
+-------| --------
+`<getTamanho>` | Retorna o tamanho do tabuleiro.
+`<getId>` | Retorna o id de um bloco posicionado na `<linha>` e na `<coluna>` indicadas.
+`<getBloco>` | Retorna o bloco posicionado na `<linha>` e na `<coluna>` indicadas.
+`<setBloco>` | Define o bloco posicionado na `<linha>` e na `<coluna>` indicadas através do parâmetro `<bloco>` passado.
+
+
+#### Interface `<ICreatorControl>`
+Interface que serve como um "filtro de visão" dos métodos do criador para o controle.
+
+```java
+public interface ICreatorControl
+{
+    public Controle getControle();
+    public SpriteBatch getBatch();
+    public Stage getStage();
+    public void setTamanhoTabuleiro(int tamanhoTabuleiro);
+    public void setScreen(Screen screen);
+}
+```
+
+Método | Objetivo
+-------| --------
+`<getControle>` | Retorna a instância do controle do jogo.
+`<getBatch>` | Retorna o batch do jogo (relacionado à interface visual).
+`<getStage>` | Retorna o stage do jogo (relacionado à interface visual).
+`<setTamanhoTabuleiro>` | Define o tamanho do tabuleiro através do parâmetro `<tamanhoTabuleiro>`.
+`<setScreen>` | Define a tela do jogo a ser exibida, através do parâmetro `<screen>`.
+
+
+#### Interface `<IGameScreenControl>`
+Interface que serve como um "filtro de visão" dos métodos do controle para a tela jogo.
+
+```java
+public interface IGameScreenControl
+{
+    public void conectaTabuleiro(Tabuleiro tabuleiro);
+    public void spawnBloco();
+    public void transfereComando(char direcao);
+	public boolean getGanhou();
+    public void setGanhou(boolean b);
+}
+```
+
+Método | Objetivo
+-------| --------
+`<conectaTabuleiro>` | Realiza a conexão da instância do tabuleiro com o controle.
+`<spawnBloco>` | Adiciona um bloco (entre os possíveis) em uma posição vazia aleatória do tabuleiro.
+`<transfereComando>` | Transfere a direção de uma movimentação feita pelo jogador para o controle através do parâmetro `<direção>`.
+`<getGanhou>` | Retorna `<true>` caso o jogador tenha ganhado e `<false>` em caso contrário (o jogo continua).
+`<setGanhou>` | Define `<true>` caso o jogador tenha ganhado e `<false>` em caso contrário (o jogo continua) através do parâmetro `<b>`.
+
+
+#### Interface `<ISettingScreenControl>`
+Interface que serve como um "filtro de visão" dos métodos do controle para a tela de configurações.
+
+```java
+public interface ISettingScreenControl
+{
+    public void setBotaoSelected(String idBotao, boolean selected);
+    public boolean getBotaoSelected(String idBotao);
+}
+```
+
+Método | Objetivo
+-------| --------
+`<setBotaoSelected>` | Define o botão definido por `<idBotao>` como `<true>` (selecionado) ou `<false>` (não selecionado), através do parâmetro `<selected>`.
+`<getBotaoSelected>` | Retorna `<true>` (selecionado) ou `<false>` (não selecionado) para o botão definido por `<idBotao>`.
+
+
+#### Interface `<ISettingScreenCreator>`
+Interface que serve como um "filtro de visão" dos métodos do criador para a tela de configurações.
+
+```java
+public interface ISettingScreenCreator
+{
+    public Controle getControle();
+    public SpriteBatch getBatch();
+    public Stage getStage();
+    public void setTamanhoTabuleiro(int tamanhoTabuleiro);
+    public void setScreen(Screen screen);
+    public Music getMusic();
+}
+```
+
+Método | Objetivo
+-------| --------
+`<getControle>` | Retorna a instância do controle do jogo.
+`<getBatch>` | Retorna o batch do jogo (relacionado à interface visual).
+`<getStage>` | Retorna o stage do jogo (relacionado à interface visual).
+`<setTamanhoTabuleiro>` | Define o tamanho do tabuleiro através do parâmetro `<tamanhoTabuleiro>`.
+`<setScreen>` | Define a tela do jogo a ser exibida, através do parâmetro `<screen>`.
+`<getMusic>` | Retorna a música do jogo.
