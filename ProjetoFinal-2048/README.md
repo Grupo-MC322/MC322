@@ -28,6 +28,164 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 A ideia do jogo começou com a gente procurando no celular um jogo que conhecessemos bem, enxergássemos viabilidade de programá-lo e gostássemos bastante, de modo que o esforço do trabalho fosse um divertimento a cada conquista e não um sacrifício a cada bug. Então achamos o 2048! A estrutura que imediatamente pensamos para o jogo original era simples, já que não havia blocos especiais, apenas numéricos que dobravam até chegar em 2048. Haveria apenas uma interface IBlocos, uma classe Tabuleiro, uma Blocos, uma Controle, uma Montador e as classes relacionadas ao framework. Para a escolha deste, ouvimos os nossos amigos falando sobre o [LibGDX](https://libgdx.com/), ótimo e completo para desenvolvimento em Java com um tutorial de qualidade no próprio site. Até aí, o projeto parecia simples e começou bem, até que terminamos em menos de um dia as 4 principais classes do programa. Faltava algo; bugs, dificuldades, madrugadas viradas com café e lágrimas NÃO ESTAVAM APARECENDO e estávamos frustados com isso, porque é isso que queremos como programadores: bugs para resolver e debugar para que a vitória venha sofrida!
  Até que começamos a planejar os blocos especiais e cada ideia maluca de funcionalidade nova vinha atrelada a uma nova classe, novas interfaces e relação com design pattterns! Alguns blocos especiais, como o Deleta e o Dobro, foram mais tranquilos, pois já se enquadravam à estrutura do jogo. Outros blocos, como o Bomba e o Tempo, tomaram sozinhos 60% do esforço do trabalho inteiro e 90% dos bugs impossíveis, pois antes não era necessário monitorar as vidas e as coordenadas de cada bloco, (a ser continuado...)
 
+
+## Destaques de Código
+### Movimentação
+> É a função que realiza as movimentações no jogo. Tem uma seção inicial que é responsável pelas animações e alterações gráficas e, depois, segue para uma segue para uma sequência de condições para cada tipo de movimentação possível. Destaca-se, também, o uso de recursão entre funções responsáveis pela movimentação, como no primeiro caso, explicitado abaixo.
+
+```java
+private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
+{
+	// animação - parte que define as posições em que as imagens devem ser posicionadas e cria uma sequência para a animação dos blocos
+	...
+
+	// quando está vazio na frente, livre para continuar se movendo
+	if(Objects.equals(board.getId(linhaFim, colunaFim), 0))
+	{
+		// nesse caso, pegamos o bloco da posição inicial e o transferimos para a posição final, já que ela era vazia e comocamos um bloco vazio na posição inicial
+		board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
+		board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco); // responsável por animar a transição
+		board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+		// há o uso de recursão através do chamado da função interpretaComando, que chamará, novamente, a função movimenta, até que o bloco encontre outro ou a parede do tabuleiro
+		interpretaComando(direcao, linhaFim, colunaFim, batch, stage);
+
+		algoMudou = true; 
+		// variável que serve de controle para, caso não haja nenhum movimento quando o jogador fizer uma jogada, não serem spawnados novos blocos
+	}
+
+	// quando ambos os blocos são iguais e podem se juntar
+	else if(Objects.equals(board.getId(linhaFim, colunaFim), board.getId(linhaIni, colunaIni)))
+	{
+		board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor()); // removendo a imagem do bloco de destino (já que ele vai ser substituido por seu dobro)
+		if(board.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+		{
+			((BlocoGenerico) board.getBloco(linhaFim, colunaFim)).dobra(); // método que dobra o número do bloco
+		}
+		board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
+		board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+		board.getBloco(linhaFim, colunaFim).setJuntado(true);
+		algoMudou = true;
+	}
+	...
+}
+```
+
+### Uso de Object
+> Para cada bloco foi designado um id específico, que o caracterizaria e permitiria que realizássemos ações relacionadas a ele (ex: juntar dois blocos de número 4, que teriam o mesmo id = 4).
+> No início, quando tínhamos apenas blocos numéricos, o id era definido como int, mas, ao adicionarmos os blocos especiais, observamos que não seria intuitivo designarmos um número genérico para os blocos bomba, deleta e tempo.
+> A solução foi implementarmos o id como um Object, fazendo com que pudéssemos continuar usando os inteiros com ids, para os blocos numéricos, e, também, implementar Strings que identificassem cada bloco especial.
+
+```java
+public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
+```
+
+
+## Destaques de Orientação a Objetos
+### Herança de interfaces
+> No projeto, a herança de interfaces foi largamente utilizada para a definição das interfaces dos blocos, já que cada classe de blocos teria que implementar métodos gerais a todos os blocos e alguns específicos às suas características.
+
+DIAGRAMA AQUI
+
+```java
+// interface geral a todos os blocos
+public interface IBlocos
+{
+    public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
+    public Image getImagem();
+    public boolean getJuntado();
+    public void setJuntado(boolean info);
+    public float getPosX();
+    public void setPosX(float posX);
+    public float getPosY();
+    public void setPosY(float posY);
+    public float getSize();
+    public void setSize(float size);   
+}
+
+// interface que se refere aos blocos timer e bomba (que possuem "vida" que diminui até sumirem ou explodirem
+public interface IBlocosVidas extends IBlocos
+{
+	...
+}
+
+// interfaces referentes a cada um dos blocos que possuem "vida", que foram criadas para que pudéssemos obter instâncias de cada um deles de maneira separada
+public interface IBombControl extends IBlocosVidas
+{}
+public interface ITimerControl extends IBlocosVidas
+{}
+```
+
+### Interfaces
+> Foram criadas algumas interfaces mais específicas para que pudéssemos implementar um filtro de visão de outras classes em relação ao controle. Isso fica evidente, por exemplo, na interface IGameScreenControl, que filtra os métodos do Controle que a TelaJogo pode acessar.
+> Além das classes de telas, também utilizamos esse método de criação de interfaces para as conexões entre as classes Tabuleiro e Controle e entre o Controle e o Criador.
+
+DIAGRAMA AQUI
+
+```java
+// exemplos de interfaces para telas
+public interface IGameScreenControl
+{
+    public void conectaTabuleiro(Tabuleiro tabuleiro);
+    public void spawnBloco();
+    public void transfereComando(char direcao);
+    public boolean getGanhou();
+    public void setGanhou(boolean b);
+}
+
+public interface ISettingScreenControl
+{
+    public void setBotaoSelected(String idBotao, boolean selected);
+    public boolean getBotaoSelected(String idBotao);
+}
+
+
+// exemplo de interface que realiza o filtro entre Controle e Tabuleiro
+public interface IBoardControl
+{
+    public int getTamanho();
+    public Object getId(int linha, int coluna);
+    public IBlocos getBloco(int linha, int coluna);
+    public void setBloco(int linha, int coluna, IBlocos bloco);
+}
+```
+
+### Classe abstrata
+> Criamos uma classe abstrata TelaAbstrata, que seria herdada por todas as outras telas do jogo. Dessa forma, seria possível definirmos os métodos requeridos pela interface Screen do LibGDX apenas uma vez e não teríamos que fazer um método render( ) diferente para cada uma das telas, por exemplo. Não tivemos tempo de finalizarmos toda essa estruturação, pois cada tela tinha suas especificidades de input e de visualização, mas esse seria um dos principais ajustes a serem feitos futuramente, para que as classes do View ficassem ainda melhor estruturadas.
+
+DIAGRAMA AQUI
+
+```java
+public abstract class TelaAbstrata extends Stage implements Screen
+{
+    protected TelaAbstrata()
+    {
+        super(new StretchViewport(400f, 400f, new OrthographicCamera()));
+    }
+    
+    @Override
+    public void render(float delta)
+    {
+        // limpar tela
+        Gdx.gl.glClearColor(0.32f, 0.41f, 0.42f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // métodos do stage
+        super.act(delta);
+        super.draw();
+    }
+    
+    @Override
+    public void resize(int width, int height)
+    {
+        getViewport().update(width, height, true);
+    }
+	  ...
+}
+```
+
+
+
+
 ## Diagramas
 
 ### Diagrama Geral da Arquitetura do Jogo
