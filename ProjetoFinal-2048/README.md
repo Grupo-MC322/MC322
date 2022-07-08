@@ -182,7 +182,44 @@ public abstract class TelaAbstrata extends Stage implements Screen
 	  ...
 }
 ```
+## Destaques de Pattern
+### Facade
+> Implementamos, na classe Criador, o método create( ), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
+> Em algumas telas, foi implementado, também, o método criaStage( ), que também é relacionado a criação de elementos da interface visual, reunindo diversas ações que são realizadas quando chamado.
 
+DIAGRAMA
+
+```java
+public void create()
+{
+    // criação da câmera, do batch e do stage
+    camera = new OrthographicCamera();
+    camera.setToOrtho(false, 500, 500);
+    batch = new SpriteBatch();
+    stage = new Stage(new StretchViewport(camera.viewportWidth, camera.viewportHeight));
+    Gdx.input.setInputProcessor(stage);
+
+    // criação do controle
+    controle = new Controle(this);
+
+    // fazendo o load da música de fundo e a iniciando
+    music = Gdx.audio.newMusic(Gdx.files.internal("musicas/Corona-320bit.mp3"));
+    music.setLooping(true);
+    music.play();
+ 
+    // definindo a tela como tela inicial
+    this.setScreen(new TelaInicial(this));
+}
+```
+
+### Singleton
+> Explicação e detalhamentos.
+
+DIAGRAMA
+
+```java
+código
+```
 
 
 
