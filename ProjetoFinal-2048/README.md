@@ -13,6 +13,7 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 
 ## Arquivo Executável do Jogo
 > [arquivo github](2048.jar)
+>
 > [google drive](https://drive.google.com/file/d/1i9GrHzZoogG3aWtwO08b4Cybgek3g0Mo/view?usp=sharing)
 
 ## Slides do projeto
