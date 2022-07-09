@@ -26,7 +26,9 @@ Na nossa versão do jogo foram criados blocos especiais, que podem ser seleciona
 
 ### Relatório de Evolução
 A ideia do jogo começou com a gente procurando no celular um jogo que conhecessemos bem, enxergássemos viabilidade de programá-lo e gostássemos bastante, de modo que o esforço do trabalho fosse um divertimento a cada conquista e não um sacrifício a cada bug. Então achamos o 2048! A estrutura que imediatamente pensamos para o jogo original era simples, já que não havia blocos especiais, apenas numéricos que dobravam até chegar em 2048. Haveria apenas uma interface IBlocos, uma classe Tabuleiro, uma Blocos, uma Controle, uma Montador e as classes relacionadas ao framework. Para a escolha deste, ouvimos os nossos amigos falando sobre o [LibGDX](https://libgdx.com/), ótimo e completo para desenvolvimento em Java com um tutorial de qualidade no próprio site. Até aí, o projeto parecia simples e começou bem, até que terminamos em menos de um dia as 4 principais classes do programa. Faltava algo; bugs, dificuldades, madrugadas viradas com café e lágrimas NÃO ESTAVAM APARECENDO e estávamos frustados com isso, porque é isso que queremos como programadores: bugs para resolver e debugar para que a vitória venha sofrida!
+
 Até que começamos a planejar os blocos especiais e cada ideia maluca de funcionalidade nova vinha atrelada a uma nova classe, novas interfaces e relação com design pattterns! Alguns blocos especiais, como o Deleta e o Dobro, foram mais tranquilos, pois já se enquadravam à estrutura do jogo. Outros blocos, como o Bomba e o Tempo, tomaram sozinhos 60% do esforço do trabalho inteiro e 90% dos bugs impossíveis, pois antes não era necessário monitorar as vidas e as coordenadas de cada bloco. Também encontramos outra barreira gigante que foi a implementação da interface gráfica e de animações, já que não tínhamos experiência prévia nenhuma trabalhando com isso.
+
 Depois de muitas pesquisas, noites viradas e *várias* chamadas que duraram horas finalmente conseguimos ajeitar tudo e fazer o jogo funcionar como queríamos! Bem, ainda pode melhorar bastante, como discutiremos mais adiante, mas foi incrívelmente recompensador ver um projeto com um escopo maior como esse ir se moldando até ser entregue. Agradecemos imensamente à equipe da disciplina pela oportunidade e esperamos que vocês gostem do jogo tanto quando nós! ;)
 
 
@@ -335,7 +337,7 @@ Método | Objetivo
 
 
 #### Interface `IBlocosVidas`
-Interface implementada por todas as classes de blocos que possuem "vida" (blocos bomba e tempo), definindo todos os métodos essenciais a elas.
+Interface implementada por todas as classes de blocos que possuem "vida" (blocos bomba e tempo), ou seja, que ficam temporariamente no tabuleiro, definindo todos os métodos essenciais a elas.
 
 ```java
 public interface IBlocosVidas extends IBlocos
@@ -358,7 +360,7 @@ Método | Objetivo
 `setImage` | Define a imagem do bloco (necessária para ser posicionada na tela) através do parâmetro `imagem`.
 `getVida` | Retorna a vida atual do bloco.
 `setVida` | Adiciona `mudanca` à vida atual do bloco.
-`getAtivo` | Retorna `true` caso o bloco em questão esteja no tabuleiro e `false` caso não haja nenhum bloco ativo. É importante já que só pode haver uma instância de cada bloco que possui vida por vez no tabuleiro.
+`getAtivo` | Retorna `true` caso o bloco em questão esteja no tabuleiro e `false` caso não haja nenhum bloco ativo. É importante, pois precisamos saber se há um bloco no tabuleiro e se ele deve perder uma vida a cada rodada.
 `setAtivo` | Define `true` caso o bloco em questão esteja no tabuleiro e `false` caso não haja nenhum bloco ativo através do parâmetro `info`.
 `getLinha` | Retorna a linha do tabuleiro em que o bloco está posicionado. É importante rastrearmos a posição do bloco bomba para explodirmos os blocos ao seu redor.
 `setLinha` | Define a linha do tabuleiro em que o bloco está posicionado através do parâmetro `linha`.
@@ -368,7 +370,7 @@ Método | Objetivo
 
 
 #### Interface `IBombControl`
-Interface implementada pela classe `BlocoBomba`, utilizada para que possamos obter instâncias do bloco bomba separadamente do bloco tempo.
+Interface implementada pela classe `BlocoBomba`, utilizada para que o controle poss obter instâncias do bloco bomba separadamente do bloco tempo. A intenção inicial era de definir métodos que apenas o bomba teria, mas o bloco tempo acabou por precisar dos mesmos métodos do bloco bomba, então decidimos colocar todos os métodos na interface `IBlocosVidas`, herdada pelas interfaces `IBombControl` e `ITimerControl`, que foram implementadas para fins de melhor organização do código.
 
 ```java
 public interface IBombControl extends IBlocosVidas
@@ -377,7 +379,7 @@ public interface IBombControl extends IBlocosVidas
 
 
 #### Interface `ITimerControl`
-Interface implementada pela classe `BlocoTempo`, utilizada para que possamos obter instâncias do bloco tempo separadamente do bloco bomba.
+Interface implementada pela classe `BlocoTempo`, utilizada para que o controle possa obter instâncias do bloco tempo separadamente do bloco bomba.
 
 ```java
 public interface ITimerControl extends IBlocosVidas
