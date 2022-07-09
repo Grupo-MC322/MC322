@@ -32,7 +32,7 @@ Depois de muitas pesquisas, noites viradas e *várias* chamadas que duraram hora
 
 ## Destaques de Código
 ### Movimentação
-É a função que realiza as movimentações no jogo. Tem uma seção inicial que é responsável pelas animações e alterações gráficas e, depois, segue para uma segue para uma sequência de condições para cada tipo de movimentação possível. Destaca-se, também, o uso de recursão entre funções responsáveis pela movimentação, como no primeiro caso, explicitado abaixo.
+É a função que realiza as movimentações no jogo. Tem uma seção inicial que é responsável pelas animações e alterações gráficas e, depois, segue para uma sequência de condições para cada tipo de movimentação possível. Destaca-se, também, o uso de recursão entre funções responsáveis pela movimentação, como no primeiro caso, explicitado abaixo.
 
 ```java
 private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
@@ -91,16 +91,7 @@ No projeto, a herança de interfaces foi largamente utilizada para a definição
 // interface geral a todos os blocos
 public interface IBlocos
 {
-    public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
-    public Image getImagem();
-    public boolean getJuntado();
-    public void setJuntado(boolean info);
-    public float getPosX();
-    public void setPosX(float posX);
-    public float getPosY();
-    public void setPosY(float posY);
-    public float getSize();
-    public void setSize(float size);   
+    ...
 }
 
 // interface que se refere aos blocos timer e bomba (que possuem "vida" que diminui até sumirem ou explodirem
@@ -126,27 +117,19 @@ Além das classes de telas, também utilizamos esse método de criação de inte
 // exemplos de interfaces para telas
 public interface IGameScreenControl
 {
-    public void conectaTabuleiro(Tabuleiro tabuleiro);
-    public void spawnBloco();
-    public void transfereComando(char direcao);
-    public boolean getGanhou();
-    public void setGanhou(boolean b);
+    ...
 }
 
 public interface ISettingScreenControl
 {
-    public void setBotaoSelected(String idBotao, boolean selected);
-    public boolean getBotaoSelected(String idBotao);
+    ...
 }
 
 
 // exemplo de interface que realiza o filtro entre Controle e Tabuleiro
 public interface IBoardControl
 {
-    public int getTamanho();
-    public Object getId(int linha, int coluna);
-    public IBlocos getBloco(int linha, int coluna);
-    public void setBloco(int linha, int coluna, IBlocos bloco);
+    ...
 }
 ```
 
@@ -185,8 +168,7 @@ public abstract class TelaAbstrata extends Stage implements Screen
 ```
 ## Destaques de Pattern
 ### Facade
-Implementamos, na classe Criador, o método create(), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
-Em algumas telas, foi implementado, também, o método criaStage( ), que também é relacionado a criação de elementos da interface visual, reunindo diversas ações que são realizadas quando chamado.
+Implementamos, na classe Criador, o método create( ), que se caracteriza como um facade, já que reúne diversas outras funções, próprias do LibGDX, em um bloco único, que age como uma “caixa preta” para a criação dos elementos visuais.
 
 ![Diagrama facade](diagramas/diagrama-facade.png)
 
@@ -214,12 +196,53 @@ public void create()
 ```
 
 ### Singleton
-> Explicação e detalhamentos.
+Quando fomos testando algumas vezes, percebemos que tanto o Bloco Tempo quanto o Bloco Bomba inviabilizavam o jogo quando começavam a aparecer vários. Portanto, pensamos que limitaríamos a sua quantidade a um Bloco Bomba e um Bloco Tempo por vez de cada no tabuleiro e logo lembramos que o Singleton poderia ser útil nesse caso, já que proibe a criação de múltiplas instâncias do mesmo bloco.
 
-DIAGRAMA
+![Diagrama singleton](diagramas/diagrama-singleton.png)
 
 ```java
-código
+public class BlocoBomba implements IBombControl
+{
+    private static IBombControl instance;
+    ...
+
+    // para implementar o design pattern singleton, é necessário um construtor privado
+    private BlocoBomba()
+    {}
+    
+    // implementação do design pattern singleton, garantindo que só uma instância de bomba exista
+    public static IBombControl getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new BlocoBomba();
+        }
+        return instance;
+    }
+    ...
+}
+
+public class BlocoTempo implements ITimerControl
+{
+    private static ITimerControl instance;
+    ...
+
+    // para implementar o design pattern singleton, é necessário um construtor privado
+    private BlocoTempo()
+    {}
+    
+    // implementação do design pattern singleton, garantindo que só uma instância de bloco tempo exista
+    public static ITimerControl getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new BlocoTempo();
+        }
+
+        return instance;
+    }
+    ...
+}
 ```
 
 ## Conclusões e Trabalhos Futuros
