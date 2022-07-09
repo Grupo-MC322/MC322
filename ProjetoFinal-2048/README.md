@@ -33,6 +33,9 @@ Depois de muitas pesquisas, noites viradas e *várias* chamadas que duraram hora
 
 
 ## Destaques de Código
+
+### ATENÇÃO: nos diagramas, as setas e algumas minúcias importantes são pretas e são pouco visíveis com o Modo Escuro do GitHub. Para acionar o Modo Claro (extremamente recomendado), clique na sua foto de perfil no canto superior direiro da tela, depois Settings -> Appearance -> Day Theme.
+
 ### Movimentação
 É a função que realiza as movimentações no jogo. Tem uma seção inicial que é responsável pelas animações e alterações gráficas e, depois, segue para uma sequência de condições para cada tipo de movimentação possível. Destaca-se, também, o uso de recursão entre funções responsáveis pela movimentação, como no primeiro caso, explicitado abaixo.
 
