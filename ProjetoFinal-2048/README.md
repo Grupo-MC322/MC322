@@ -605,3 +605,6 @@ Método | Objetivo
 `setTamanhoTabuleiro` | Define o tamanho do tabuleiro através do parâmetro `tamanhoTabuleiro`.
 `setScreen` | Define a tela do jogo a ser exibida, através do parâmetro `screen`.
 `getMusic` | Retorna a música do jogo.
+
+## Plano de Exceções
+Pensamos bastante sobre as exceções no Jogo 2048, mas não achamos uma sequer exceção que possa ocorrer no jogo. Inicialmente tinhamos pensado nas alternativas do tipo: e se o tabuleiro lotar, e se for clicado uma tecla errado, e se a jução de blocos não for compatível. Mas a estrutura já modelada do jogo já respondeu à todas as perguntas. (1) Se o tabuleiro lota, não a Tela de Perdeu já era chamada inicialmente; (2) se uma tecla errada for clicada, nada deve ocorrer, pois o jogo só espera as teclas que fazem parte dos movimentos; (3) se a junção de blocos não for compatível, simplesmente os blocos não se juntam e nada ocorre. Assim, não achamos que esses problemas pensados mereciam que o código os tratassem, mas sim que a estrutura do funcionamento orgânico do jogo continuasse rodando. Por isso, nos esforçamos para tentar achar outras exceções que poderiam ser tratadas com o código apropriado de exceções, mas falhamos nessa parte.
