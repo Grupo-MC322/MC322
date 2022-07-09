@@ -447,11 +447,11 @@ public interface IGameScreenControl
 
 Método | Objetivo
 -------| --------
-`conectaTabuleiro` | Realiza a conexão da instância do tabuleiro com o controle.
+`conectaTabuleiro` | Realiza a conexão da instância do tabuleiro para ser utilizado no controle.
 `spawnBloco` | Adiciona um bloco (entre os possíveis) em uma posição vazia aleatória do tabuleiro.
 `transfereComando` | Transfere a direção de uma movimentação feita pelo jogador para o controle através do parâmetro `direção`.
 `getGanhou` | Retorna `true` caso o jogador tenha ganhado e `false` em caso contrário (o jogo continua).
-`setGanhou` | Define `true` caso o jogador tenha ganhado e `false` em caso contrário (o jogo continua) através do parâmetro `b`.
+`setGanhou` | Define `true` caso o jogador tenha ganhado e `false` em caso contrário (o jogo continua) através do parâmetro `b` (boolean).
 
 
 #### Interface `ISettingScreenControl`
