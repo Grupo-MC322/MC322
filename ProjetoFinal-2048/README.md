@@ -268,6 +268,7 @@ Com relação ao jogo em si, poderiam ser criados, no futuro, novos blocos espec
 
 ### Diagrama Geral da Arquitetura do Jogo
 > [diagrama.pdf](diagramas/diagrama.pdf)
+> Para melhor qualidade do diagrama, faça o seu download.
 
 O diagrama acima está dividido em três seções que englobam o modelo MVC. Estão presentes todas as estruturas, classes e interfaces implementadas no jogo. Foram apenas omitidos os design patterns e os componentes, já que o detalhamento destes é feito neste arquivo, com diagramas individuais para cada um deles.
 
@@ -289,6 +290,12 @@ Classe | [2048/core/src/com/poo/jogo2048/Criador.java](2048/core/src/com/poo/jog
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ICreatorControl e IsettingScreenCreator`
 
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/criadorcontrole.jpeg)
+![Diagrama Interfaces](diagramas/settingcriador.jpeg)
+
 ### Componente `Controle`
 Esse componente serve como principal articulador do jogo, sendo responsável por manipular as principais estruturas da montagem do jogo, da lógica, da interface visual e dos blocos, para repassá-las e às telas para serem apresentadas.
 
@@ -300,6 +307,14 @@ item | detalhamento
 Classe | [2048/core/src/com/poo/jogo2048/Controle.java](2048/core/src/com/poo/jogo2048/Controle.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ICreatorControl, IGameScreenControl, IBoardControl e IsettingScreenControl`
+
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/criadorcontrole.jpeg)
+![Diagrama Interfaces](diagramas/settingcontrol.jpeg)
+
+Interface agregadora do componente em Java:
 
 ### Componente `Tabuleiro`
 Esse componente serve como base de suporte para o Model, sendo que todos os blocos serão acessados por uma matriz que é atributo do Tabuleiro. Assim, ele coordenará a comunicação entre os blocos e o externo, ou seja, com o Controle.
@@ -313,6 +328,11 @@ Classe | [2048/core/src/com/poo/jogo2048/Tabuleiro.java](2048/core/src/com/poo/j
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBoardControl, IBlocos`
 
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/board.jpeg)
+
 ### Componente `TelaConfigurações`
 Essa é a tela em que o jogador escolhe o tamanho do tabuleiro a ser criado (comunicação com o Criador) e quais blocos especiais participarão das rodadas (comunicação com o Controle). Ademais, essa tela é apresentada pela interface gráfica, então precisa de uma interface Screen própria do LibGDX.
 
@@ -325,10 +345,22 @@ Classe | [2048/core/src/com/poo/jogo2048/Telas/TelaConfiguracoes.java](2048/core
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ISettingScreenControl, Screen e ISettingScreenCreator`
 
+
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/settingcontrol.jpeg)
+![Diagrama Interfaces](diagramas/settingcriador.jpeg)
+
 ### Componente `TelaJogo`
 Essa é a tela em que o jogador efetivamente jogará, requerindo uma comunicação com o Controle. Ademais, essa tela é apresentada pela interface gráfica, então precisa de uma interface Screen própria do LibGDX.
 
 ![Componente](diagramas/diagrama-telajogo.png)
+
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/gamecontrol.jpeg)
 
 **Ficha Técnica**
 item | detalhamento
@@ -349,6 +381,11 @@ Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDobro.java](2048/core/
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/Iblocos.jpeg)
+
 ### Componente `BlocoDeleta`
 Esse é referente ao Bloco Deleta, o qual pode ser acessado através do Tabuleiro.
 
@@ -360,6 +397,11 @@ item | detalhamento
 Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDeleta.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDeleta.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
+
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/Iblocos.jpeg)
 
 ### Componente `BlocoGenérico`
 Esse é referente aos Blocos Genéricos, ou seja, os blocos numéricos, os quais podem ser acessados através do Tabuleiro.
@@ -373,6 +415,11 @@ Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoGenerico.java](2048/co
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/Iblocos.jpeg)
+
 ### Componente `BlocoBomba`
 Esse é referente ao Bloco Bomba, o qual pode ser acessado através do Tabuleiro, mas também é dado o seu acesso ao Controle, já que ele pode explodir e afetar a dinâmica de outros blocos e outras movimentações.
 
@@ -384,6 +431,11 @@ item | detalhamento
 Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoBomba.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoBomba.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos e IBombControl`
+
+#### Interfaces
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagramas/Bomba.jpeg)
 
 ### Componente `BlocoTempo`
 Esse é referente ao Bloco Tempo, o qual pode ser acessado através do Tabuleiro, mas também é dado o seu acesso ao Controle, já que ele pode atrapalhar e afetar a dinâmica de outros blocos e outras movimentações.
@@ -400,16 +452,7 @@ Interfaces | `IBlocos e ITimerControl`
 #### Interfaces
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-
+![Diagrama Interfaces](diagramas/tempo.jpeg)
 
 
 ## Detalhamento das Interfaces
