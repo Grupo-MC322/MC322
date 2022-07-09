@@ -274,17 +274,125 @@ O diagrama acima está dividido em três seções que englobam o modelo MVC. Est
 
 O diagrama mostra os componentes principais do jogo e como cada um se interliga para transmitir as informações durante o jogo e as interfaces que os relacionam.
 
-### Componente `<nome do componente>`
-Resumo do papel do componente e serviços que ele oferece.
+### Componente `Criador`
+Esse componente serve como principal montador do jogo, sendo responsável por criar principais estruturas da lógica e da interface visual para repassá-las ao Controle e às telas para serem apresentadas.
 
 ![Componente](diagrama-componente.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `ICreatorControl e IsettingScreenCreator`
+
+### Componente `Controle`
+Esse componente serve como principal articulador do jogo, sendo responsável por manipular as principais estruturas da montagem do jogo, da lógica, da interface visual e dos blocos, para repassá-las e às telas para serem apresentadas.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `ICreatorControl, IGameScreenControl, IBoardControl e IsettingScreenControl`
+
+### Componente `Tabuleiro`
+Esse componente serve como base de suporte para o Model, sendo que todos os blocos serão acessados por uma matriz que é atributo do Tabuleiro. Assim, ele coordenará a comunicação entre os blocos e o externo, ou seja, com o Controle.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IBoardControl, IBlocos`
+
+### Componente `TelaConfigurações`
+Essa é a tela em que o jogador escolhe o tamanho do tabuleiro a ser criado (comunicação com o Criador) e quais blocos especiais participarão das rodadas (comunicação com o Controle). Ademais, essa tela é apresentada pela interface gráfica, então precisa de uma interface Screen própria do LibGDX.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `ISettingScreenControl, Screen e ISettingScreenCreator`
+
+### Componente `TelaJogo`
+Essa é a tela em que o jogador efetivamente jogará, requerindo uma comunicação com o Controle. Ademais, essa tela é apresentada pela interface gráfica, então precisa de uma interface Screen própria do LibGDX.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IGameScreenControl e Screen`
+
+### Componente `BlocoDobro`
+Esse é referente ao Bloco Dobro, o qual pode ser acessado através do Tabuleiro.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IBlocos`
+
+### Componente `BlocoDeleta`
+Esse é referente ao Bloco Deleta, o qual pode ser acessado através do Tabuleiro.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IBlocos`
+
+### Componente `BlocoGenérico`
+Esse é referente aos Blocos Genéricos, ou seja, os blocos numéricos, os quais podem ser acessados através do Tabuleiro.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IBlocos`
+
+### Componente `BlocoBomba`
+Esse é referente ao Bloco Bomba, o qual pode ser acessado através do Tabuleiro, mas também é dado o seu acesso ao Controle, já que ele pode explodir e afetar a dinâmica de outros blocos e outras movimentações.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IBlocos e IBombControl`
+
+### Componente `BlocoTempo`
+Esse é referente ao Bloco Tempo, o qual pode ser acessado através do Tabuleiro, mas também é dado o seu acesso ao Controle, já que ele pode atrapalhar e afetar a dinâmica de outros blocos e outras movimentações.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `Luigi Rigato e Raphael Kitahara`
+Interfaces | `IBlocos e ITimerControl`
 
 #### Interfaces
 Interfaces associadas a esse componente:
