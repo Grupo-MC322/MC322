@@ -297,7 +297,7 @@ Esse componente serve como principal articulador do jogo, sendo responsável por
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Controle.java](2048.core.src.com.poo.Jogo2048.Controle.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Controle](2048.core.src.com.poo.Jogo2048.Controle)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ICreatorControl, IGameScreenControl, IBoardControl e IsettingScreenControl`
 
@@ -309,7 +309,7 @@ Esse componente serve como base de suporte para o Model, sendo que todos os bloc
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Tabuleiro.java](2048.core.src.com.poo.Jogo2048.Tabuleiro.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Tabuleiro](2048.core.src.com.poo.Jogo2048.Tabuleiro)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBoardControl, IBlocos`
 
@@ -321,7 +321,7 @@ Essa é a tela em que o jogador escolhe o tamanho do tabuleiro a ser criado (com
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Telas.TelaConfiguracoes.java](2048.core.src.com.poo.Jogo2048.Telas.TelaConfiguracoes.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Telas.TelaConfiguracoes](2048.core.src.com.poo.Jogo2048.Telas.TelaConfiguracoes)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ISettingScreenControl, Screen e ISettingScreenCreator`
 
@@ -333,7 +333,7 @@ Essa é a tela em que o jogador efetivamente jogará, requerindo uma comunicaç�
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Telas.TelaJogo.java](2048.core.src.com.poo.Jogo2048.Telas.TelaJogo.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Telas.TelaJogo](2048.core.src.com.poo.Jogo2048.Telas.TelaJogo)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IGameScreenControl e Screen`
 
@@ -345,7 +345,7 @@ Esse é referente ao Bloco Dobro, o qual pode ser acessado através do Tabuleiro
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoDobro.java](2048.core.src.com.poo.Jogo2048.Blocos.BlocoDobro.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoDobro](2048.core.src.com.poo.Jogo2048.Blocos.BlocoDobro)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
@@ -357,7 +357,7 @@ Esse é referente ao Bloco Deleta, o qual pode ser acessado através do Tabuleir
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoDeleta.java](2048.core.src.com.poo.Jogo2048.Blocos.BlocoDeleta.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoDeleta](2048.core.src.com.poo.Jogo2048.Blocos.BlocoDeleta)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
@@ -369,7 +369,7 @@ Esse é referente aos Blocos Genéricos, ou seja, os blocos numéricos, os quais
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoGenerico.java](2048.core.src.com.poo.Jogo2048.Blocos.BlocoGenerico.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoGenerico](2048.core.src.com.poo.Jogo2048.Blocos.BlocoGenerico)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
@@ -381,7 +381,7 @@ Esse é referente ao Bloco Bomba, o qual pode ser acessado através do Tabuleiro
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoBomba.java](2048.core.src.com.poo.Jogo2048.Blocos.BlocoBomba.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoBomba](2048.core.src.com.poo.Jogo2048.Blocos.BlocoBomba)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos e IBombControl`
 
@@ -393,7 +393,7 @@ Esse é referente ao Bloco Tempo, o qual pode ser acessado através do Tabuleiro
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoTempo.java](2048.core.src.com.poo.Jogo2048.Blocos.BlocoTempo.java)
+Classe | [2048.core.src.com.poo.Jogo2048.Blocos.BlocoTempo](2048.core.src.com.poo.Jogo2048.Blocos.BlocoTempo)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos e ITimerControl`
 
