@@ -65,7 +65,7 @@ public class TelaConfiguracoes extends TelaAbstrata
 
         txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_2.png"));
 
-        txtrBotaoMusica = new Texture(Gdx.files.absolute("botoes/botao_musica.png"));
+        txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica.png"));
 
         // setup inicial das opções de blocos
         control.setBotaoSelected("bomba", true);
@@ -118,7 +118,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         stage.addActor(botaoJogar);
 
         // botão voltar
-        Texture txtrBotaoVoltar = new Texture(Gdx.files.absolute("botoes/botao_voltar.png"));
+        Texture txtrBotaoVoltar = new Texture(Gdx.files.internal("botoes/botao_voltar.png"));
         Image botaoVoltar = new Image(txtrBotaoVoltar);
         botaoVoltar.setPosition(stage.getWidth() * 0.05f, stage.getHeight() * 0.85f);
         botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);

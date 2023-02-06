@@ -30,14 +30,14 @@ public class TelaGanhou extends TelaAbstrata
     {
         /* adicionando os atores */
         // fundo
-        Texture txtrFundo = new Texture(Gdx.files.absolute("telas/fundo_tela_ganhou.png"));
+        Texture txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_ganhou.png"));
         Image imgFundo = new Image(txtrFundo);
         imgFundo.setPosition(0, 0);
         imgFundo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(imgFundo);
 
         // confetti caindo
-        Texture txtrConfetti = new Texture(Gdx.files.absolute("extras/confetti.png"));
+        Texture txtrConfetti = new Texture(Gdx.files.internal("extras/confetti.png"));
         Image imgConfetti = new Image(txtrConfetti);
         imgConfetti.setPosition(Gdx.graphics.getWidth() * 0.055f, Gdx.graphics.getHeight());
         imgConfetti.setSize(Gdx.graphics.getWidth() * 0.9f, Gdx.graphics.getHeight() * 0.95f);
@@ -51,14 +51,14 @@ public class TelaGanhou extends TelaAbstrata
         imgConfetti.addAction(moveParaBaixo);
 
         // botão menu principal
-        Texture txtrBotaoMenu = new Texture(Gdx.files.absolute("botoes/botao_menu_principal.png"));
+        Texture txtrBotaoMenu = new Texture(Gdx.files.internal("botoes/botao_menu_principal.png"));
         Image botaoMenu = new Image(txtrBotaoMenu);
         botaoMenu.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.35f);
         botaoMenu.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
         stage.addActor(botaoMenu);
 
         // botão encerrar
-        Texture txtrBotaoEncerrar = new Texture(Gdx.files.absolute("botoes/botao_encerrar.png"));
+        Texture txtrBotaoEncerrar = new Texture(Gdx.files.internal("botoes/botao_encerrar.png"));
         Image botaoEncerrar = new Image(txtrBotaoEncerrar);
         botaoEncerrar.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.2f);
         botaoEncerrar.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
