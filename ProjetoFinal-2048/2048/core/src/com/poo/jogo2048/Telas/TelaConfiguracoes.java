@@ -35,8 +35,6 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtrJogar;
     private Texture txtrBotaoMusica;
 
-    private boolean botaoMusicaSelected;
-
     public TelaConfiguracoes(final Criador jogo)
     {
         game = jogo;
@@ -72,6 +70,7 @@ public class TelaConfiguracoes extends TelaAbstrata
         control.setBotaoSelected("deleta", true);
         control.setBotaoSelected("tempo", true);
         control.setBotaoSelected("2x", true);
+        control.setBotaoSelected("musica", true);
     }
 
     @Override
@@ -259,16 +258,16 @@ public class TelaConfiguracoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(botaoMusicaSelected)
+                if(control.getBotaoSelected("musica"))
                 {
                     game.getMusic().pause();
-                    botaoMusicaSelected = false;
+                    control.setBotaoSelected("musica", false);
                     txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica_unselected.png"));
                 }
                 else
                 {
                     game.getMusic().play();
-                    botaoMusicaSelected = true;
+                    control.setBotaoSelected("musica", true);
                     txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica.png"));
                 }
                     

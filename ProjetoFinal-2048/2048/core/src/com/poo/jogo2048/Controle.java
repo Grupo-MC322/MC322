@@ -27,6 +27,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     private boolean botaoDeletaSelected;
     private boolean botaoTempoSelected;
     private boolean botao2xSelected;
+    private boolean botaoMusicaSelected;
 
     private IBombControl bomb;
     private ITimerControl timer;
@@ -426,6 +427,11 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             case("2x"):
                 botao2xSelected = selected;
                 break;
+            case("musica"):
+                botaoMusicaSelected = selected;
+                break;
+            default:
+                break;
         }
     }
 
@@ -441,6 +447,8 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
                 return botaoTempoSelected;
             case("2x"):
                 return botao2xSelected;
+            case("musica"):
+                return botaoMusicaSelected;
             default:
                 return false;
         }
