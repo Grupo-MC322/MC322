@@ -119,7 +119,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 	{
         if(algoMudou)
         {
-            atualizaVidas();
+            atualizaVidas(); // updates the lives of the special blocks
             algoMudou = false;
         }
         
@@ -173,7 +173,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 
     private void verificaViabilidade(int linha, int coluna, char direcao)
     {
-        if(!Objects.equals(board.getId(linha, coluna), 0) && board.getBloco(linha, coluna).getJuntado() == false)
+        if(!Objects.equals(board.getId(linha, coluna), 0) && board.getBloco(linha, coluna).getJuntado() == false) // se não for 0 e se não juntou
         {
             interpretaComando(direcao, linha, coluna, batch, stage);
         }
@@ -183,14 +183,17 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     {
         planejaMovimento(direcao, linhaIni, colunaIni);
 
-        if(0 <= linhaFim && linhaFim < board.getTamanho() && 0 <= colunaFim && colunaFim < board.getTamanho())
+        if(0 <= linhaFim && linhaFim < board.getTamanho() && 0 <= colunaFim && colunaFim < board.getTamanho()) // verifica se está dentro do tabuleiro
         {
-            if(board.getBloco(linhaIni, colunaIni) instanceof IBlocosVidas && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
+            if (board.getBloco(linhaFim, colunaFim).getJuntado() == false)
             {
-                ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
-                ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
+                if(board.getBloco(linhaIni, colunaIni) instanceof IBlocosVidas && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
+                {
+                    ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
+                    ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
+                }
+                movimenta(direcao, linhaIni, colunaIni, batch, stage);
             }
-            movimenta(direcao, linhaIni, colunaIni, batch, stage);
         }
     }
 
