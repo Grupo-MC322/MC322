@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoGenerico implements IBlocos
+public class NumBlock implements IBlocks
 {
 	private int id;
     private Image imagem;
@@ -13,7 +13,7 @@ public class BlocoGenerico implements IBlocos
     private float posY;
     private float size;
 
-    public BlocoGenerico(int id)
+    public NumBlock(int id)
     {
         setId(id);
     }

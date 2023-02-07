@@ -2,7 +2,7 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public interface IBlocos
+public interface IBlocks
 {
     public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
     public Image getImagem();

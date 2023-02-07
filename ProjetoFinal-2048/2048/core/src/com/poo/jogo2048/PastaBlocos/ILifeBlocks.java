@@ -2,7 +2,7 @@ package com.poo.jogo2048.PastaBlocos;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public interface IBlocosVidas extends IBlocos
+public interface ILifeBlocks extends IBlocks
 {
     public void setImagem(Image imagem);
     public int getVida();

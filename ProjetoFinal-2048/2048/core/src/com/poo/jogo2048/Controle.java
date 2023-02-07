@@ -29,7 +29,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     private boolean botao2xSelected;
     private boolean botaoMusicaSelected;
 
-    private IBlocosVidas timer, bomb;
+    private ILifeBlocks timer, bomb;
 
     private int linhaFim = 0;
     private int colunaFim = 0;
@@ -46,14 +46,14 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         this.batch = game.getBatch();
         this.stage = game.getStage();
         
-        bomb = BlocoBomba.getInstance();
-        timer = BlocoTempo.getInstance();
+        bomb = BombBlock.getInstance();
+        timer = TimeBlock.getInstance();
     }
 
     // Adiciona um bloco entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro.
     public void spawnBloco()
     {
-        IBlocos blocoGerado = new BlocoGenerico(0);
+        IBlocks blocoGerado = new NumBlock(0);
         Random random = new Random();
         int linha = random.nextInt(board.getTamanho());
 		int coluna = random.nextInt(board.getTamanho());
@@ -64,15 +64,15 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 			int index = random.nextInt(100);
             if(index < 10)
             {
-                blocoGerado = new BlocoGenerico(1);
+                blocoGerado = new NumBlock(1);
             }
             else if (index < 60)
             {
-                blocoGerado = new BlocoGenerico(2);
+                blocoGerado = new NumBlock(2);
             }
             else if (index < 80)
             {
-                blocoGerado = new BlocoGenerico(4);
+                blocoGerado = new NumBlock(4);
             }
             else if (index < 85 && bomb.getAtivo() == false && getBotaoSelected("bomba"))
             {
@@ -92,11 +92,11 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
             }
             else if (index < 95 && getBotaoSelected("deleta"))
             {
-                blocoGerado = new BlocoDeleta();
+                blocoGerado = new DelBlock();
             }
             else if (index < 100 && getBotaoSelected("2x"))
             {
-                blocoGerado = new BlocoDobro();
+                blocoGerado = new DoubleBlock();
             }
             else
             {
@@ -182,10 +182,10 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         {
             if (board.getBloco(linhaFim, colunaFim).getJuntado() == false)
             {
-                if(board.getBloco(linhaIni, colunaIni) instanceof IBlocosVidas && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
+                if(board.getBloco(linhaIni, colunaIni) instanceof ILifeBlocks && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
                 {
-                    ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
-                    ((IBlocosVidas) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
+                    ((ILifeBlocks) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
+                    ((ILifeBlocks) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
                 }
                 movimenta(direcao, linhaIni, colunaIni, batch, stage);
             }
@@ -233,7 +233,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         {
             board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
             interpretaComando(direcao, linhaFim, colunaFim, batch, stage);
             algoMudou = true;
         }
@@ -242,12 +242,12 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         else if(Objects.equals(board.getId(linhaFim, colunaFim), board.getId(linhaIni, colunaIni)))
         {
             board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            if(board.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+            if(board.getBloco(linhaFim, colunaFim) instanceof NumBlock)
             {
-                ((BlocoGenerico) board.getBloco(linhaFim, colunaFim)).dobra();
+                ((NumBlock) board.getBloco(linhaFim, colunaFim)).dobra();
             }
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
             board.getBloco(linhaFim, colunaFim).setJuntado(true);
             algoMudou = true;
         }
@@ -256,9 +256,9 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         else if(Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaIni, colunaIni), "deleta"))
         {
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
             board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            board.setBloco(linhaFim, colunaFim, new BlocoGenerico(0));
+            board.setBloco(linhaFim, colunaFim, new NumBlock(0));
             algoMudou = true;
         }
 
@@ -266,14 +266,14 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         else if(Objects.equals(board.getId(linhaFim, colunaFim), "2x"))
         {
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            if(board.getBloco(linhaIni, colunaIni) instanceof BlocoGenerico)
+            if(board.getBloco(linhaIni, colunaIni) instanceof NumBlock)
             {
-                ((BlocoGenerico) board.getBloco(linhaIni, colunaIni)).dobra();
+                ((NumBlock) board.getBloco(linhaIni, colunaIni)).dobra();
             }
             board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
             board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(Actions.removeActor());
-            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
             board.getBloco(linhaIni, colunaIni).setJuntado(true);
             algoMudou = true;
         }
@@ -282,11 +282,11 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         else if(Objects.equals(board.getId(linhaIni, colunaIni), "2x"))
         {
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new BlocoGenerico(0));
+            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
             board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            if(board.getBloco(linhaFim, colunaFim) instanceof BlocoGenerico)
+            if(board.getBloco(linhaFim, colunaFim) instanceof NumBlock)
             {
-                ((BlocoGenerico) board.getBloco(linhaFim, colunaFim)).dobra();
+                ((NumBlock) board.getBloco(linhaFim, colunaFim)).dobra();
             }
             board.getBloco(linhaFim, colunaFim).setJuntado(true);
             algoMudou = true;
@@ -341,7 +341,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         {
             algoMudou = true;
             timer.reset();
-            board.setBloco(timer.getLinha(), timer.getColuna(), new BlocoGenerico(0));
+            board.setBloco(timer.getLinha(), timer.getColuna(), new NumBlock(0));
         }
     }
 
@@ -381,7 +381,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         {
             SequenceAction animaExplosao = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
             board.getBloco(linha, coluna).getImagem().addAction(animaExplosao);
-            board.setBloco(linha, coluna, new BlocoGenerico(0));
+            board.setBloco(linha, coluna, new NumBlock(0));
         }
     }
 

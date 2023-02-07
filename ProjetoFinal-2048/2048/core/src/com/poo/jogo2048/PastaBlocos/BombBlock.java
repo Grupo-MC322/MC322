@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoBomba implements IBlocosVidas
+public class BombBlock implements ILifeBlocks
 {
-    private static IBlocosVidas instance;
+    private static ILifeBlocks instance;
     private String id = "bomba";
     private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
     private Image imagem = new Image(textura);
@@ -21,15 +21,15 @@ public class BlocoBomba implements IBlocosVidas
     
 
     // para implementar o design pattern singleton, é necessário um construtor privado
-    private BlocoBomba()
+    private BombBlock()
     {}
     
     // implementação do design pattern singleton, garantindo que só uma instância de bomba exista
-    public static IBlocosVidas getInstance()
+    public static ILifeBlocks getInstance()
     {
         if (instance == null)
         {
-            instance = new BlocoBomba();
+            instance = new BombBlock();
         }
         return instance;
     }

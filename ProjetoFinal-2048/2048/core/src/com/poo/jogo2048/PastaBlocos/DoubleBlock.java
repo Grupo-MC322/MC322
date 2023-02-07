@@ -4,10 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoDeleta implements IBlocos
+public class DoubleBlock implements IBlocks
 {
-    private String id = "deleta";
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+    private String id = "2x";
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
     private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;
@@ -18,7 +18,7 @@ public class BlocoDeleta implements IBlocos
     {
         return id;
     }
-
+    
     public Texture getTextura() {
         return textura;
     }
@@ -42,7 +42,7 @@ public class BlocoDeleta implements IBlocos
     {
         return posX;
     }
-    
+
     public void setPosX(float posX)
     {
         this.posX = posX;

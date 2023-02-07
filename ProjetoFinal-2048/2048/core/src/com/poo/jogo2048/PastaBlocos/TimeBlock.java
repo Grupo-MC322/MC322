@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class BlocoTempo implements IBlocosVidas
+public class TimeBlock implements ILifeBlocks
 {
-    private static IBlocosVidas instance;
+    private static ILifeBlocks instance;
     private String id = "tempo";
     private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
     private Image imagem = new Image(textura);
@@ -22,15 +22,15 @@ public class BlocoTempo implements IBlocosVidas
     
 
     // para implementar o design pattern singleton, é necessário um construtor privado
-    private BlocoTempo()
+    private TimeBlock()
     {}
     
     // implementação do design pattern singleton, garantindo que só uma instância de bloco tempo exista
-    public static IBlocosVidas getInstance()
+    public static ILifeBlocks getInstance()
     {
         if (instance == null)
         {
-            instance = new BlocoTempo();
+            instance = new TimeBlock();
         }
 
         return instance;
