@@ -29,8 +29,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     private boolean botao2xSelected;
     private boolean botaoMusicaSelected;
 
-    private IBombControl bomb;
-    private ITimerControl timer;
+    private IBlocosVidas timer, bomb;
 
     private int linhaFim = 0;
     private int colunaFim = 0;
