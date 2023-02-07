@@ -115,13 +115,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
     }
 
     public void transfereComando(char direcao)
-	{
-        if(algoMudou)
-        {
-            atualizaVidas(); // updates the lives of the special blocks
-            algoMudou = false;
-        }
-        
+	{   
 		if(direcao == 'w')
         {
             for(int coluna = board.getTamanho() - 1; coluna >= 0; coluna--)
@@ -166,7 +160,9 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         percorreTabuleiro();
         if(algoMudou)
         {
+            atualizaVidas();
             spawnBloco();
+            algoMudou = false;
         }
 	}
 
