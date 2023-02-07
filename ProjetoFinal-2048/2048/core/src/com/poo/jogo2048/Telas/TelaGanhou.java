@@ -8,14 +8,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.poo.jogo2048.Criador;
+import com.poo.jogo2048.Creator;
 
 public class TelaGanhou extends TelaAbstrata
 {
-    private final Criador jogo;
+    private final Creator jogo;
     private Stage stage;
 
-    public TelaGanhou(final Criador jogo)
+    public TelaGanhou(final Creator jogo)
     {
         // conexões
         this.jogo = jogo;

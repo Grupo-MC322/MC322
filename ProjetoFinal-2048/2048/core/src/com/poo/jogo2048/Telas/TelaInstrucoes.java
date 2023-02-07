@@ -8,16 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.poo.jogo2048.Criador;
+import com.poo.jogo2048.Creator;
 
 public class TelaInstrucoes extends TelaAbstrata
 {
-    private final Criador jogo;
+    private final Creator jogo;
     private Stage stage;
     private Texture txtrFundo;
     private int pagina = 1;
     
-    public TelaInstrucoes(final Criador jogo)
+    public TelaInstrucoes(final Creator jogo)
     {
         this.jogo = jogo;
         jogo.getStage().clear();

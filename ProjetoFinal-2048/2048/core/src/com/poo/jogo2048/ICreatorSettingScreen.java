@@ -1,15 +1,16 @@
 package com.poo.jogo2048;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public interface ICreatorControl
+public interface ICreatorSettingScreen
 {
-    public Controle getControle();
+    public Control getControle();
     public SpriteBatch getBatch();
     public Stage getStage();
     public void setTamanhoTabuleiro(int tamanhoTabuleiro);
     public void setScreen(Screen screen);
-
+    public Music getMusic();
 }

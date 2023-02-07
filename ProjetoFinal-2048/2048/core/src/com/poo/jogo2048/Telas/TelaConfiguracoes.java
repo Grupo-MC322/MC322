@@ -10,17 +10,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.poo.jogo2048.ISettingScreenControl;
-import com.poo.jogo2048.ISettingScreenCreator;
-import com.poo.jogo2048.Criador;
+import com.poo.jogo2048.IControlSettingScreen;
+import com.poo.jogo2048.ICreatorSettingScreen;
+import com.poo.jogo2048.Creator;
 
 public class TelaConfiguracoes extends TelaAbstrata
 {
-    private final ISettingScreenCreator game;
-    private ISettingScreenControl control;
+    private final ICreatorSettingScreen game;
+    private IControlSettingScreen control;
     private Stage stage;
     private SpriteBatch batch;
-    private final Criador jogo;
+    private final Creator jogo;
     private OrthographicCamera camera;
 
     private Texture txtrFundo;
@@ -35,7 +35,7 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtrJogar;
     private Texture txtrBotaoMusica;
 
-    public TelaConfiguracoes(final Criador jogo)
+    public TelaConfiguracoes(final Creator jogo)
     {
         game = jogo;
         this.jogo = jogo;

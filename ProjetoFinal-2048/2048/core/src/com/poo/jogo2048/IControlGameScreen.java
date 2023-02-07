@@ -1,8 +1,8 @@
 package com.poo.jogo2048;
 
-public interface IGameScreenControl
+public interface IControlGameScreen
 {
-    public void conectaTabuleiro(Tabuleiro tabuleiro);
+    public void conectaTabuleiro(Board tabuleiro);
     public void spawnBloco();
     public void transfereComando(char direcao);
 	public boolean getGanhou();

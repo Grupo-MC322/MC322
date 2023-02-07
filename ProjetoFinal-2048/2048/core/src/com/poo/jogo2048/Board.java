@@ -3,12 +3,12 @@ package com.poo.jogo2048;
 import com.poo.jogo2048.PastaBlocos.NumBlock;
 import com.poo.jogo2048.PastaBlocos.IBlocks;
 
-public class Tabuleiro implements IBoardControl
+public class Board implements IBoardControl
 {
     private IBlocks[][] matriz;
     private int tamanho;
 
-    public Tabuleiro(int tamanho)
+    public Board(int tamanho)
     {
         this.tamanho = tamanho;
         matriz = new IBlocks[tamanho][tamanho];

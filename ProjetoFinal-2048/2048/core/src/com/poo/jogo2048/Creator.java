@@ -10,13 +10,13 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.poo.jogo2048.Telas.TelaInicial;
 
 
-public class Criador extends Game implements ISettingScreenCreator, ICreatorControl
+public class Creator extends Game implements ICreatorSettingScreen
 {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
 	private int tamanhoTabuleiro = 4;
-	private Controle controle;
+	private Control control;
 	private Music music;
 
 	@Override
@@ -29,8 +29,8 @@ public class Criador extends Game implements ISettingScreenCreator, ICreatorCont
 		stage = new Stage(new StretchViewport(camera.viewportWidth, camera.viewportHeight));
 		Gdx.input.setInputProcessor(stage);
 
-		// criação do controle
-		controle = new Controle(this);
+		// criação do control
+		control = new Control(this);
 
 		// fazendo o load da música de fundo e a iniciando
 		music = Gdx.audio.newMusic(Gdx.files.internal("musicas/Corona-320bit.mp3"));
@@ -67,9 +67,9 @@ public class Criador extends Game implements ISettingScreenCreator, ICreatorCont
 		return tamanhoTabuleiro;
 	}
 
-	public Controle getControle()
+	public Control getControle()
 	{
-		return controle;
+		return control;
 	}
 
 	public Music getMusic() {

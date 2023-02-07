@@ -9,20 +9,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.poo.jogo2048.Tabuleiro;
-import com.poo.jogo2048.Criador;
-import com.poo.jogo2048.IGameScreenControl;
+import com.poo.jogo2048.Board;
+import com.poo.jogo2048.Creator;
+import com.poo.jogo2048.IControlGameScreen;
 
 public class TelaJogo extends TelaAbstrata
 {
-    private final Criador jogo;
+    private final Creator jogo;
     private Stage stage;
     private OrthographicCamera camera;
-    private Tabuleiro tabuleiro;
-    private IGameScreenControl control;
+    private Board tabuleiro;
+    private IControlGameScreen control;
     private char direcao;
 
-    public TelaJogo(final Criador jogo)
+    public TelaJogo(final Creator jogo)
     {
         // conexões
         this.jogo = jogo;
@@ -34,7 +34,7 @@ public class TelaJogo extends TelaAbstrata
 		camera.setToOrtho(false, 500, 500);
 
         // criação do tabuleiro
-        tabuleiro = new Tabuleiro(jogo.getTamanhoTabuleiro());
+        tabuleiro = new Board(jogo.getTamanhoTabuleiro());
         control.conectaTabuleiro(tabuleiro);
 
         // desenho inicial do tabuleiro

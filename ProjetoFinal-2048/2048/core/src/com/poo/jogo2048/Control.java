@@ -15,10 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.poo.jogo2048.PastaBlocos.*;
 import com.poo.jogo2048.Telas.TelaPerdeu;
 
-public class Controle implements IGameScreenControl, ISettingScreenControl
+public class Control implements IControlGameScreen, IControlSettingScreen
 {
-    private final ICreatorControl game;
-    private final Criador jogo;
+    private final Creator creator;
     private Stage stage;
     private SpriteBatch batch;
     private IBoardControl board;
@@ -39,12 +38,11 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
 
     private boolean ganhou = false;
 
-    public Controle(final Criador jogo)
+    public Control(final Creator creator)
     {
-        this.jogo = jogo;
-        game = jogo;
-        this.batch = game.getBatch();
-        this.stage = game.getStage();
+        this.creator = creator;
+        this.batch = creator.getBatch();
+        this.stage = creator.getStage();
         
         bomb = BombBlock.getInstance();
         timer = TimeBlock.getInstance();
@@ -405,7 +403,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         }
         if(vazioInexistente)
         {
-            jogo.setScreen(new TelaPerdeu(jogo));
+            creator.setScreen(new TelaPerdeu(creator));
         }
     }
 
@@ -452,7 +450,7 @@ public class Controle implements IGameScreenControl, ISettingScreenControl
         }
     }
 
-    public void conectaTabuleiro(Tabuleiro tabuleiro)
+    public void conectaTabuleiro(Board tabuleiro)
     {
         board = tabuleiro;
     }
