@@ -13,28 +13,28 @@ import com.poo.jogo2048.Board;
 import com.poo.jogo2048.Creator;
 import com.poo.jogo2048.IControlGameScreen;
 
-public class TelaJogo extends TelaAbstrata
+public class GameScreen extends AbstractScreen
 {
-    private final Creator jogo;
+    private final Creator creator;
     private Stage stage;
     private OrthographicCamera camera;
     private Board tabuleiro;
     private IControlGameScreen control;
     private char direcao;
 
-    public TelaJogo(final Creator jogo)
+    public GameScreen(final Creator creator)
     {
         // conexões
-        this.jogo = jogo;
-        control = jogo.getControle();
-        stage = jogo.getStage();
+        this.creator = creator;
+        control = creator.getControle();
+        stage = creator.getStage();
         stage.clear();
 
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
 
         // criação do tabuleiro
-        tabuleiro = new Board(jogo.getTamanhoTabuleiro());
+        tabuleiro = new Board(creator.getTamanhoTabuleiro());
         control.conectaTabuleiro(tabuleiro);
 
         // desenho inicial do tabuleiro
@@ -86,7 +86,7 @@ public class TelaJogo extends TelaAbstrata
         {
             stage.clear();
             control.setGanhou(false);
-            jogo.setScreen(new TelaGanhou(jogo));
+            creator.setScreen(new WinScreen(creator));
         }
     }
 

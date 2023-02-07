@@ -10,18 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.poo.jogo2048.Creator;
 
-public class TelaInstrucoes extends TelaAbstrata
+public class InstructionScreen extends AbstractScreen
 {
-    private final Creator jogo;
+    private final Creator creator;
     private Stage stage;
     private Texture txtrFundo;
     private int pagina = 1;
     
-    public TelaInstrucoes(final Creator jogo)
+    public InstructionScreen(final Creator creator)
     {
-        this.jogo = jogo;
-        jogo.getStage().clear();
-        this.stage = jogo.getStage();
+        this.creator = creator;
+        creator.getStage().clear();
+        this.stage = creator.getStage();
 
         criaStage();
     }
@@ -96,7 +96,7 @@ public class TelaInstrucoes extends TelaAbstrata
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                jogo.setScreen(new TelaInicial(jogo));
+                creator.setScreen(new HomeScreen(creator));
             }
         });
     }

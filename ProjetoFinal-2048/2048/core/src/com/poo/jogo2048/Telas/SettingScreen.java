@@ -14,7 +14,7 @@ import com.poo.jogo2048.IControlSettingScreen;
 import com.poo.jogo2048.ICreatorSettingScreen;
 import com.poo.jogo2048.Creator;
 
-public class TelaConfiguracoes extends TelaAbstrata
+public class SettingScreen extends AbstractScreen
 {
     private final ICreatorSettingScreen game;
     private IControlSettingScreen control;
@@ -35,7 +35,7 @@ public class TelaConfiguracoes extends TelaAbstrata
     private Texture txtrJogar;
     private Texture txtrBotaoMusica;
 
-    public TelaConfiguracoes(final Creator jogo)
+    public SettingScreen(final Creator jogo)
     {
         game = jogo;
         this.jogo = jogo;
@@ -303,7 +303,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             botao.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new TelaInicial(jogo));
+                    game.setScreen(new HomeScreen(jogo));
                 }
             });
         } 
@@ -312,7 +312,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             botao.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new TelaJogo(jogo));
+                    game.setScreen(new GameScreen(jogo));
                 }
             });
         }
@@ -321,7 +321,7 @@ public class TelaConfiguracoes extends TelaAbstrata
             botao.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new TelaInstrucoes(jogo));
+                    game.setScreen(new InstructionScreen(jogo));
                 }
             });
         }

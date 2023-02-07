@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.poo.jogo2048.Telas.TelaInicial;
+import com.poo.jogo2048.Telas.HomeScreen;
 
 
 public class Creator extends Game implements ICreatorSettingScreen
@@ -44,7 +44,7 @@ public class Creator extends Game implements ICreatorSettingScreen
 		music.play();
  
 		// definindo a tela como tela inicial
-		this.setScreen(new TelaInicial(this));
+		this.setScreen(new HomeScreen(this));
 	}
 
 	public SpriteBatch getBatch()
