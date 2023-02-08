@@ -33,7 +33,7 @@ public class Creator extends Game implements ICreatorSettingScreen
 		control = new Control(this);
 
 		// fazendo o load da música de fundo e a iniciando
-		music = Gdx.audio.newMusic(Gdx.files.internal("musicas/Corona-320bit.mp3"));
+		music = Gdx.audio.newMusic(Gdx.files.internal("songs/Corona-320bit.mp3"));
 		/* 
 		Corona by Alexander Nakarada | https://www.serpentsoundstudios.com
 		Music promoted by https://www.chosic.com/free-music/all/

@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class DoubleBlock implements IBlocks
 {
     private String id = "2x";
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
+    private Texture textura = new Texture(Gdx.files.internal("blocks/2x.png"));
     private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;

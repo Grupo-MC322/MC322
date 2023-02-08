@@ -72,7 +72,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             {
                 blocoGerado = new NumBlock(4);
             }
-            else if (index < 85 && bomb.getAtivo() == false && getBotaoSelected("bomba"))
+            else if (index < 85 && bomb.getAtivo() == false && getBotaoSelected("bomb"))
             {
                 blocoGerado = bomb;
                 
@@ -80,7 +80,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 bomb.setLinha(linha);
                 bomb.setColuna(coluna);
             }
-            else if (index < 90 && timer.getAtivo() == false && getBotaoSelected("tempo"))
+            else if (index < 90 && timer.getAtivo() == false && getBotaoSelected("time"))
             {
                 blocoGerado = timer;
 
@@ -88,7 +88,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 timer.setLinha(linha);
                 timer.setColuna(coluna);
             }
-            else if (index < 95 && getBotaoSelected("deleta"))
+            else if (index < 95 && getBotaoSelected("del"))
             {
                 blocoGerado = new DelBlock();
             }
@@ -180,7 +180,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         {
             if (board.getBloco(linhaFim, colunaFim).getJuntado() == false)
             {
-                if(board.getBloco(linhaIni, colunaIni) instanceof ILifeBlocks && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
+                if(board.getBloco(linhaIni, colunaIni) instanceof ILifeBlocks && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "del") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
                 {
                     ((ILifeBlocks) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
                     ((ILifeBlocks) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
@@ -251,7 +251,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
 
         // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
-        else if(Objects.equals(board.getId(linhaFim, colunaFim), "deleta") || Objects.equals(board.getId(linhaIni, colunaIni), "deleta"))
+        else if(Objects.equals(board.getId(linhaFim, colunaFim), "del") || Objects.equals(board.getId(linhaIni, colunaIni), "del"))
         {
             board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
             board.setBloco(linhaIni, colunaIni, new NumBlock(0));
@@ -302,11 +302,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             // setup das imagens para identificação do estado do bloco
             if(bomb.getVida() == 2)
             {
-                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_2:3.png"))));
+                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocks/bomb_2:3.png"))));
             }
             else if(bomb.getVida() == 1)
             {
-                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba_3:3.png"))));
+                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocks/bomb_3:3.png"))));
             }
         }
         if (timer.getAtivo())
@@ -318,15 +318,15 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             // setup das imagens para identificação do estado do bloco
             if(timer.getVida() == 3)
             {
-                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_3:4.png"))));
+                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocks/time_3:4.png"))));
             }
             else if(timer.getVida() == 2)
             {
-                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_2:4.png"))));
+                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocks/time_2:4.png"))));
             }
             else if(timer.getVida() == 1)
             {
-                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo_1:4.png"))));
+                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocks/time_1:4.png"))));
             }
         }
         if(bomb.getVida() == 0)
@@ -411,19 +411,19 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     {
         switch(idBotao)
         {
-            case("bomba"):
+            case("bomb"):
                 botaoBombaSelected = selected;
                 break;
-            case("deleta"):
+            case("del"):
                 botaoDeletaSelected = selected;
                 break;
-            case("tempo"):
+            case("time"):
                 botaoTempoSelected = selected;
                 break;
             case("2x"):
                 botao2xSelected = selected;
                 break;
-            case("musica"):
+            case("music"):
                 botaoMusicaSelected = selected;
                 break;
             default:
@@ -435,15 +435,15 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     {
         switch(idBotao)
         {
-            case("bomba"):
+            case("bomb"):
                 return botaoBombaSelected;
-            case("deleta"):
+            case("del"):
                 return botaoDeletaSelected;
-            case("tempo"):
+            case("time"):
                 return botaoTempoSelected;
             case("2x"):
                 return botao2xSelected;
-            case("musica"):
+            case("music"):
                 return botaoMusicaSelected;
             default:
                 return false;

@@ -38,13 +38,13 @@ public class HomeScreen extends AbstractScreen
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
     
-        txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_inicio.png"));
+        txtrFundo = new Texture(Gdx.files.internal("backgrounds/start.png"));
 
-        txtrBotaoJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_1.png"));
+        txtrBotaoJogar = new Texture(Gdx.files.internal("buttons/play_1.png"));
         xBotaoJogar = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
         yBotaoJogar = stage.getHeight() * 0.44f;
 
-        txtrBotaoInstr = new Texture(Gdx.files.internal("botoes/botao_instrucoes.png"));
+        txtrBotaoInstr = new Texture(Gdx.files.internal("buttons/instructions.png"));
         xBotaoInstr = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
         yBotaoInstr = stage.getHeight() * 0.27f;
 

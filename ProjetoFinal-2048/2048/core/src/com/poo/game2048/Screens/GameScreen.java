@@ -113,7 +113,7 @@ public class GameScreen extends AbstractScreen
 
         if(control.getGanhou())
         {
-            Image aviso = new Image(new Texture(Gdx.files.internal("extras/aviso.png")));
+            Image aviso = new Image(new Texture(Gdx.files.internal("extras/warning.png")));
             aviso.setPosition(camera.viewportWidth/2 - camera.viewportWidth * 0.45f, camera.viewportHeight/2 - camera.viewportHeight * 0.13f);
             aviso.setSize(camera.viewportWidth * 0.9f, camera.viewportHeight * 0.26f);
             stage.addActor(aviso);

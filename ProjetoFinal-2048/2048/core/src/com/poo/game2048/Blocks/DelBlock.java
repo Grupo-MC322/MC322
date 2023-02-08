@@ -6,8 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public class DelBlock implements IBlocks
 {
-    private String id = "deleta";
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+    private String id = "del";
+    private Texture textura = new Texture(Gdx.files.internal("blocks/del.png"));
     private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;

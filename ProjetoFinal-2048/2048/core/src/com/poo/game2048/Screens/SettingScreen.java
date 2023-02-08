@@ -49,28 +49,28 @@ public class SettingScreen extends AbstractScreen
 		camera.setToOrtho(false, 500, 500);
     
         // setup inicial das texturas
-        txtrFundo = new Texture(Gdx.files.internal("telas/fundo_configuracoes.png"));
+        txtrFundo = new Texture(Gdx.files.internal("backgrounds/settings.png"));
 
-        txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4.png"));
-        txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
-        txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
-        txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
+        txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4.png"));
+        txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
+        txtr6x6 = new Texture(Gdx.files.internal("buttons/6x6_unselected.png"));
+        txtr7x7 = new Texture(Gdx.files.internal("buttons/7x7_unselected.png"));
 
-        txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
-        txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
-        txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
-        txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
+        txtrBomba = new Texture(Gdx.files.internal("blocks/bomb.png"));
+        txtrDeleta = new Texture(Gdx.files.internal("blocks/del.png"));
+        txtrTempo = new Texture(Gdx.files.internal("blocks/time.png"));
+        txtr2x = new Texture(Gdx.files.internal("blocks/2x.png"));
 
-        txtrJogar = new Texture(Gdx.files.internal("botoes/botao_jogar_2.png"));
+        txtrJogar = new Texture(Gdx.files.internal("buttons/play_2.png"));
 
-        txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica.png"));
+        txtrBotaoMusica = new Texture(Gdx.files.internal("buttons/music.png"));
 
         // setup inicial das opções de blocos
-        control.setBotaoSelected("bomba", true);
-        control.setBotaoSelected("deleta", true);
-        control.setBotaoSelected("tempo", true);
+        control.setBotaoSelected("bomb", true);
+        control.setBotaoSelected("del", true);
+        control.setBotaoSelected("time", true);
         control.setBotaoSelected("2x", true);
-        control.setBotaoSelected("musica", true);
+        control.setBotaoSelected("music", true);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class SettingScreen extends AbstractScreen
         stage.addActor(botaoJogar);
 
         // botão voltar
-        Texture txtrBotaoVoltar = new Texture(Gdx.files.internal("botoes/botao_voltar.png"));
+        Texture txtrBotaoVoltar = new Texture(Gdx.files.internal("buttons/back.png"));
         Image botaoVoltar = new Image(txtrBotaoVoltar);
         botaoVoltar.setPosition(stage.getWidth() * 0.05f, stage.getHeight() * 0.85f);
         botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
@@ -138,10 +138,10 @@ public class SettingScreen extends AbstractScreen
             {
                 game.setTamanhoTabuleiro(4);
                 
-                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("buttons/6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("buttons/7x7_unselected.png"));
             }
         });
 
@@ -151,10 +151,10 @@ public class SettingScreen extends AbstractScreen
             {
                 game.setTamanhoTabuleiro(5);
 
-                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("buttons/6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("buttons/7x7_unselected.png"));
             }
         });
 
@@ -164,10 +164,10 @@ public class SettingScreen extends AbstractScreen
             {
                 game.setTamanhoTabuleiro(6);
 
-                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7_unselected.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("buttons/6x6.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("buttons/7x7_unselected.png"));
             }
         });
 
@@ -177,10 +177,10 @@ public class SettingScreen extends AbstractScreen
             {
                 game.setTamanhoTabuleiro(7);
 
-                txtr4x4 = new Texture(Gdx.files.internal("botoes/selecao_4x4_unselected.png"));
-                txtr5x5 = new Texture(Gdx.files.internal("botoes/selecao_5x5_unselected.png"));
-                txtr6x6 = new Texture(Gdx.files.internal("botoes/selecao_6x6_unselected.png"));
-                txtr7x7 = new Texture(Gdx.files.internal("botoes/selecao_7x7.png"));
+                txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4_unselected.png"));
+                txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
+                txtr6x6 = new Texture(Gdx.files.internal("buttons/6x6_unselected.png"));
+                txtr7x7 = new Texture(Gdx.files.internal("buttons/7x7.png"));
             }
         });
 
@@ -188,15 +188,15 @@ public class SettingScreen extends AbstractScreen
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("bomba"))
+                if(control.getBotaoSelected("bomb"))
                 {
-                    control.setBotaoSelected("bomba", false);;
-                    txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba_unselected.png"));
+                    control.setBotaoSelected("bomb", false);;
+                    txtrBomba = new Texture(Gdx.files.internal("blocks/bomb_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("bomba", true);;
-                    txtrBomba = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
+                    control.setBotaoSelected("bomb", true);;
+                    txtrBomba = new Texture(Gdx.files.internal("blocks/bomb.png"));
                 }
             }
         });
@@ -205,15 +205,15 @@ public class SettingScreen extends AbstractScreen
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("deleta"))
+                if(control.getBotaoSelected("del"))
                 {
-                    control.setBotaoSelected("deleta", false);;
-                    txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta_unselected.png"));
+                    control.setBotaoSelected("del", false);;
+                    txtrDeleta = new Texture(Gdx.files.internal("blocks/del_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("deleta", true);;
-                    txtrDeleta = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+                    control.setBotaoSelected("del", true);;
+                    txtrDeleta = new Texture(Gdx.files.internal("blocks/del.png"));
                 }
             }
         });
@@ -222,15 +222,15 @@ public class SettingScreen extends AbstractScreen
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("tempo"))
+                if(control.getBotaoSelected("time"))
                 {
-                    control.setBotaoSelected("tempo", false);
-                    txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo_unselected.png"));
+                    control.setBotaoSelected("time", false);
+                    txtrTempo = new Texture(Gdx.files.internal("blocks/time_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("tempo", true);
-                    txtrTempo = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
+                    control.setBotaoSelected("time", true);
+                    txtrTempo = new Texture(Gdx.files.internal("blocks/time.png"));
                 }
             }
         });
@@ -242,12 +242,12 @@ public class SettingScreen extends AbstractScreen
                 if(control.getBotaoSelected("2x"))
                 {
                     control.setBotaoSelected("2x", false);
-                    txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x_unselected.png"));
+                    txtr2x = new Texture(Gdx.files.internal("blocks/2x_unselected.png"));
                 }
                 else
                 {
                     control.setBotaoSelected("2x", true);
-                    txtr2x = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
+                    txtr2x = new Texture(Gdx.files.internal("blocks/2x.png"));
                 }
             }
         });
@@ -258,17 +258,17 @@ public class SettingScreen extends AbstractScreen
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("musica"))
+                if(control.getBotaoSelected("music"))
                 {
                     game.getMusic().pause();
-                    control.setBotaoSelected("musica", false);
-                    txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica_unselected.png"));
+                    control.setBotaoSelected("music", false);
+                    txtrBotaoMusica = new Texture(Gdx.files.internal("buttons/music_unselected.png"));
                 }
                 else
                 {
                     game.getMusic().play();
-                    control.setBotaoSelected("musica", true);
-                    txtrBotaoMusica = new Texture(Gdx.files.internal("botoes/botao_musica.png"));
+                    control.setBotaoSelected("music", true);
+                    txtrBotaoMusica = new Texture(Gdx.files.internal("buttons/music.png"));
                 }
                     
 
@@ -276,10 +276,10 @@ public class SettingScreen extends AbstractScreen
         });
 
         // conexão para o botão voltar inicializar a tela inicial
-        adicionaConexao(botaoVoltar, "inicial");
+        adicionaConexao(botaoVoltar, "start");
 
         // conexão para o botao jogar inicializar a tela jogo
-        adicionaConexao(botaoJogar, "jogo");
+        adicionaConexao(botaoJogar, "game");
     }
 
     private Image criaBotao(Texture textura, Double posX, Double posY, Double width, Double height)
@@ -298,7 +298,7 @@ public class SettingScreen extends AbstractScreen
 
     private void adicionaConexao(Image botao, String tela)
     {
-        if(tela.equals("inicial"))
+        if(tela.equals("start"))
         {
             botao.addListener(new ClickListener()
             {
@@ -307,7 +307,7 @@ public class SettingScreen extends AbstractScreen
                 }
             });
         } 
-        else if(tela.equals("jogo"))
+        else if(tela.equals("game"))
         {
             botao.addListener(new ClickListener()
             {
@@ -316,7 +316,7 @@ public class SettingScreen extends AbstractScreen
                 }
             });
         }
-        else if(tela.equals("instrucoes"))
+        else if(tela.equals("instructions"))
         {
             botao.addListener(new ClickListener()
             {

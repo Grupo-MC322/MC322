@@ -30,7 +30,7 @@ public class WinScreen extends AbstractScreen
     {
         /* adicionando os atores */
         // fundo
-        Texture txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_ganhou.png"));
+        Texture txtrFundo = new Texture(Gdx.files.internal("backgrounds/win.png"));
         Image imgFundo = new Image(txtrFundo);
         imgFundo.setPosition(0, 0);
         imgFundo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -51,14 +51,14 @@ public class WinScreen extends AbstractScreen
         imgConfetti.addAction(moveParaBaixo);
 
         // botão menu principal
-        Texture txtrBotaoMenu = new Texture(Gdx.files.internal("botoes/botao_menu_principal.png"));
+        Texture txtrBotaoMenu = new Texture(Gdx.files.internal("buttons/menu.png"));
         Image botaoMenu = new Image(txtrBotaoMenu);
         botaoMenu.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.35f);
         botaoMenu.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
         stage.addActor(botaoMenu);
 
         // botão encerrar
-        Texture txtrBotaoEncerrar = new Texture(Gdx.files.internal("botoes/botao_encerrar.png"));
+        Texture txtrBotaoEncerrar = new Texture(Gdx.files.internal("buttons/close.png"));
         Image botaoEncerrar = new Image(txtrBotaoEncerrar);
         botaoEncerrar.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.2f);
         botaoEncerrar.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));

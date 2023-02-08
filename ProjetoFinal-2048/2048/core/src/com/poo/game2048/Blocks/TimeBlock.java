@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class TimeBlock implements ILifeBlocks
 {
     private static ILifeBlocks instance;
-    private String id = "tempo";
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_tempo.png"));
+    private String id = "time";
+    private Texture textura = new Texture(Gdx.files.internal("blocks/time.png"));
     private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;
@@ -151,6 +151,6 @@ public class TimeBlock implements ILifeBlocks
     {
         vida = 4;
         ativo = false;
-        imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_tempo.png")));
+        imagem = new Image(new Texture(Gdx.files.internal("blocks/time.png")));
     }
 }

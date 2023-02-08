@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class BombBlock implements ILifeBlocks
 {
     private static ILifeBlocks instance;
-    private String id = "bomba";
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_bomba.png"));
+    private String id = "bomb";
+    private Texture textura = new Texture(Gdx.files.internal("blocks/bomb.png"));
     private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;
@@ -148,6 +148,6 @@ public class BombBlock implements ILifeBlocks
     {
         setVida(3);
         setAtivo(false);
-        imagem = new Image(new Texture(Gdx.files.internal("blocos/bloco_bomba.png")));
+        imagem = new Image(new Texture(Gdx.files.internal("blocks/bomb.png")));
     }
 }
