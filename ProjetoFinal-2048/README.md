@@ -286,7 +286,7 @@ Esse componente serve como principal montador do jogo, sendo responsável por cr
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/Criador.java](2048/core/src/com/poo/jogo2048/Criador.java)
+Classe | [2048/core/src/com/poo/game2048/Criador.java](2048/core/src/com/poo/game2048/Criador.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ICreatorControl e IsettingScreenCreator`
 
@@ -298,7 +298,7 @@ Esse componente serve como principal articulador do jogo, sendo responsável por
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/Controle.java](2048/core/src/com/poo/jogo2048/Controle.java)
+Classe | [2048/core/src/com/poo/game2048/Controle.java](2048/core/src/com/poo/game2048/Controle.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ICreatorControl, IGameScreenControl, IBoardControl e IsettingScreenControl`
 
@@ -310,7 +310,7 @@ Esse componente serve como base de suporte para o Model, sendo que todos os bloc
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/Tabuleiro.java](2048/core/src/com/poo/jogo2048/Tabuleiro.java)
+Classe | [2048/core/src/com/poo/game2048/Tabuleiro.java](2048/core/src/com/poo/game2048/Tabuleiro.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBoardControl, IBlocos`
 
@@ -322,7 +322,7 @@ Essa é a tela em que o jogador escolhe o tamanho do tabuleiro a ser criado (com
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/Telas/TelaConfiguracoes.java](2048/core/src/com/poo/jogo2048/Telas/TelaConfiguracoes.java)
+Classe | [2048/core/src/com/poo/game2048/Telas/TelaConfiguracoes.java](2048/core/src/com/poo/game2048/Telas/TelaConfiguracoes.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `ISettingScreenControl, Screen e ISettingScreenCreator`
 
@@ -334,7 +334,7 @@ Essa é a tela em que o jogador efetivamente jogará, requerindo uma comunicaç�
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/Telas/TelaJogo.java](2048/core/src/com/poo/jogo2048/Telas/TelaJogo.java)
+Classe | [2048/core/src/com/poo/game2048/Telas/TelaJogo.java](2048/core/src/com/poo/game2048/Telas/TelaJogo.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IGameScreenControl e Screen`
 
@@ -346,7 +346,7 @@ Esse é referente ao Bloco Dobro, o qual pode ser acessado através do Tabuleiro
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDobro.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDobro.java)
+Classe | [2048/core/src/com/poo/game2048/PastaBlocos/BlocoDobro.java](2048/core/src/com/poo/game2048/PastaBlocos/BlocoDobro.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
@@ -358,7 +358,7 @@ Esse é referente ao Bloco Deleta, o qual pode ser acessado através do Tabuleir
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDeleta.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoDeleta.java)
+Classe | [2048/core/src/com/poo/game2048/PastaBlocos/BlocoDeleta.java](2048/core/src/com/poo/game2048/PastaBlocos/BlocoDeleta.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
@@ -370,7 +370,7 @@ Esse é referente aos Blocos Genéricos, ou seja, os blocos numéricos, os quais
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoGenerico.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoGenerico.java)
+Classe | [2048/core/src/com/poo/game2048/PastaBlocos/BlocoGenerico.java](2048/core/src/com/poo/game2048/PastaBlocos/BlocoGenerico.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos`
 
@@ -382,7 +382,7 @@ Esse é referente ao Bloco Bomba, o qual pode ser acessado através do Tabuleiro
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoBomba.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoBomba.java)
+Classe | [2048/core/src/com/poo/game2048/PastaBlocos/BlocoBomba.java](2048/core/src/com/poo/game2048/PastaBlocos/BlocoBomba.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos e IBombControl`
 
@@ -394,7 +394,7 @@ Esse é referente ao Bloco Tempo, o qual pode ser acessado através do Tabuleiro
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | [2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoTempo.java](2048/core/src/com/poo/jogo2048/PastaBlocos/BlocoTempo.java)
+Classe | [2048/core/src/com/poo/game2048/PastaBlocos/BlocoTempo.java](2048/core/src/com/poo/game2048/PastaBlocos/BlocoTempo.java)
 Autores | `Luigi Rigato e Raphael Kitahara`
 Interfaces | `IBlocos e ITimerControl`
 

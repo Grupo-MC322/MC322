@@ -1,20 +1,21 @@
-package com.poo.jogo2048.Telas;
+package com.poo.game2048.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.poo.jogo2048.Creator;
+import com.poo.game2048.Creator;
 
-public class LooseScreen extends AbstractScreen
+public class WinScreen extends AbstractScreen
 {
     private final Creator creator;
     private Stage stage;
 
-    public LooseScreen(final Creator creator)
+    public WinScreen(final Creator creator)
     {
         // conexões
         this.creator = creator;
@@ -29,11 +30,25 @@ public class LooseScreen extends AbstractScreen
     {
         /* adicionando os atores */
         // fundo
-        Texture txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_perdeu.png"));
+        Texture txtrFundo = new Texture(Gdx.files.internal("telas/fundo_tela_ganhou.png"));
         Image imgFundo = new Image(txtrFundo);
         imgFundo.setPosition(0, 0);
         imgFundo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(imgFundo);
+
+        // confetti caindo
+        Texture txtrConfetti = new Texture(Gdx.files.internal("extras/confetti.png"));
+        Image imgConfetti = new Image(txtrConfetti);
+        imgConfetti.setPosition(Gdx.graphics.getWidth() * 0.055f, Gdx.graphics.getHeight());
+        imgConfetti.setSize(Gdx.graphics.getWidth() * 0.9f, Gdx.graphics.getHeight() * 0.95f);
+        imgConfetti.setOrigin(Gdx.graphics.getWidth() * 0.055f, Gdx.graphics.getHeight());
+        stage.addActor(imgConfetti);
+
+        MoveToAction moveParaBaixo = new MoveToAction();
+        moveParaBaixo.setPosition(Gdx.graphics.getWidth() * 0.055f, -Gdx.graphics.getHeight());
+        moveParaBaixo.setDuration(7.5f);
+
+        imgConfetti.addAction(moveParaBaixo);
 
         // botão menu principal
         Texture txtrBotaoMenu = new Texture(Gdx.files.internal("botoes/botao_menu_principal.png"));

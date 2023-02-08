@@ -1,4 +1,4 @@
-package com.poo.jogo2048.Telas;
+package com.poo.game2048.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.poo.jogo2048.Creator;
+import com.poo.game2048.Creator;
 
 public class InstructionScreen extends AbstractScreen
 {

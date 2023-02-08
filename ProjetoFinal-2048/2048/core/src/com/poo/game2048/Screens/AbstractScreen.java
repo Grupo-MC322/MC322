@@ -1,4 +1,4 @@
-package com.poo.jogo2048.Telas;
+package com.poo.game2048.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;

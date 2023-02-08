@@ -1,6 +1,6 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
-import com.poo.jogo2048.PastaBlocos.IBlocks;
+import com.poo.game2048.Blocks.IBlocks;
 
 public interface IBoardControl
 {

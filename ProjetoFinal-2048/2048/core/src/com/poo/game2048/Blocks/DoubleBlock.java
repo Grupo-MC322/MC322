@@ -1,13 +1,13 @@
-package com.poo.jogo2048.PastaBlocos;
+package com.poo.game2048.Blocks;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class DelBlock implements IBlocks
+public class DoubleBlock implements IBlocks
 {
-    private String id = "deleta";
-    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_deleta.png"));
+    private String id = "2x";
+    private Texture textura = new Texture(Gdx.files.internal("blocos/bloco_2x.png"));
     private Image imagem = new Image(textura);
     private boolean juntado = false;
     private float posX;
@@ -18,7 +18,7 @@ public class DelBlock implements IBlocks
     {
         return id;
     }
-
+    
     public Texture getTextura() {
         return textura;
     }
@@ -42,7 +42,7 @@ public class DelBlock implements IBlocks
     {
         return posX;
     }
-    
+
     public void setPosX(float posX)
     {
         this.posX = posX;

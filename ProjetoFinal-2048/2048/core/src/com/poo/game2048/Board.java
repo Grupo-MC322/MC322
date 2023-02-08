@@ -1,7 +1,7 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
-import com.poo.jogo2048.PastaBlocos.NumBlock;
-import com.poo.jogo2048.PastaBlocos.IBlocks;
+import com.poo.game2048.Blocks.IBlocks;
+import com.poo.game2048.Blocks.NumBlock;
 
 public class Board implements IBoardControl
 {

@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;

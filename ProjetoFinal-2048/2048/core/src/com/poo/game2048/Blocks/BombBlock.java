@@ -1,4 +1,4 @@
-package com.poo.jogo2048.PastaBlocos;
+package com.poo.game2048.Blocks;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

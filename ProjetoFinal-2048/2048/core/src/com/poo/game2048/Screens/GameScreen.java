@@ -1,4 +1,4 @@
-package com.poo.jogo2048.Telas;
+package com.poo.game2048.Screens;
 
 import java.util.Objects;
 
@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.poo.jogo2048.Board;
-import com.poo.jogo2048.Creator;
-import com.poo.jogo2048.IControlGameScreen;
+import com.poo.game2048.Board;
+import com.poo.game2048.Creator;
+import com.poo.game2048.IControlGameScreen;
 
 public class GameScreen extends AbstractScreen
 {

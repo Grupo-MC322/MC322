@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
 public interface IControlGameScreen
 {

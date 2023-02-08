@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;

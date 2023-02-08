@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
 import java.util.Objects;
 import java.util.Random;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.poo.jogo2048.PastaBlocos.*;
-import com.poo.jogo2048.Telas.LooseScreen;
+import com.poo.game2048.Blocks.*;
+import com.poo.game2048.Screens.LooseScreen;
 
 public class Control implements IControlGameScreen, IControlSettingScreen
 {

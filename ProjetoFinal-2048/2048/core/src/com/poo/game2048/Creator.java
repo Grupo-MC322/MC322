@@ -1,4 +1,4 @@
-package com.poo.jogo2048;
+package com.poo.game2048;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.poo.jogo2048.Telas.HomeScreen;
+import com.poo.game2048.Screens.HomeScreen;
 
 
 public class Creator extends Game implements ICreatorSettingScreen
