@@ -132,7 +132,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             interpretInput(direction, vertical, horizontal, batch, stage);
     }
 
-    public void interpretInput(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
+    private void interpretInput(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
     {
         planMove(direction, verticalIni, horizontalIni);
 
