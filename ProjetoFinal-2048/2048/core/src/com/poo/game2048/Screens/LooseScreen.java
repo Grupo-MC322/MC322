@@ -22,36 +22,36 @@ public class LooseScreen extends AbstractScreen
 
         // setup do stage
         stage.clear();
-        criaStage();
+        createStage();
     }
 
-    public void criaStage()
+    public void createStage()
     {
         /* adicionando os atores */
-        // fundo
-        Texture txtrFundo = new Texture(Gdx.files.internal("backgrounds/loose.png"));
-        Image imgFundo = new Image(txtrFundo);
-        imgFundo.setPosition(0, 0);
-        imgFundo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.addActor(imgFundo);
+        // background
+        Texture txtrBackgr = new Texture(Gdx.files.internal("backgrounds/loose.png"));
+        Image imgBackgr = new Image(txtrBackgr);
+        imgBackgr.setPosition(0, 0);
+        imgBackgr.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.addActor(imgBackgr);
 
-        // botão menu principal
-        Texture txtrBotaoMenu = new Texture(Gdx.files.internal("buttons/menu.png"));
-        Image botaoMenu = new Image(txtrBotaoMenu);
-        botaoMenu.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.35f);
-        botaoMenu.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
-        stage.addActor(botaoMenu);
+        // button menu
+        Texture txtrButtonMenu = new Texture(Gdx.files.internal("buttons/menu.png"));
+        Image buttonMenu = new Image(txtrButtonMenu);
+        buttonMenu.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.35f);
+        buttonMenu.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
+        stage.addActor(buttonMenu);
 
-        // botão encerrar
-        Texture txtrBotaoEncerrar = new Texture(Gdx.files.internal("buttons/close.png"));
-        Image botaoEncerrar = new Image(txtrBotaoEncerrar);
-        botaoEncerrar.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.2f);
-        botaoEncerrar.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
-        stage.addActor(botaoEncerrar);
+        // button close
+        Texture txtrButtonClose = new Texture(Gdx.files.internal("buttons/close.png"));
+        Image buttonClose = new Image(txtrButtonClose);
+        buttonClose.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.2f);
+        buttonClose.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
+        stage.addActor(buttonClose);
 
         
         /* configurações de input dos botões */
-        botaoMenu.addListener(new ClickListener()
+        buttonMenu.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
@@ -59,7 +59,7 @@ public class LooseScreen extends AbstractScreen
             }
         });
 
-        botaoEncerrar.addListener(new ClickListener()
+        buttonClose.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {

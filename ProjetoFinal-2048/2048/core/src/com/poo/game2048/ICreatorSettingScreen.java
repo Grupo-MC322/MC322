@@ -7,10 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public interface ICreatorSettingScreen
 {
-    public Control getControle();
+    public Control getControl();
     public SpriteBatch getBatch();
     public Stage getStage();
-    public void setTamanhoTabuleiro(int tamanhoTabuleiro);
+    public void setSizeBoard(int sizeBoard);
     public void setScreen(Screen screen);
     public Music getMusic();
 }

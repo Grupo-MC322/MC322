@@ -14,8 +14,8 @@ public class InstructionScreen extends AbstractScreen
 {
     private final Creator creator;
     private Stage stage;
-    private Texture txtrFundo;
-    private int pagina = 1;
+    private Texture txtrBackgr;
+    private int page = 1;
     
     public InstructionScreen(final Creator creator)
     {
@@ -23,76 +23,76 @@ public class InstructionScreen extends AbstractScreen
         creator.getStage().clear();
         this.stage = creator.getStage();
 
-        criaStage();
+        createStage();
     }
 
-    public void criaStage()
+    public void createStage()
     {
         stage.clear();
 
         /* adicionando os atores */
         // fundo
-        if(pagina == 1)
-            txtrFundo = new Texture(Gdx.files.internal("backgrounds/instructions_1:4.png"));
-        else if(pagina == 2)
-            txtrFundo = new Texture(Gdx.files.internal("backgrounds/instructions_2:4.png"));
-        else if(pagina == 3)
-            txtrFundo = new Texture(Gdx.files.internal("backgrounds/instructions_3:4.png"));
-        else if(pagina == 4)
-            txtrFundo = new Texture(Gdx.files.internal("backgrounds/instructions_4:4.png"));
+        if(page == 1)
+            txtrBackgr = new Texture(Gdx.files.internal("backgrounds/instructions_1:4.png"));
+        else if(page == 2)
+            txtrBackgr = new Texture(Gdx.files.internal("backgrounds/instructions_2:4.png"));
+        else if(page == 3)
+            txtrBackgr = new Texture(Gdx.files.internal("backgrounds/instructions_3:4.png"));
+        else if(page == 4)
+            txtrBackgr = new Texture(Gdx.files.internal("backgrounds/instructions_4:4.png"));
 
-        Image imgFundo = new Image(txtrFundo);
-        imgFundo.setPosition(0, 0);
-        imgFundo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        stage.addActor(imgFundo);
+        Image imgBackgr = new Image(txtrBackgr);
+        imgBackgr.setPosition(0, 0);
+        imgBackgr.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage.addActor(imgBackgr);
 
-        // botão próxima página
-        Texture txtrBotaoProx = new Texture(Gdx.files.internal("buttons/next.png"));
-        Image botaoProx = new Image(txtrBotaoProx);
-        botaoProx.setPosition((stage.getWidth() / 2) + (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
-        botaoProx.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
-        stage.addActor(botaoProx);
+        // button próxima page
+        Texture txtrButtonNext = new Texture(Gdx.files.internal("buttons/next.png"));
+        Image buttonNext = new Image(txtrButtonNext);
+        buttonNext.setPosition((stage.getWidth() / 2) + (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
+        buttonNext.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
+        stage.addActor(buttonNext);
 
-        // botão página anterior
-        Texture txtrBotaoAnt = new Texture(Gdx.files.internal("buttons/previous.png"));
-        Image botaoAnt = new Image(txtrBotaoAnt);
-        botaoAnt.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.11f) - (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
-        botaoAnt.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
-        stage.addActor(botaoAnt);
+        // button page anterior
+        Texture txtrButtonAnt = new Texture(Gdx.files.internal("buttons/previous.png"));
+        Image buttonAnt = new Image(txtrButtonAnt);
+        buttonAnt.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.11f) - (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
+        buttonAnt.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
+        stage.addActor(buttonAnt);
 
-        // botão voltar
-        Texture txtrBotaoVoltar = new Texture(Gdx.files.internal("buttons/back.png"));
-        Image botaoVoltar = new Image(txtrBotaoVoltar);
-        botaoVoltar.setPosition((stage.getWidth() * 0.05f), stage.getHeight() * 0.85f);
-        botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
-        stage.addActor(botaoVoltar);
+        // button Back
+        Texture txtrButtonBack = new Texture(Gdx.files.internal("buttons/back.png"));
+        Image buttonBack = new Image(txtrButtonBack);
+        buttonBack.setPosition((stage.getWidth() * 0.05f), stage.getHeight() * 0.85f);
+        buttonBack.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+        stage.addActor(buttonBack);
         
         /* configurações de input dos botões */
-        botaoProx.addListener(new ClickListener()
+        buttonNext.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(pagina < 4)
+                if(page < 4)
                 {
-                    pagina++;
-                    criaStage();
+                    page++;
+                    createStage();
                 }
             }
         });
 
-        botaoAnt.addListener(new ClickListener()
+        buttonAnt.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(pagina > 1)
+                if(page > 1)
                 {
-                    pagina--;
-                    criaStage();
+                    page--;
+                    createStage();
                 }
             }
         });
 
-        botaoVoltar.addListener(new ClickListener()
+        buttonBack.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
@@ -104,21 +104,21 @@ public class InstructionScreen extends AbstractScreen
     @Override
     public void render(float delta)
     {
-        // input das teclas para mudar as páginas
+        // input das teclas para mudar as pages
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
         {
-            if(pagina < 4)
+            if(page < 4)
             {
-                pagina++;
-                criaStage();
+                page++;
+                createStage();
             }
         }
         else if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
         {
-            if(pagina > 1)
+            if(page > 1)
             {
-                pagina--;
-                criaStage();
+                page--;
+                createStage();
             }
         }
 

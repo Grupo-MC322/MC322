@@ -8,23 +8,23 @@ public class BombBlock implements ILifeBlocks
 {
     private static ILifeBlocks instance;
     private String id = "bomb";
-    private Texture textura = new Texture(Gdx.files.internal("blocks/bomb.png"));
-    private Image imagem = new Image(textura);
-    private boolean juntado = false;
+    private Texture txtr = new Texture(Gdx.files.internal("blocks/bomb.png"));
+    private Image img = new Image(txtr);
+    private boolean combined = false;
     private float posX;
     private float posY;
     private float size;
-    private int vida = 3;
-    private int linha;
-    private int coluna;
-    private boolean ativo = false;
+    private int life = 3;
+    private int vertical;
+    private int horizontal;
+    private boolean activated = false;
     
 
     // para implementar o design pattern singleton, é necessário um construtor privado
     private BombBlock()
     {}
     
-    // implementação do design pattern singleton, garantindo que só uma instância de bomba exista
+    // implementação do design pattern singleton, garantindo que só uma instância de bomb exista
     public static ILifeBlocks getInstance()
     {
         if (instance == null)
@@ -39,32 +39,32 @@ public class BombBlock implements ILifeBlocks
         return id;
     }
 
-    public Texture getTextura() {
-        return textura;
+    public Texture getTexture() {
+        return txtr;
     }
 
-    public void setTextura(Texture textura) {
-        this.textura = textura;
+    public void setTexture(Texture txtr) {
+        this.txtr = txtr;
     }
 
-    public boolean getJuntado()
+    public boolean getCombined()
     {
-        return juntado;
+        return combined;
     }
 
-    public void setJuntado(boolean info)
+    public void setCombined(boolean info)
     {
-        juntado = info;
+        combined = info;
     }
 
-    public Image getImagem()
+    public Image getImage()
     {
-        return imagem;
+        return img;
     }
 
-    public void setImagem(Image imagem)
+    public void setImage(Image img)
     {
-        this.imagem = imagem;
+        this.img = img;
     }
 
     public float getPosX()
@@ -75,7 +75,7 @@ public class BombBlock implements ILifeBlocks
     public void setPosX(float posX)
     {
         this.posX = posX;
-        this.getImagem().setX(posX);
+        this.getImage().setX(posX);
     }
 
     public float getPosY()
@@ -86,7 +86,7 @@ public class BombBlock implements ILifeBlocks
     public void setPosY(float posY)
     {
         this.posY = posY;
-        this.getImagem().setY(posY);
+        this.getImage().setY(posY);
     }
 
     public float getSize()
@@ -97,57 +97,57 @@ public class BombBlock implements ILifeBlocks
     public void setSize(float size)
     {
         this.size = size;
-        this.getImagem().setWidth(size);
-        this.getImagem().setHeight(size);
+        this.getImage().setWidth(size);
+        this.getImage().setHeight(size);
     }
 
-    // a bomba tem 3 vidas até explodir
-    public int getVida()
+    // a bomb tem 3 lifes até explodir
+    public int getLife()
     {
-        return vida;
+        return life;
     }
 
-    public void setVida(int mudanca)
+    public void setLife(int addition)
     {
-        vida += mudanca;
+        life += addition;
     }
 
-    public int getLinha()
+    public int getVertical()
     {
-        return linha;
+        return vertical;
     }
 
-    public void setLinha(int linha)
+    public void setVertical(int vertical)
     {
-        this.linha = linha;
+        this.vertical = vertical;
     }
 
-    public int getColuna()
+    public int getHorizontal()
     {
-        return coluna;
+        return horizontal;
     }
 
-    public void setColuna(int coluna)
+    public void setHorizontal(int horizontal)
     {
-        this.coluna = coluna;
+        this.horizontal = horizontal;
     }
 
-    // a bomba pode estar ativa, ou seja, participando do tabuleiro, ou não ativa
-    public boolean getAtivo()
+    // a bomb pode estar ativa, ou seja, participando do tabuleiro, ou não ativa
+    public boolean getActivated()
     {
-        return ativo;
+        return activated;
     }
 
-    public void setAtivo(boolean info)
+    public void setActivated(boolean info)
     {
-        ativo = info;
+        activated = info;
     }
 
-    // depois da bomba explodir, seus atributos são renovados, esparando ser posta de volta ao tabuleiro.
+    // depois da bomb explodir, seus atributos são renovados, esparando ser posta de volta ao tabuleiro.
     public void reset()
     {
-        setVida(3);
-        setAtivo(false);
-        imagem = new Image(new Texture(Gdx.files.internal("blocks/bomb.png")));
+        setLife(3);
+        setActivated(false);
+        img = new Image(new Texture(Gdx.files.internal("blocks/bomb.png")));
     }
 }

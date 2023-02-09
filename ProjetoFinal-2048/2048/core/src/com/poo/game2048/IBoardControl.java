@@ -4,8 +4,8 @@ import com.poo.game2048.Blocks.IBlocks;
 
 public interface IBoardControl
 {
-    public int getTamanho();
-    public Object getId(int linha, int coluna);
-    public IBlocks getBloco(int linha, int coluna);
-    public void setBloco(int linha, int coluna, IBlocks bloco);
+    public int getSize();
+    public Object getId(int vertical, int horizontal);
+    public IBlocks getBlock(int vertical, int horizontal);
+    public void setBlock(int vertical, int horizontal, IBlocks block);
 }

@@ -11,66 +11,63 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.poo.game2048.IControlSettingScreen;
-import com.poo.game2048.ICreatorSettingScreen;
 import com.poo.game2048.Creator;
 
 public class SettingScreen extends AbstractScreen
 {
-    private final ICreatorSettingScreen game;
     private IControlSettingScreen control;
     private Stage stage;
     private SpriteBatch batch;
-    private final Creator jogo;
+    private final Creator creator;
     private OrthographicCamera camera;
 
-    private Texture txtrFundo;
+    private Texture txtrBackgr;
     private Texture txtr4x4;
     private Texture txtr5x5;
     private Texture txtr6x6;
     private Texture txtr7x7;
-    private Texture txtrBomba;
-    private Texture txtrDeleta;
-    private Texture txtrTempo;
+    private Texture txtrBomb;
+    private Texture txtrDel;
+    private Texture txtrTime;
     private Texture txtr2x;
-    private Texture txtrJogar;
-    private Texture txtrBotaoMusica;
+    private Texture txtrPlay;
+    private Texture txtrButtonMusic;
 
-    public SettingScreen(final Creator jogo)
+    public SettingScreen(final Creator creator)
     {
-        game = jogo;
-        this.jogo = jogo;
-        control = game.getControle();
-        game.getStage().clear();
-        this.stage = game.getStage();
-        this.batch = game.getBatch();
+        this.creator = creator;
+        control = creator.getControl();
+        creator.getStage().clear();
+        this.stage = creator.getStage();
+        this.batch = creator.getBatch();
 
         // configurações de camera
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
     
-        // setup inicial das texturas
-        txtrFundo = new Texture(Gdx.files.internal("backgrounds/settings.png"));
+        // setup inicial das txtrs
+        txtrBackgr = new Texture(Gdx.files.internal("backgrounds/settings.png"));
 
         txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4.png"));
         txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
         txtr6x6 = new Texture(Gdx.files.internal("buttons/6x6_unselected.png"));
         txtr7x7 = new Texture(Gdx.files.internal("buttons/7x7_unselected.png"));
 
-        txtrBomba = new Texture(Gdx.files.internal("blocks/bomb.png"));
-        txtrDeleta = new Texture(Gdx.files.internal("blocks/del.png"));
-        txtrTempo = new Texture(Gdx.files.internal("blocks/time.png"));
+        txtrBomb = new Texture(Gdx.files.internal("blocks/bomb.png"));
+        txtrDel = new Texture(Gdx.files.internal("blocks/del.png"));
+        txtrTime = new Texture(Gdx.files.internal("blocks/time.png"));
         txtr2x = new Texture(Gdx.files.internal("blocks/2x.png"));
 
-        txtrJogar = new Texture(Gdx.files.internal("buttons/play_2.png"));
+        txtrPlay = new Texture(Gdx.files.internal("buttons/play_2.png"));
 
-        txtrBotaoMusica = new Texture(Gdx.files.internal("buttons/music.png"));
+        txtrButtonMusic = new Texture(Gdx.files.internal("buttons/music.png"));
 
         // setup inicial das opções de blocos
-        control.setBotaoSelected("bomb", true);
-        control.setBotaoSelected("del", true);
-        control.setBotaoSelected("time", true);
-        control.setBotaoSelected("2x", true);
-        control.setBotaoSelected("music", true);
+        control.setButtonSelected("bomb", true);
+        control.setButtonSelected("del", true);
+        control.setButtonSelected("time", true);
+        control.setButtonSelected("2x", true);
+        control.setButtonSelected("music", true);
     }
 
     @Override
@@ -83,60 +80,60 @@ public class SettingScreen extends AbstractScreen
         // configurações do batch
 		batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(txtrFundo, 0, 0, camera.viewportWidth, camera.viewportHeight);
+        batch.draw(txtrBackgr, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
-        // criação e configuração do stage
-        criaStage(batch, stage);
+        // createção e configuração do stage
+        createStage(batch, stage);
 
         batch.end();
 	}
 
-    public void criaStage(Batch batch, Stage stage)
+    public void createStage(Batch batch, Stage stage)
     {
         // adicionando os atores
 
         // botões de tabuleiro
-        Image botao4x4 = criaBotao(txtr4x4, 0.13, 0.65, 0.17, 0.17);
-        Image botao5x5 = criaBotao(txtr5x5, 0.32, 0.65, 0.17, 0.17);
-        Image botao6x6 = criaBotao(txtr6x6, 0.51, 0.65, 0.17, 0.17);
-        Image botao7x7 = criaBotao(txtr7x7, 0.70, 0.65, 0.17, 0.17);
+        Image button4x4 = createButton(txtr4x4, 0.13, 0.65, 0.17, 0.17);
+        Image button5x5 = createButton(txtr5x5, 0.32, 0.65, 0.17, 0.17);
+        Image button6x6 = createButton(txtr6x6, 0.51, 0.65, 0.17, 0.17);
+        Image button7x7 = createButton(txtr7x7, 0.70, 0.65, 0.17, 0.17);
 
         // botões de blocos
-        Image botaoBomba = criaBotao(txtrBomba, 0.13, 0.32, 0.17, 0.17);
-        Image botaoDeleta = criaBotao(txtrDeleta, 0.32, 0.32, 0.17, 0.17);
-        Image botaoTempo = criaBotao(txtrTempo, 0.51, 0.32, 0.17, 0.17);
-        Image botao2x = criaBotao(txtr2x, 0.70, 0.32, 0.17, 0.17);
+        Image buttonBomb = createButton(txtrBomb, 0.13, 0.32, 0.17, 0.17);
+        Image buttonDel = createButton(txtrDel, 0.32, 0.32, 0.17, 0.17);
+        Image buttonTime = createButton(txtrTime, 0.51, 0.32, 0.17, 0.17);
+        Image button2x = createButton(txtr2x, 0.70, 0.32, 0.17, 0.17);
 
         // botão jogar
-        Image botaoJogar = new Image(txtrJogar);
-        botaoJogar.setX(500 / 2 - 0.37f * 500 / 2);
-        botaoJogar.setY(0.1f * 500);
-        botaoJogar.setWidth((float) (0.37 * 500));
-        botaoJogar.setHeight((float) (0.1 * 500));
-        botaoJogar.draw(batch, 1);
-        stage.addActor(botaoJogar);
+        Image buttonPlay = new Image(txtrPlay);
+        buttonPlay.setX(500 / 2 - 0.37f * 500 / 2);
+        buttonPlay.setY(0.1f * 500);
+        buttonPlay.setWidth((float) (0.37 * 500));
+        buttonPlay.setHeight((float) (0.1 * 500));
+        buttonPlay.draw(batch, 1);
+        stage.addActor(buttonPlay);
 
         // botão voltar
-        Texture txtrBotaoVoltar = new Texture(Gdx.files.internal("buttons/back.png"));
-        Image botaoVoltar = new Image(txtrBotaoVoltar);
-        botaoVoltar.setPosition(stage.getWidth() * 0.05f, stage.getHeight() * 0.85f);
-        botaoVoltar.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
-        botaoVoltar.draw(batch, 1);
-        stage.addActor(botaoVoltar);
+        Texture txtrButtonBack = new Texture(Gdx.files.internal("buttons/back.png"));
+        Image buttonBack = new Image(txtrButtonBack);
+        buttonBack.setPosition(stage.getWidth() * 0.05f, stage.getHeight() * 0.85f);
+        buttonBack.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+        buttonBack.draw(batch, 1);
+        stage.addActor(buttonBack);
 
         // botão musica
-        Image botaoMusica = new Image(txtrBotaoMusica);
-        botaoMusica.setPosition(stage.getWidth() * 0.85f, stage.getHeight() * 0.85f);
-        botaoMusica.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
-        botaoMusica.draw(batch, 1);
-        stage.addActor(botaoMusica);
+        Image buttonMusic = new Image(txtrButtonMusic);
+        buttonMusic.setPosition(stage.getWidth() * 0.85f, stage.getHeight() * 0.85f);
+        buttonMusic.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
+        buttonMusic.draw(batch, 1);
+        stage.addActor(buttonMusic);
 
         // configurações de input dos botões
-        botao4x4.addListener(new ClickListener()
+        button4x4.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                game.setTamanhoTabuleiro(4);
+                creator.setSizeBoard(4);
                 
                 txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
@@ -145,11 +142,11 @@ public class SettingScreen extends AbstractScreen
             }
         });
 
-        botao5x5.addListener(new ClickListener()
+        button5x5.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                game.setTamanhoTabuleiro(5);
+                creator.setSizeBoard(5);
 
                 txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4_unselected.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5.png"));
@@ -158,11 +155,11 @@ public class SettingScreen extends AbstractScreen
             }
         });
 
-        botao6x6.addListener(new ClickListener()
+        button6x6.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                game.setTamanhoTabuleiro(6);
+                creator.setSizeBoard(6);
 
                 txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4_unselected.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
@@ -171,11 +168,11 @@ public class SettingScreen extends AbstractScreen
             }
         });
 
-        botao7x7.addListener(new ClickListener()
+        button7x7.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                game.setTamanhoTabuleiro(7);
+                creator.setSizeBoard(7);
 
                 txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4_unselected.png"));
                 txtr5x5 = new Texture(Gdx.files.internal("buttons/5x5_unselected.png"));
@@ -184,69 +181,69 @@ public class SettingScreen extends AbstractScreen
             }
         });
 
-        botaoBomba.addListener(new ClickListener()
+        buttonBomb.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("bomb"))
+                if(control.getButtonSelected("bomb"))
                 {
-                    control.setBotaoSelected("bomb", false);;
-                    txtrBomba = new Texture(Gdx.files.internal("blocks/bomb_unselected.png"));
+                    control.setButtonSelected("bomb", false);;
+                    txtrBomb = new Texture(Gdx.files.internal("blocks/bomb_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("bomb", true);;
-                    txtrBomba = new Texture(Gdx.files.internal("blocks/bomb.png"));
+                    control.setButtonSelected("bomb", true);;
+                    txtrBomb = new Texture(Gdx.files.internal("blocks/bomb.png"));
                 }
             }
         });
 
-        botaoDeleta.addListener(new ClickListener()
+        buttonDel.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("del"))
+                if(control.getButtonSelected("del"))
                 {
-                    control.setBotaoSelected("del", false);;
-                    txtrDeleta = new Texture(Gdx.files.internal("blocks/del_unselected.png"));
+                    control.setButtonSelected("del", false);;
+                    txtrDel = new Texture(Gdx.files.internal("blocks/del_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("del", true);;
-                    txtrDeleta = new Texture(Gdx.files.internal("blocks/del.png"));
+                    control.setButtonSelected("del", true);;
+                    txtrDel = new Texture(Gdx.files.internal("blocks/del.png"));
                 }
             }
         });
 
-        botaoTempo.addListener(new ClickListener()
+        buttonTime.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("time"))
+                if(control.getButtonSelected("time"))
                 {
-                    control.setBotaoSelected("time", false);
-                    txtrTempo = new Texture(Gdx.files.internal("blocks/time_unselected.png"));
+                    control.setButtonSelected("time", false);
+                    txtrTime = new Texture(Gdx.files.internal("blocks/time_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("time", true);
-                    txtrTempo = new Texture(Gdx.files.internal("blocks/time.png"));
+                    control.setButtonSelected("time", true);
+                    txtrTime = new Texture(Gdx.files.internal("blocks/time.png"));
                 }
             }
         });
 
-        botao2x.addListener(new ClickListener()
+        button2x.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("2x"))
+                if(control.getButtonSelected("2x"))
                 {
-                    control.setBotaoSelected("2x", false);
+                    control.setButtonSelected("2x", false);
                     txtr2x = new Texture(Gdx.files.internal("blocks/2x_unselected.png"));
                 }
                 else
                 {
-                    control.setBotaoSelected("2x", true);
+                    control.setButtonSelected("2x", true);
                     txtr2x = new Texture(Gdx.files.internal("blocks/2x.png"));
                 }
             }
@@ -254,74 +251,74 @@ public class SettingScreen extends AbstractScreen
 
         
         
-        botaoMusica.addListener(new ClickListener()
+        buttonMusic.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
-                if(control.getBotaoSelected("music"))
+                if(control.getButtonSelected("music"))
                 {
-                    game.getMusic().pause();
-                    control.setBotaoSelected("music", false);
-                    txtrBotaoMusica = new Texture(Gdx.files.internal("buttons/music_unselected.png"));
+                    creator.getMusic().pause();
+                    control.setButtonSelected("music", false);
+                    txtrButtonMusic = new Texture(Gdx.files.internal("buttons/music_unselected.png"));
                 }
                 else
                 {
-                    game.getMusic().play();
-                    control.setBotaoSelected("music", true);
-                    txtrBotaoMusica = new Texture(Gdx.files.internal("buttons/music.png"));
+                    creator.getMusic().play();
+                    control.setButtonSelected("music", true);
+                    txtrButtonMusic = new Texture(Gdx.files.internal("buttons/music.png"));
                 }
                     
 
             }
         });
 
-        // conexão para o botão voltar inicializar a tela inicial
-        adicionaConexao(botaoVoltar, "start");
+        // conexão para o botão voltar inicializar a screen inicial
+        addConnection(buttonBack, "start");
 
-        // conexão para o botao jogar inicializar a tela jogo
-        adicionaConexao(botaoJogar, "game");
+        // conexão para o button jogar inicializar a screen creator
+        addConnection(buttonPlay, "game");
     }
 
-    private Image criaBotao(Texture textura, Double posX, Double posY, Double width, Double height)
+    private Image createButton(Texture txtr, Double posX, Double posY, Double width, Double height)
     {
-        Image botao = new Image(textura);
-        botao.setX((float) (posX * camera.viewportWidth));
-        botao.setY((float) (posY * camera.viewportHeight));
-        botao.setWidth((float) (width * camera.viewportWidth));
-        botao.setHeight((float) (height * camera.viewportHeight));
+        Image button = new Image(txtr);
+        button.setX((float) (posX * camera.viewportWidth));
+        button.setY((float) (posY * camera.viewportHeight));
+        button.setWidth((float) (width * camera.viewportWidth));
+        button.setHeight((float) (height * camera.viewportHeight));
 
-        botao.draw(batch, 1);
-        stage.addActor(botao);
+        button.draw(batch, 1);
+        stage.addActor(button);
 
-        return botao;
+        return button;
     }
 
-    private void adicionaConexao(Image botao, String tela)
+    private void addConnection(Image button, String screen)
     {
-        if(tela.equals("start"))
+        if(screen.equals("start"))
         {
-            botao.addListener(new ClickListener()
+            button.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new HomeScreen(jogo));
+                    creator.setScreen(new HomeScreen(creator));
                 }
             });
         } 
-        else if(tela.equals("game"))
+        else if(screen.equals("game"))
         {
-            botao.addListener(new ClickListener()
+            button.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new GameScreen(jogo));
+                    creator.setScreen(new GameScreen(creator));
                 }
             });
         }
-        else if(tela.equals("instructions"))
+        else if(screen.equals("instructions"))
         {
-            botao.addListener(new ClickListener()
+            button.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
-                    game.setScreen(new InstructionScreen(jogo));
+                    creator.setScreen(new InstructionScreen(creator));
                 }
             });
         }

@@ -15,7 +15,7 @@ public class Creator extends Game implements ICreatorSettingScreen
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Stage stage;
-	private int tamanhoTabuleiro = 4;
+	private int sizeBoard = 4;
 	private Control control;
 	private Music music;
 
@@ -57,17 +57,17 @@ public class Creator extends Game implements ICreatorSettingScreen
 		return stage;
 	}
 
-	public void setTamanhoTabuleiro(int tamanhoTabuleiro)
+	public void setSizeBoard(int sizeBoard)
 	{
-		this.tamanhoTabuleiro = tamanhoTabuleiro;
+		this.sizeBoard = sizeBoard;
 	}
 
-	public int getTamanhoTabuleiro()
+	public int getSizeBoard()
 	{
-		return tamanhoTabuleiro;
+		return sizeBoard;
 	}
 
-	public Control getControle()
+	public Control getControl()
 	{
 		return control;
 	}

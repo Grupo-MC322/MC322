@@ -5,39 +5,39 @@ import com.poo.game2048.Blocks.NumBlock;
 
 public class Board implements IBoardControl
 {
-    private IBlocks[][] matriz;
-    private int tamanho;
+    private IBlocks[][] matrix;
+    private int size;
 
-    public Board(int tamanho)
+    public Board(int size)
     {
-        this.tamanho = tamanho;
-        matriz = new IBlocks[tamanho][tamanho];
-        for(int linha = 0; linha < tamanho; linha++)
+        this.size = size;
+        matrix = new IBlocks[size][size];
+        for(int vertical = 0; vertical < size; vertical++)
         {
-            for(int coluna = 0; coluna < tamanho; coluna++)
+            for(int horizontal = 0; horizontal < size; horizontal++)
             {
-                matriz[linha][coluna] = new NumBlock(0);
+                matrix[vertical][horizontal] = new NumBlock(0);
             }
         }
     }
 
-    public int getTamanho()
+    public int getSize()
     {
-        return tamanho;
+        return size;
     }
 
-    public Object getId(int linha, int coluna)
+    public Object getId(int vertical, int horizontal)
     {
-        return matriz[linha][coluna].getId();
+        return matrix[vertical][horizontal].getId();
     }
 
-    public IBlocks getBloco(int linha, int coluna)
+    public IBlocks getBlock(int vertical, int horizontal)
     {
-        return matriz[linha][coluna];
+        return matrix[vertical][horizontal];
     }
 
-    public void setBloco(int linha, int coluna, IBlocks bloco)
+    public void setBlock(int vertical, int horizontal, IBlocks block)
     {
-        matriz[linha][coluna] = bloco;
+        matrix[vertical][horizontal] = block;
     }
 }

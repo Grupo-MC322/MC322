@@ -2,6 +2,6 @@ package com.poo.game2048;
 
 public interface IControlSettingScreen
 {
-    public void setBotaoSelected(String idBotao, boolean selected);
-    public boolean getBotaoSelected(String idBotao);
+    public void setButtonSelected(String idButton, boolean selected);
+    public boolean getButtonSelected(String idButton);
 }

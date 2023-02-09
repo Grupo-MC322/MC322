@@ -8,16 +8,16 @@ public class TimeBlock implements ILifeBlocks
 {
     private static ILifeBlocks instance;
     private String id = "time";
-    private Texture textura = new Texture(Gdx.files.internal("blocks/time.png"));
-    private Image imagem = new Image(textura);
-    private boolean juntado = false;
+    private Texture txtr = new Texture(Gdx.files.internal("blocks/time.png"));
+    private Image img = new Image(txtr);
+    private boolean combined = false;
     private float posX;
     private float posY;
     private float size;
-    private int vida = 4;
-    private int linha;
-    private int coluna;
-    private boolean ativo = false;
+    private int life = 4;
+    private int vertical;
+    private int horizontal;
+    private boolean activated = false;
     
     
 
@@ -41,32 +41,32 @@ public class TimeBlock implements ILifeBlocks
         return id;
     }
 
-    public Texture getTextura() {
-        return textura;
+    public Texture getTexture() {
+        return txtr;
     }
 
-    public void setTextura(Texture textura) {
-        this.textura = textura;
+    public void setTexture(Texture txtr) {
+        this.txtr = txtr;
     }
 
-    public boolean getJuntado()
+    public boolean getCombined()
     {
-        return juntado;
+        return combined;
     }
 
-    public void setJuntado(boolean info)
+    public void setCombined(boolean info)
     {
-        juntado = info;
+        combined = info;
     }
 
-    public Image getImagem()
+    public Image getImage()
     {
-        return imagem;
+        return img;
     }
 
-    public void setImagem(Image imagem)
+    public void setImage(Image img)
     {
-        this.imagem = imagem;
+        this.img = img;
     }
 
     public float getPosX()
@@ -77,7 +77,7 @@ public class TimeBlock implements ILifeBlocks
     public void setPosX(float posX)
     {
         this.posX = posX;
-        this.getImagem().setX(posX);
+        this.getImage().setX(posX);
     }
 
     public float getPosY()
@@ -88,7 +88,7 @@ public class TimeBlock implements ILifeBlocks
     public void setPosY(float posY)
     {
         this.posY = posY;
-        this.getImagem().setY(posY);
+        this.getImage().setY(posY);
     }
 
     public float getSize()
@@ -99,58 +99,58 @@ public class TimeBlock implements ILifeBlocks
     public void setSize(float size)
     {
         this.size = size;
-        this.getImagem().setWidth(size);
-        this.getImagem().setHeight(size);
+        this.getImage().setWidth(size);
+        this.getImage().setHeight(size);
     }
 
-    // o bloco tempo tem 4 vidas até desaparecer
-    public int getVida()
+    // o bloco tempo tem 4 lifes até desaparecer
+    public int getLife()
     {
-        return vida;
+        return life;
     }
 
-    public void setVida(int mudanca)
+    public void setLife(int addition)
     {
-        vida += mudanca;
+        life += addition;
     }
 
-    public int getLinha()
+    public int getVertical()
     {
-        return linha;
+        return vertical;
     }
 
-    public void setLinha(int linha)
+    public void setVertical(int vertical)
     {
-        this.linha = linha;
+        this.vertical = vertical;
     }
 
-    public int getColuna()
+    public int getHorizontal()
     {
-        return coluna;
+        return horizontal;
     }
 
-    public void setColuna(int coluna)
+    public void setHorizontal(int horizontal)
     {
-        this.coluna = coluna;
+        this.horizontal = horizontal;
     }
 
-    // o bloco tempo pode estar ativo, ou seja, participando do tabuleiro, ou não ativo
-    public boolean getAtivo()
+    // o bloco tempo pode estar activated, ou seja, participando do tabuleiro, ou não activated
+    public boolean getActivated()
     {
-        return ativo;
+        return activated;
     }
 
-    public void setAtivo(boolean info)
+    public void setActivated(boolean info)
     {
-        ativo = info;
+        activated = info;
     }
 
 
     // depois do bloco tempo sumir, seus atributos são renovados, esparando ser posto de volta ao tabuleiro
     public void reset()
     {
-        vida = 4;
-        ativo = false;
-        imagem = new Image(new Texture(Gdx.files.internal("blocks/time.png")));
+        life = 4;
+        activated = false;
+        img = new Image(new Texture(Gdx.files.internal("blocks/time.png")));
     }
 }

@@ -4,14 +4,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public interface ILifeBlocks extends IBlocks
 {
-    public void setImagem(Image imagem);
-    public int getVida();
-    public void setVida(int mudanca);
-    public boolean getAtivo();
-    public void setAtivo(boolean info);
-    public int getLinha();
-    public void setLinha(int linha);
-    public int getColuna();
-    public void setColuna(int coluna);
+    public void setImage(Image img);
+    public int getLife();
+    public void setLife(int addition);
+    public boolean getActivated();
+    public void setActivated(boolean info);
+    public int getVertical();
+    public void setVertical(int linha);
+    public int getHorizontal();
+    public void setHorizontal(int coluna);
     public void reset();
 }

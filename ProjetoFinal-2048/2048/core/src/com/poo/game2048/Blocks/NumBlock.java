@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class NumBlock implements IBlocks
 {
 	private int id;
-    private Image imagem;
-    private boolean juntado = false;
+    private Image img;
+    private boolean combined = false;
     private float posX;
     private float posY;
     private float size;
@@ -29,70 +29,70 @@ public class NumBlock implements IBlocks
         switch(id)
         {
             case 0:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/empty.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/empty.png"))));
                 break;
             case 1:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/1.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/1.png"))));
                 break;
             case 2:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/2.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/2.png"))));
                 break;
             case 4:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/4.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/4.png"))));
                 break;
             case 8:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/8.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/8.png"))));
                 break;
             case 16:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/16.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/16.png"))));
                 break;
             case 32:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/32.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/32.png"))));
                 break;
             case 64:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/64.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/64.png"))));
                 break;
             case 128:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/128.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/128.png"))));
                 break;
             case 256:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/256.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/256.png"))));
                 break;
             case 512:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/512.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/512.png"))));
                 break;
             case 1024:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/1024.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/1024.png"))));
                 break;
             case 2048:
-                setImagem(new Image(new Texture(Gdx.files.internal("blocks/2048.png"))));
+                setImage(new Image(new Texture(Gdx.files.internal("blocks/2048.png"))));
                 break;
         }
     }
 
-    public void dobra()
+    public void combineDouble()
     {
         setId(id * 2);
     }
 
-    public boolean getJuntado()
+    public boolean getCombined()
     {
-        return juntado;
+        return combined;
     }
 
-    public void setJuntado(boolean info)
+    public void setCombined(boolean info)
     {
-        juntado = info;
+        combined = info;
     }
 
-    public Image getImagem()
+    public Image getImage()
     {
-        return imagem;
+        return img;
     }
 
-    public void setImagem(Image imagem)
+    public void setImage(Image img)
     {
-        this.imagem = imagem;
+        this.img = img;
     }
 
     public float getPosX()
@@ -103,7 +103,7 @@ public class NumBlock implements IBlocks
     public void setPosX(float posX)
     {
         this.posX = posX;
-        this.getImagem().setX(posX);
+        this.getImage().setX(posX);
     }
 
     public float getPosY() {
@@ -113,7 +113,7 @@ public class NumBlock implements IBlocks
     public void setPosY(float posY)
     {
         this.posY = posY;
-        this.getImagem().setY(posY);
+        this.getImage().setY(posY);
     }
 
     public float getSize()
@@ -124,7 +124,7 @@ public class NumBlock implements IBlocks
     public void setSize(float size)
     {
         this.size = size;
-        this.getImagem().setWidth(size);
-        this.getImagem().setHeight(size);
+        this.getImage().setWidth(size);
+        this.getImage().setHeight(size);
     }
 }

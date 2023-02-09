@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class DoubleBlock implements IBlocks
 {
     private String id = "2x";
-    private Texture textura = new Texture(Gdx.files.internal("blocks/2x.png"));
-    private Image imagem = new Image(textura);
-    private boolean juntado = false;
+    private Texture txtr = new Texture(Gdx.files.internal("blocks/2x.png"));
+    private Image img = new Image(txtr);
+    private boolean combined = false;
     private float posX;
     private float posY;
     private float size;
@@ -19,23 +19,23 @@ public class DoubleBlock implements IBlocks
         return id;
     }
     
-    public Texture getTextura() {
-        return textura;
+    public Texture getTexture() {
+        return txtr;
     }
 
-    public Image getImagem()
+    public Image getImage()
     {
-        return imagem;
+        return img;
     }
 
-    public boolean getJuntado()
+    public boolean getCombined()
     {
-        return juntado;
+        return combined;
     }
 
-    public void setJuntado(boolean info)
+    public void setCombined(boolean info)
     {
-        juntado = info;
+        combined = info;
     }
 
     public float getPosX()
@@ -46,7 +46,7 @@ public class DoubleBlock implements IBlocks
     public void setPosX(float posX)
     {
         this.posX = posX;
-        this.getImagem().setX(posX);
+        this.getImage().setX(posX);
     }
 
     public float getPosY()
@@ -57,7 +57,7 @@ public class DoubleBlock implements IBlocks
     public void setPosY(float posY)
     {
         this.posY = posY;
-        this.getImagem().setY(posY);
+        this.getImage().setY(posY);
     }
 
     public float getSize()
@@ -68,7 +68,7 @@ public class DoubleBlock implements IBlocks
     public void setSize(float size)
     {
         this.size = size;
-        this.getImagem().setWidth(size);
-        this.getImagem().setHeight(size);
+        this.getImage().setWidth(size);
+        this.getImage().setHeight(size);
     }
 }

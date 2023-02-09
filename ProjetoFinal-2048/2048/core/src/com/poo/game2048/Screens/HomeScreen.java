@@ -20,13 +20,13 @@ public class HomeScreen extends AbstractScreen
 
     private OrthographicCamera camera;
 
-    private Texture txtrFundo;
-    private Texture txtrBotaoJogar;
-    private float xBotaoJogar;
-    private float yBotaoJogar;
-    private Texture txtrBotaoInstr;
-    private float xBotaoInstr;
-    private float yBotaoInstr;
+    private Texture txtrBackgr;
+    private Texture txtrPlay;
+    private float xButtonPlay;
+    private float yButtonPlay;
+    private Texture txtrButtonInstruct;
+    private float xButtonInstruct;
+    private float yButtonInstruct;
 
     public HomeScreen(final Creator creator)
     {
@@ -38,15 +38,15 @@ public class HomeScreen extends AbstractScreen
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
     
-        txtrFundo = new Texture(Gdx.files.internal("backgrounds/start.png"));
+        txtrBackgr = new Texture(Gdx.files.internal("backgrounds/start.png"));
 
-        txtrBotaoJogar = new Texture(Gdx.files.internal("buttons/play_1.png"));
-        xBotaoJogar = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
-        yBotaoJogar = stage.getHeight() * 0.44f;
+        txtrPlay = new Texture(Gdx.files.internal("buttons/play_1.png"));
+        xButtonPlay = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
+        yButtonPlay = stage.getHeight() * 0.44f;
 
-        txtrBotaoInstr = new Texture(Gdx.files.internal("buttons/instructions.png"));
-        xBotaoInstr = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
-        yBotaoInstr = stage.getHeight() * 0.27f;
+        txtrButtonInstruct = new Texture(Gdx.files.internal("buttons/instructions.png"));
+        xButtonInstruct = (stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2);
+        yButtonInstruct = stage.getHeight() * 0.27f;
 
     }
 
@@ -61,40 +61,40 @@ public class HomeScreen extends AbstractScreen
         // configurações do batch
 		batch.begin();
         
-        batch.draw(txtrFundo, 0, 0, 500, 500);
-        batch.draw(txtrBotaoJogar, xBotaoJogar, yBotaoJogar, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
-        batch.draw(txtrBotaoInstr, xBotaoInstr, yBotaoInstr, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
+        batch.draw(txtrBackgr, 0, 0, 500, 500);
+        batch.draw(txtrPlay, xButtonPlay, yButtonPlay, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
+        batch.draw(txtrButtonInstruct, xButtonInstruct, yButtonInstruct, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
 
         // configurações do stage
-        criaStage();
+        createStage();
 
 		batch.end();
 	}
 
-    public void criaStage()
+    public void createStage()
     {
         // adicionando os atores
         // botão configurar
-        Image botaoConfig = new Image(txtrBotaoJogar);
-        botaoConfig.setPosition(xBotaoJogar, yBotaoJogar);
-        botaoConfig.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
-        stage.addActor(botaoConfig);
+        Image buttonSetting = new Image(txtrPlay);
+        buttonSetting.setPosition(xButtonPlay, yButtonPlay);
+        buttonSetting.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
+        stage.addActor(buttonSetting);
 
         // botão instruções
-        Image botaoInstr = new Image(txtrBotaoInstr);
-        botaoInstr.setPosition(xBotaoInstr, yBotaoInstr);
-        botaoInstr.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
-        stage.addActor(botaoInstr);
+        Image buttonInstruct = new Image(txtrButtonInstruct);
+        buttonInstruct.setPosition(xButtonInstruct, yButtonInstruct);
+        buttonInstruct.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
+        stage.addActor(buttonInstruct);
 
         // configurações de input dos botões
-        botaoConfig.addListener(new ClickListener()
+        buttonSetting.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
                 creator.setScreen(new SettingScreen(creator));
             }
         });
-        botaoInstr.addListener(new ClickListener()
+        buttonInstruct.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
             {
@@ -106,9 +106,9 @@ public class HomeScreen extends AbstractScreen
     @Override
 	public void dispose()
     {
-		txtrFundo.dispose();
-		txtrBotaoJogar.dispose();
-		txtrBotaoInstr.dispose();
+		txtrBackgr.dispose();
+		txtrPlay.dispose();
+		txtrButtonInstruct.dispose();
 	}
 
 }

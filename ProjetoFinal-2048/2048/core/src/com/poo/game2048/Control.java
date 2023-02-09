@@ -22,21 +22,21 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     private SpriteBatch batch;
     private IBoardControl board;
 
-    private boolean botaoBombaSelected;
-    private boolean botaoDeletaSelected;
-    private boolean botaoTempoSelected;
-    private boolean botao2xSelected;
-    private boolean botaoMusicaSelected;
+    private boolean buttonBombSelected;
+    private boolean buttonDelSelected;
+    private boolean buttonTimeSelected;
+    private boolean button2xSelected;
+    private boolean buttonMusicSelected;
 
     private ILifeBlocks timer, bomb;
 
-    private int linhaFim = 0;
-    private int colunaFim = 0;
+    private int verticalEnd = 0;
+    private int horizontalEnd = 0;
 
-    private boolean vazioInexistente;
-    private boolean algoMudou;
+    private boolean nonExistentVoid;
+    private boolean smthChanged;
 
-    private boolean ganhou = false;
+    private boolean win = false;
 
     public Control(final Creator creator)
     {
@@ -48,419 +48,419 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         timer = TimeBlock.getInstance();
     }
 
-    // Adiciona um bloco entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro.
-    public void spawnBloco()
+    // Adiciona um block entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro.
+    public void spawnBlock()
     {
-        IBlocks blocoGerado = new NumBlock(0);
+        IBlocks blockSpawned = new NumBlock(0);
         Random random = new Random();
-        int linha = random.nextInt(board.getTamanho());
-		int coluna = random.nextInt(board.getTamanho());
+        int vertical = random.nextInt(board.getSize());
+		int horizontal = random.nextInt(board.getSize());
 
-        // definição das probabilidades de cada bloco ser adicionado
-		if (Objects.equals(board.getId(linha, coluna), 0))
+        // definição das probabilidades de cada block ser adicionado
+		if (Objects.equals(board.getId(vertical, horizontal), 0))
 		{
 			int index = random.nextInt(100);
             if(index < 10)
             {
-                blocoGerado = new NumBlock(1);
+                blockSpawned = new NumBlock(1);
             }
             else if (index < 60)
             {
-                blocoGerado = new NumBlock(2);
+                blockSpawned = new NumBlock(2);
             }
             else if (index < 80)
             {
-                blocoGerado = new NumBlock(4);
+                blockSpawned = new NumBlock(4);
             }
-            else if (index < 85 && bomb.getAtivo() == false && getBotaoSelected("bomb"))
+            else if (index < 85 && bomb.getActivated() == false && getButtonSelected("bomb"))
             {
-                blocoGerado = bomb;
+                blockSpawned = bomb;
                 
-                bomb.setAtivo(true);
-                bomb.setLinha(linha);
-                bomb.setColuna(coluna);
+                bomb.setActivated(true);
+                bomb.setVertical(vertical);
+                bomb.setHorizontal(horizontal);
             }
-            else if (index < 90 && timer.getAtivo() == false && getBotaoSelected("time"))
+            else if (index < 90 && timer.getActivated() == false && getButtonSelected("time"))
             {
-                blocoGerado = timer;
+                blockSpawned = timer;
 
-                timer.setAtivo(true);
-                timer.setLinha(linha);
-                timer.setColuna(coluna);
+                timer.setActivated(true);
+                timer.setVertical(vertical);
+                timer.setHorizontal(horizontal);
             }
-            else if (index < 95 && getBotaoSelected("del"))
+            else if (index < 95 && getButtonSelected("del"))
             {
-                blocoGerado = new DelBlock();
+                blockSpawned = new DelBlock();
             }
-            else if (index < 100 && getBotaoSelected("2x"))
+            else if (index < 100 && getButtonSelected("2x"))
             {
-                blocoGerado = new DoubleBlock();
+                blockSpawned = new DoubleBlock();
             }
             else
             {
-                spawnBloco();
+                spawnBlock();
             }
             
-            // adicionando o novo bloco ao tabuleiro e animando
-            board.setBloco(linha, coluna, blocoGerado);
-            board.getBloco(linha, coluna).getImagem().setScale(.75f);
-			board.getBloco(linha, coluna).getImagem().addAction(Actions.scaleTo(1, 1, .25f));
+            // adicionando o novo block ao tabuleiro e animatendo
+            board.setBlock(vertical, horizontal, blockSpawned);
+            board.getBlock(vertical, horizontal).getImage().setScale(.75f);
+			board.getBlock(vertical, horizontal).getImage().addAction(Actions.scaleTo(1, 1, .25f));
 		}
 		else
 		{
-			spawnBloco();
+			spawnBlock();
 		}
     }
 
-    public void transfereComando(char direcao)
+    public void transferInput(char direction)
 	{   
-		if(direcao == 'w')
+		if(direction == 'w')
         {
-            for(int coluna = board.getTamanho() - 1; coluna >= 0; coluna--)
+            for(int horizontal = board.getSize() - 1; horizontal >= 0; horizontal--)
             {
-                for(int linha = 0; linha < board.getTamanho(); linha++)
+                for(int vertical = 0; vertical < board.getSize(); vertical++)
                 {
-                    verificaViabilidade(linha, coluna, direcao);
+                    checkViability(vertical, horizontal, direction);
                 }
             }
         }
-        else if(direcao == 's')
+        else if(direction == 's')
         {
-            for(int coluna = 0; coluna < board.getTamanho(); coluna++)
+            for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
             {
-                for(int linha = board.getTamanho() - 1; linha >= 0; linha--)
+                for(int vertical = board.getSize() - 1; vertical >= 0; vertical--)
                 {
-                    verificaViabilidade(linha, coluna, direcao);
+                    checkViability(vertical, horizontal, direction);
                 }
             }
         }
-        else if(direcao == 'a')
+        else if(direction == 'a')
         {
-            for(int linha = 0; linha < board.getTamanho(); linha++)
+            for(int vertical = 0; vertical < board.getSize(); vertical++)
             {
-                for(int coluna = 0; coluna < board.getTamanho(); coluna++)
+                for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
                 {
-                    verificaViabilidade(linha, coluna, direcao);
+                    checkViability(vertical, horizontal, direction);
                 }
             }
         }
-        else if(direcao == 'd')
+        else if(direction == 'd')
         {
-            for(int linha = board.getTamanho() - 1; linha >= 0; linha--)
+            for(int vertical = board.getSize() - 1; vertical >= 0; vertical--)
             {
-                for(int coluna = 0; coluna < board.getTamanho(); coluna++)
+                for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
                 {
-                    verificaViabilidade(linha, coluna, direcao);
+                    checkViability(vertical, horizontal, direction);
                 }
             }
         }
         
-        percorreTabuleiro();
-        if(algoMudou)
+        goThroughBoard();
+        if(smthChanged)
         {
-            atualizaVidas();
-            spawnBloco();
-            algoMudou = false;
+            updateLifes();
+            spawnBlock();
+            smthChanged = false;
         }
 	}
 
-    private void verificaViabilidade(int linha, int coluna, char direcao)
+    private void checkViability(int vertical, int horizontal, char direction)
     {
-        if(!Objects.equals(board.getId(linha, coluna), 0) && board.getBloco(linha, coluna).getJuntado() == false) // se não for 0 e se não juntou
+        if(!Objects.equals(board.getId(vertical, horizontal), 0) && board.getBlock(vertical, horizontal).getCombined() == false) // se não for 0 e se não juntou
         {
-            interpretaComando(direcao, linha, coluna, batch, stage);
+            interpretInput(direction, vertical, horizontal, batch, stage);
         }
     }
     
-    public void interpretaComando(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
+    public void interpretInput(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
     {
-        planejaMovimento(direcao, linhaIni, colunaIni);
+        planMove(direction, verticalIni, horizontalIni);
 
-        if(0 <= linhaFim && linhaFim < board.getTamanho() && 0 <= colunaFim && colunaFim < board.getTamanho()) // verifica se está dentro do tabuleiro
+        if(0 <= verticalEnd && verticalEnd < board.getSize() && 0 <= horizontalEnd && horizontalEnd < board.getSize()) // verifica se está dentro do tabuleiro
         {
-            if (board.getBloco(linhaFim, colunaFim).getJuntado() == false)
+            if (board.getBlock(verticalEnd, horizontalEnd).getCombined() == false)
             {
-                if(board.getBloco(linhaIni, colunaIni) instanceof ILifeBlocks && (Objects.equals(board.getId(linhaFim, colunaFim), 0) || Objects.equals(board.getId(linhaFim, colunaFim), "del") || Objects.equals(board.getId(linhaFim, colunaFim), "2x")))
+                if(board.getBlock(verticalIni, horizontalIni) instanceof ILifeBlocks && (Objects.equals(board.getId(verticalEnd, horizontalEnd), 0) || Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x")))
                 {
-                    ((ILifeBlocks) board.getBloco(linhaIni, colunaIni)).setLinha(linhaFim);
-                    ((ILifeBlocks) board.getBloco(linhaIni, colunaIni)).setColuna(colunaFim);
+                    ((ILifeBlocks) board.getBlock(verticalIni, horizontalIni)).setVertical(verticalEnd);
+                    ((ILifeBlocks) board.getBlock(verticalIni, horizontalIni)).setHorizontal(horizontalEnd);
                 }
-                movimenta(direcao, linhaIni, colunaIni, batch, stage);
+                move(direction, verticalIni, horizontalIni, batch, stage);
             }
         }
     }
 
-    private void planejaMovimento(char direcao, int linhaIni, int colunaIni)
+    private void planMove(char direction, int verticalIni, int horizontalIni)
     {
-        switch (direcao)
+        switch (direction)
         {
             case 'w':
-                linhaFim = linhaIni;
-                colunaFim = colunaIni + 1;
+                verticalEnd = verticalIni;
+                horizontalEnd = horizontalIni + 1;
                 break;
             case 'a':
-                linhaFim = linhaIni - 1;
-                colunaFim = colunaIni;
+                verticalEnd = verticalIni - 1;
+                horizontalEnd = horizontalIni;
                 break;
             case 's':
-                linhaFim = linhaIni;
-                colunaFim = colunaIni - 1;
+                verticalEnd = verticalIni;
+                horizontalEnd = horizontalIni - 1;
                 break;
             case 'd':
-                linhaFim = linhaIni + 1;
-                colunaFim = colunaIni;
+                verticalEnd = verticalIni + 1;
+                horizontalEnd = horizontalIni;
                 break;
         }
     }
 
-    // Realiza a movimentação de um bloco de uma posição inicial indicada para a posição final definida.
-    private void movimenta(char direcao, int linhaIni, int colunaIni, SpriteBatch batch, Stage stage)
+    // Realiza a moveção de um block de uma posição inicial indicada para a posição final definida.
+    private void move(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
     {
-        // animação
-        float posicaoXBloco = ((500 * 0.05f) + (500 * 0.87f / board.getTamanho()) * linhaFim + (500 * 0.01f) * linhaFim);
-        float posicaoYBloco = ((500 * 0.05f) + (500 * 0.87f / board.getTamanho()) * colunaFim + (500 * 0.01f) * colunaFim);
-        MoveToAction juntaBloco = new MoveToAction();
-        juntaBloco.setPosition(posicaoXBloco,posicaoYBloco);
-        juntaBloco.setDuration(0.35f);
-        juntaBloco.setInterpolation(Interpolation.smooth);
-        board.getBloco(linhaIni, colunaIni).getImagem().addAction(juntaBloco);
-        SequenceAction animaBloco = new SequenceAction(juntaBloco, Actions.removeActor());
+        // animateção
+        float posXBlock = ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * verticalEnd + (500 * 0.01f) * verticalEnd);
+        float posYBlock = ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * horizontalEnd + (500 * 0.01f) * horizontalEnd);
+        MoveToAction combineBlock = new MoveToAction();
+        combineBlock.setPosition(posXBlock,posYBlock);
+        combineBlock.setDuration(0.35f);
+        combineBlock.setInterpolation(Interpolation.smooth);
+        board.getBlock(verticalIni, horizontalIni).getImage().addAction(combineBlock);
+        SequenceAction animateBlock = new SequenceAction(combineBlock, Actions.removeActor());
 
         // quando está vazio na frente, livre para continuar se movendo
-        if(Objects.equals(board.getId(linhaFim, colunaFim), 0))
+        if(Objects.equals(board.getId(verticalEnd, horizontalEnd), 0))
         {
-            board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
-            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
-            interpretaComando(direcao, linhaFim, colunaFim, batch, stage);
-            algoMudou = true;
+            board.setBlock(verticalEnd, horizontalEnd, board.getBlock(verticalIni, horizontalIni));
+            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
+            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
+            interpretInput(direction, verticalEnd, horizontalEnd, batch, stage);
+            smthChanged = true;
         }
 
-        // quando ambos os blocos são iguais e podem se juntar
-        else if(Objects.equals(board.getId(linhaFim, colunaFim), board.getId(linhaIni, colunaIni)))
+        // quando ambos os blocks são iguais e podem se combiner
+        else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), board.getId(verticalIni, horizontalIni)))
         {
-            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            if(board.getBloco(linhaFim, colunaFim) instanceof NumBlock)
+            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
+            if(board.getBlock(verticalEnd, horizontalEnd) instanceof NumBlock)
             {
-                ((NumBlock) board.getBloco(linhaFim, colunaFim)).dobra();
+                ((NumBlock) board.getBlock(verticalEnd, horizontalEnd)).combineDouble();
             }
-            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
-            board.getBloco(linhaFim, colunaFim).setJuntado(true);
-            algoMudou = true;
+            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
+            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
+            board.getBlock(verticalEnd, horizontalEnd).setCombined(true);
+            smthChanged = true;
         }
 
-        // quando o bloco deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
-        else if(Objects.equals(board.getId(linhaFim, colunaFim), "del") || Objects.equals(board.getId(linhaIni, colunaIni), "del"))
+        // quando o block deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
+        else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || Objects.equals(board.getId(verticalIni, horizontalIni), "del"))
         {
-            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
-            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            board.setBloco(linhaFim, colunaFim, new NumBlock(0));
-            algoMudou = true;
+            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
+            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
+            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
+            board.setBlock(verticalEnd, horizontalEnd, new NumBlock(0));
+            smthChanged = true;
         }
 
-        // quando o bloco dobro (que está no destino do movimento) vai dobrar o outro 
-        else if(Objects.equals(board.getId(linhaFim, colunaFim), "2x"))
+        // quando o block dobro (que está no destino do movimento) vai combineDoubler o outro 
+        else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x"))
         {
-            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            if(board.getBloco(linhaIni, colunaIni) instanceof NumBlock)
+            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
+            if(board.getBlock(verticalIni, horizontalIni) instanceof NumBlock)
             {
-                ((NumBlock) board.getBloco(linhaIni, colunaIni)).dobra();
+                ((NumBlock) board.getBlock(verticalIni, horizontalIni)).combineDouble();
             }
-            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            board.setBloco(linhaFim, colunaFim, board.getBloco(linhaIni, colunaIni));
-            board.getBloco(linhaIni, colunaIni).getImagem().addAction(Actions.removeActor());
-            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
-            board.getBloco(linhaIni, colunaIni).setJuntado(true);
-            algoMudou = true;
+            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
+            board.setBlock(verticalEnd, horizontalEnd, board.getBlock(verticalIni, horizontalIni));
+            board.getBlock(verticalIni, horizontalIni).getImage().addAction(Actions.removeActor());
+            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
+            board.getBlock(verticalIni, horizontalIni).setCombined(true);
+            smthChanged = true;
         }
         
-        // quando o bloco dobro (que está na origem do movimento) vai dobrar o outro
-        else if(Objects.equals(board.getId(linhaIni, colunaIni), "2x"))
+        // quando o block dobro (que está na origem do movimento) vai combineDoubler o outro
+        else if(Objects.equals(board.getId(verticalIni, horizontalIni), "2x"))
         {
-            board.getBloco(linhaIni, colunaIni).getImagem().addAction(animaBloco);
-            board.setBloco(linhaIni, colunaIni, new NumBlock(0));
-            board.getBloco(linhaFim, colunaFim).getImagem().addAction(Actions.removeActor());
-            if(board.getBloco(linhaFim, colunaFim) instanceof NumBlock)
+            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
+            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
+            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
+            if(board.getBlock(verticalEnd, horizontalEnd) instanceof NumBlock)
             {
-                ((NumBlock) board.getBloco(linhaFim, colunaFim)).dobra();
+                ((NumBlock) board.getBlock(verticalEnd, horizontalEnd)).combineDouble();
             }
-            board.getBloco(linhaFim, colunaFim).setJuntado(true);
-            algoMudou = true;
+            board.getBlock(verticalEnd, horizontalEnd).setCombined(true);
+            smthChanged = true;
         }
     }
 
-    public void atualizaVidas()
+    public void updateLifes()
     {
-        if (bomb.getAtivo())
+        if (bomb.getActivated())
         {
             // diminui 1
-            bomb.setVida(-1);
-            board.getBloco(bomb.getLinha(), bomb.getColuna()).getImagem().addAction(Actions.removeActor());
+            bomb.setLife(-1);
+            board.getBlock(bomb.getVertical(), bomb.getHorizontal()).getImage().addAction(Actions.removeActor());
 
-            // setup das imagens para identificação do estado do bloco
-            if(bomb.getVida() == 2)
+            // setup das imagens para identificação do estado do block
+            if(bomb.getLife() == 2)
             {
-                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocks/bomb_2:3.png"))));
+                bomb.setImage(new Image(new Texture(Gdx.files.internal("blocks/bomb_2:3.png"))));
             }
-            else if(bomb.getVida() == 1)
+            else if(bomb.getLife() == 1)
             {
-                bomb.setImagem(new Image(new Texture(Gdx.files.internal("blocks/bomb_3:3.png"))));
+                bomb.setImage(new Image(new Texture(Gdx.files.internal("blocks/bomb_3:3.png"))));
             }
         }
-        if (timer.getAtivo())
+        if (timer.getActivated())
         {
             // diminui 1
-            timer.setVida(-1);
-            board.getBloco(timer.getLinha(), timer.getColuna()).getImagem().addAction(Actions.removeActor());
+            timer.setLife(-1);
+            board.getBlock(timer.getVertical(), timer.getHorizontal()).getImage().addAction(Actions.removeActor());
 
-            // setup das imagens para identificação do estado do bloco
-            if(timer.getVida() == 3)
+            // setup das imagens para identificação do estado do block
+            if(timer.getLife() == 3)
             {
-                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocks/time_3:4.png"))));
+                timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_3:4.png"))));
             }
-            else if(timer.getVida() == 2)
+            else if(timer.getLife() == 2)
             {
-                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocks/time_2:4.png"))));
+                timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_2:4.png"))));
             }
-            else if(timer.getVida() == 1)
+            else if(timer.getLife() == 1)
             {
-                timer.setImagem(new Image(new Texture(Gdx.files.internal("blocks/time_1:4.png"))));
+                timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_1:4.png"))));
             }
         }
-        if(bomb.getVida() == 0)
+        if(bomb.getLife() == 0)
         {
-            algoMudou = true;
+            smthChanged = true;
             bomb.reset();
-            miraVizinhos(bomb.getLinha(), bomb.getColuna());
+            aimNeighbors(bomb.getVertical(), bomb.getHorizontal());
         }
-        if (timer.getVida() == 0)
+        if (timer.getLife() == 0)
         {
-            algoMudou = true;
+            smthChanged = true;
             timer.reset();
-            board.setBloco(timer.getLinha(), timer.getColuna(), new NumBlock(0));
+            board.setBlock(timer.getVertical(), timer.getHorizontal(), new NumBlock(0));
         }
     }
 
-    private void miraVizinhos(int linha, int coluna)
+    private void aimNeighbors(int vertical, int horizontal)
     {
-        explode(linha, coluna);
+        explode(vertical, horizontal);
 
-        linha--;
-        coluna--;
-        explode(linha, coluna);
+        vertical--;
+        horizontal--;
+        explode(vertical, horizontal);
         
-        linha++;
-        explode(linha, coluna);
+        vertical++;
+        explode(vertical, horizontal);
 
-        linha++;
-        explode(linha, coluna);
+        vertical++;
+        explode(vertical, horizontal);
 
-        coluna++;
-        explode(linha, coluna);
+        horizontal++;
+        explode(vertical, horizontal);
 
-        coluna++;
-        explode(linha, coluna);
+        horizontal++;
+        explode(vertical, horizontal);
 
-        linha--;
-        explode(linha, coluna);
+        vertical--;
+        explode(vertical, horizontal);
 
-        linha--;
-        explode(linha, coluna);
+        vertical--;
+        explode(vertical, horizontal);
 
-        coluna--;
-        explode(linha, coluna);
+        horizontal--;
+        explode(vertical, horizontal);
     }
 
-    private void explode(int linha, int coluna)
+    private void explode(int vertical, int horizontal)
     {
-        if(linha >= 0 && linha < board.getTamanho() && coluna >= 0 && coluna < board.getTamanho())
+        if(vertical >= 0 && vertical < board.getSize() && horizontal >= 0 && horizontal < board.getSize())
         {
-            SequenceAction animaExplosao = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
-            board.getBloco(linha, coluna).getImagem().addAction(animaExplosao);
-            board.setBloco(linha, coluna, new NumBlock(0));
+            SequenceAction animateExplosion = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
+            board.getBlock(vertical, horizontal).getImage().addAction(animateExplosion);
+            board.setBlock(vertical, horizontal, new NumBlock(0));
         }
     }
 
-    public void percorreTabuleiro()
+    public void goThroughBoard()
     {
-        vazioInexistente = true;
-        for(int i = 0; i < board.getTamanho(); i++)
+        nonExistentVoid = true;
+        for(int i = 0; i < board.getSize(); i++)
         {
-            for(int j = 0; j < board.getTamanho(); j++)
+            for(int j = 0; j < board.getSize(); j++)
             {
                 if(Objects.equals(board.getId(i, j), 2048))
                 {
-                    ganhou = true;
+                    win = true;
                 }
                 else if(Objects.equals(board.getId(i, j), 0))
                 {
-                    vazioInexistente = false;
+                    nonExistentVoid = false;
                 }
-                board.getBloco(i, j).setJuntado(false);
+                board.getBlock(i, j).setCombined(false);
             }
         }
-        if(vazioInexistente)
+        if(nonExistentVoid)
         {
             creator.setScreen(new LooseScreen(creator));
         }
     }
 
-    public void setBotaoSelected(String idBotao, boolean selected)
+    public void setButtonSelected(String idButton, boolean selected)
     {
-        switch(idBotao)
+        switch(idButton)
         {
             case("bomb"):
-                botaoBombaSelected = selected;
+                buttonBombSelected = selected;
                 break;
             case("del"):
-                botaoDeletaSelected = selected;
+                buttonDelSelected = selected;
                 break;
             case("time"):
-                botaoTempoSelected = selected;
+                buttonTimeSelected = selected;
                 break;
             case("2x"):
-                botao2xSelected = selected;
+                button2xSelected = selected;
                 break;
             case("music"):
-                botaoMusicaSelected = selected;
+                buttonMusicSelected = selected;
                 break;
             default:
                 break;
         }
     }
 
-    public boolean getBotaoSelected(String idBotao)
+    public boolean getButtonSelected(String idButton)
     {
-        switch(idBotao)
+        switch(idButton)
         {
             case("bomb"):
-                return botaoBombaSelected;
+                return buttonBombSelected;
             case("del"):
-                return botaoDeletaSelected;
+                return buttonDelSelected;
             case("time"):
-                return botaoTempoSelected;
+                return buttonTimeSelected;
             case("2x"):
-                return botao2xSelected;
+                return button2xSelected;
             case("music"):
-                return botaoMusicaSelected;
+                return buttonMusicSelected;
             default:
                 return false;
         }
     }
 
-    public void conectaTabuleiro(Board tabuleiro)
+    public void connectBoard(Board tabuleiro)
     {
         board = tabuleiro;
     }
 
-    public boolean getGanhou()
+    public boolean getWin()
     {
-        return ganhou;
+        return win;
     }
 
-    public void setGanhou(boolean ganhou) {
-        this.ganhou = ganhou;
+    public void setWin(boolean win) {
+        this.win = win;
     }
 }

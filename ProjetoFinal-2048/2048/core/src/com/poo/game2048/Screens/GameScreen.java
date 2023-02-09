@@ -18,74 +18,74 @@ public class GameScreen extends AbstractScreen
     private final Creator creator;
     private Stage stage;
     private OrthographicCamera camera;
-    private Board tabuleiro;
+    private Board board;
     private IControlGameScreen control;
-    private char direcao;
+    private char direction;
 
     public GameScreen(final Creator creator)
     {
         // conexões
         this.creator = creator;
-        control = creator.getControle();
+        control = creator.getControl();
         stage = creator.getStage();
         stage.clear();
 
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
 
-        // criação do tabuleiro
-        tabuleiro = new Board(creator.getTamanhoTabuleiro());
-        control.conectaTabuleiro(tabuleiro);
+        // criação do board
+        board = new Board(creator.getSizeBoard());
+        control.connectBoard(board);
 
-        // desenho inicial do tabuleiro
-        for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+        // desenho inicial do board
+        for(int vertical = 0; vertical < board.getSize(); vertical++)
         {
-            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
             {
-                tabuleiro.getBloco(linha, coluna).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * linha + (camera.viewportWidth * 0.01) * linha));
-                tabuleiro.getBloco(linha, coluna).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * coluna + (camera.viewportHeight * 0.01) * coluna));
-                tabuleiro.getBloco(linha, coluna).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
-                stage.addActor(tabuleiro.getBloco(linha, coluna).getImagem());
+                board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
+                board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
+                board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
+                stage.addActor(board.getBlock(vertical, horizontal).getImage());
             }
         }
         stage.draw();
 		
         // adicionando os dois primeiros blocos
-        control.spawnBloco();
-        control.spawnBloco();
+        control.spawnBlock();
+        control.spawnBlock();
     }
 
-    private void leComando()
+    private void readInput()
     {
-        if(!control.getGanhou()){
+        if(!control.getWin()){
             if(Gdx.input.isKeyJustPressed(Keys.LEFT) || Gdx.input.isKeyJustPressed(Keys.A))
             {
-                direcao = 'a';
-                control.transfereComando(direcao);
+                direction = 'a';
+                control.transferInput(direction);
             }
                 
             else if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
             {
-                direcao = 'd';
-                control.transfereComando(direcao);
+                direction = 'd';
+                control.transferInput(direction);
             }
                 
             else if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.isKeyJustPressed(Keys.W))
             {
-                direcao = 'w';
-                control.transfereComando(direcao);
+                direction = 'w';
+                control.transferInput(direction);
             }
                 
             else if(Gdx.input.isKeyJustPressed(Keys.DOWN) || Gdx.input.isKeyJustPressed(Keys.S))
             {
-                direcao = 's';
-                control.transfereComando(direcao);
+                direction = 's';
+                control.transferInput(direction);
             }
         }
-        else if(Gdx.input.isKeyJustPressed(Keys.ENTER) && control.getGanhou())
+        else if(Gdx.input.isKeyJustPressed(Keys.ENTER) && control.getWin())
         {
             stage.clear();
-            control.setGanhou(false);
+            control.setWin(false);
             creator.setScreen(new WinScreen(creator));
         }
     }
@@ -97,32 +97,32 @@ public class GameScreen extends AbstractScreen
 
         camera.update();
         
-        // desenho do tabuleiro
-        for(int linha = 0; linha < tabuleiro.getTamanho(); linha++)
+        // desenho do board
+        for(int vertical = 0; vertical < board.getSize(); vertical++)
         {
-            for(int coluna = 0; coluna < tabuleiro.getTamanho(); coluna++)
+            for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
             {
-                tabuleiro.getBloco(linha, coluna).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / tabuleiro.getTamanho()) * linha + (camera.viewportWidth * 0.01) * linha));
-                tabuleiro.getBloco(linha, coluna).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()) * coluna + (camera.viewportHeight * 0.01) * coluna));
-                tabuleiro.getBloco(linha, coluna).setSize((float) (camera.viewportHeight * 0.87 / tabuleiro.getTamanho()));
+                board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
+                board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
+                board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
                 
-                if(!Objects.equals(tabuleiro.getId(linha, coluna), 0))
-                    stage.addActor(tabuleiro.getBloco(linha, coluna).getImagem());
+                if(!Objects.equals(board.getId(vertical, horizontal), 0))
+                    stage.addActor(board.getBlock(vertical, horizontal).getImage());
             }
         }
 
-        if(control.getGanhou())
+        if(control.getWin())
         {
-            Image aviso = new Image(new Texture(Gdx.files.internal("extras/warning.png")));
-            aviso.setPosition(camera.viewportWidth/2 - camera.viewportWidth * 0.45f, camera.viewportHeight/2 - camera.viewportHeight * 0.13f);
-            aviso.setSize(camera.viewportWidth * 0.9f, camera.viewportHeight * 0.26f);
-            stage.addActor(aviso);
+            Image winMessage = new Image(new Texture(Gdx.files.internal("extras/warning.png")));
+            winMessage.setPosition(camera.viewportWidth/2 - camera.viewportWidth * 0.45f, camera.viewportHeight/2 - camera.viewportHeight * 0.13f);
+            winMessage.setSize(camera.viewportWidth * 0.9f, camera.viewportHeight * 0.26f);
+            stage.addActor(winMessage);
         }
 
         stage.draw();
         stage.act();
 
         // leitura da próxima jogada
-        leComando();
+        readInput();
 	}
 }
