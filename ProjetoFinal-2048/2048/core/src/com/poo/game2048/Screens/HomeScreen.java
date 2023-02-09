@@ -58,14 +58,14 @@ public class HomeScreen extends AbstractScreen
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 
-        // configurações do batch
+        // configuring batch
 		batch.begin();
         
         batch.draw(txtrBackgr, 0, 0, 500, 500);
         batch.draw(txtrPlay, xButtonPlay, yButtonPlay, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         batch.draw(txtrButtonInstruct, xButtonInstruct, yButtonInstruct, stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
 
-        // configurações do stage
+        // configuring stage
         createStage();
 
 		batch.end();
@@ -73,20 +73,19 @@ public class HomeScreen extends AbstractScreen
 
     public void createStage()
     {
-        // adicionando os atores
-        // botão configurar
+        // settings button
         Image buttonSetting = new Image(txtrPlay);
         buttonSetting.setPosition(xButtonPlay, yButtonPlay);
         buttonSetting.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         stage.addActor(buttonSetting);
 
-        // botão instruções
+        // instructions button
         Image buttonInstruct = new Image(txtrButtonInstruct);
         buttonInstruct.setPosition(xButtonInstruct, yButtonInstruct);
         buttonInstruct.setSize(stage.getWidth() * 0.5f, stage.getHeight() * 0.1f);
         stage.addActor(buttonInstruct);
 
-        // configurações de input dos botões
+        // configuring buttons
         buttonSetting.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)

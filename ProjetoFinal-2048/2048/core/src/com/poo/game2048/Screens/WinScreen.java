@@ -17,26 +17,24 @@ public class WinScreen extends AbstractScreen
 
     public WinScreen(final Creator creator)
     {
-        // conexões
         this.creator = creator;
         this.stage = creator.getStage();
 
-        // setup do stage
+        // stage setup
         stage.clear();
         createStage();
     }
 
     public void createStage()
     {
-        /* adicionando os atores */
-        // fundo
+        // background
         Texture txtrBackgr = new Texture(Gdx.files.internal("backgrounds/win.png"));
         Image imgBackgr = new Image(txtrBackgr);
         imgBackgr.setPosition(0, 0);
         imgBackgr.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(imgBackgr);
 
-        // confetti caindo
+        // confetti
         Texture txtrConfetti = new Texture(Gdx.files.internal("extras/confetti.png"));
         Image imgConfetti = new Image(txtrConfetti);
         imgConfetti.setPosition(Gdx.graphics.getWidth() * 0.055f, Gdx.graphics.getHeight());
@@ -50,14 +48,14 @@ public class WinScreen extends AbstractScreen
 
         imgConfetti.addAction(moveDown);
 
-        // botão menu principal
+        // menu button
         Texture txtrButtonMenu = new Texture(Gdx.files.internal("buttons/menu.png"));
         Image buttonMenu = new Image(txtrButtonMenu);
         buttonMenu.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.35f);
         buttonMenu.setSize((float) (stage.getWidth() * 0.5), (float) (stage.getHeight() * 0.1));
         stage.addActor(buttonMenu);
 
-        // botão encerrar
+        // close button
         Texture txtrButtonClose = new Texture(Gdx.files.internal("buttons/close.png"));
         Image buttonClose = new Image(txtrButtonClose);
         buttonClose.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.5f / 2), stage.getHeight() * 0.2f);
@@ -65,7 +63,7 @@ public class WinScreen extends AbstractScreen
         stage.addActor(buttonClose);
 
         
-        /* configurações de input dos botões */
+        // configuring buttons
         buttonMenu.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)

@@ -21,11 +21,11 @@ public class TimeBlock implements ILifeBlocks
     
     
 
-    // para implementar o design pattern singleton, é necessário um construtor privado
+    // to implement the singleton design pattern, a private constructor is needed
     private TimeBlock()
     {}
     
-    // implementação do design pattern singleton, garantindo que só uma instância de bloco tempo exista
+    // implementation of the singleton design pattern, ensuring that only one time instance exists
     public static ILifeBlocks getInstance()
     {
         if (instance == null)
@@ -103,7 +103,7 @@ public class TimeBlock implements ILifeBlocks
         this.getImage().setHeight(size);
     }
 
-    // o bloco tempo tem 4 lifes até desaparecer
+    // the time block has 4 lives until it dissapears
     public int getLife()
     {
         return life;
@@ -134,7 +134,7 @@ public class TimeBlock implements ILifeBlocks
         this.horizontal = horizontal;
     }
 
-    // o bloco tempo pode estar activated, ou seja, participando do tabuleiro, ou não activated
+    // the time block can be actived (participating in the board) or not (waiting to return)
     public boolean getActivated()
     {
         return activated;
@@ -146,7 +146,7 @@ public class TimeBlock implements ILifeBlocks
     }
 
 
-    // depois do bloco tempo sumir, seus atributos são renovados, esparando ser posto de volta ao tabuleiro
+    // after the time block explodes, its attributes are renewed
     public void reset()
     {
         life = 4;

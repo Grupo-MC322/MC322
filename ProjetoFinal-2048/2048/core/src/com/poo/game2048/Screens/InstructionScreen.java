@@ -30,8 +30,7 @@ public class InstructionScreen extends AbstractScreen
     {
         stage.clear();
 
-        /* adicionando os atores */
-        // fundo
+        // backgrounds
         if(page == 1)
             txtrBackgr = new Texture(Gdx.files.internal("backgrounds/instructions_1:4.png"));
         else if(page == 2)
@@ -46,28 +45,28 @@ public class InstructionScreen extends AbstractScreen
         imgBackgr.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(imgBackgr);
 
-        // button próxima page
+        // next page button
         Texture txtrButtonNext = new Texture(Gdx.files.internal("buttons/next.png"));
         Image buttonNext = new Image(txtrButtonNext);
         buttonNext.setPosition((stage.getWidth() / 2) + (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
         buttonNext.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
         stage.addActor(buttonNext);
 
-        // button page anterior
+        // previous page button
         Texture txtrButtonAnt = new Texture(Gdx.files.internal("buttons/previous.png"));
         Image buttonAnt = new Image(txtrButtonAnt);
         buttonAnt.setPosition((stage.getWidth() / 2) - (stage.getWidth() * 0.11f) - (stage.getWidth() * 0.01f), stage.getHeight() * 0.1f);
         buttonAnt.setSize(stage.getWidth() * 0.11f, stage.getHeight() * 0.11f);
         stage.addActor(buttonAnt);
 
-        // button Back
+        // back button
         Texture txtrButtonBack = new Texture(Gdx.files.internal("buttons/back.png"));
         Image buttonBack = new Image(txtrButtonBack);
         buttonBack.setPosition((stage.getWidth() * 0.05f), stage.getHeight() * 0.85f);
         buttonBack.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
         stage.addActor(buttonBack);
         
-        /* configurações de input dos botões */
+        // configuring buttons
         buttonNext.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
@@ -104,7 +103,6 @@ public class InstructionScreen extends AbstractScreen
     @Override
     public void render(float delta)
     {
-        // input das teclas para mudar as pages
         if(Gdx.input.isKeyJustPressed(Keys.RIGHT) || Gdx.input.isKeyJustPressed(Keys.D))
         {
             if(page < 4)

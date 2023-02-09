@@ -6,5 +6,5 @@ public interface IControlGameScreen
     public void spawnBlock();
     public void transferInput(char direction);
 	public boolean getWin();
-    public void setWin(boolean b);
+    public void setWin(boolean win);
 }

@@ -22,17 +22,17 @@ public class Creator extends Game implements ICreatorSettingScreen
 	@Override
 	public void create()
 	{
-		// criação da câmera, do batch e do stage
+		// camera, batch and stage setup
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
 		batch = new SpriteBatch();
 		stage = new Stage(new StretchViewport(camera.viewportWidth, camera.viewportHeight));
 		Gdx.input.setInputProcessor(stage);
 
-		// criação do control
+		// control setup
 		control = new Control(this);
 
-		// fazendo o load da música de fundo e a iniciando
+		// music setp
 		music = Gdx.audio.newMusic(Gdx.files.internal("songs/Corona-320bit.mp3"));
 		/* 
 		Corona by Alexander Nakarada | https://www.serpentsoundstudios.com
@@ -43,7 +43,7 @@ public class Creator extends Game implements ICreatorSettingScreen
 		music.setLooping(true);
 		music.play();
  
-		// definindo a tela como tela inicial
+		// defining the first screen
 		this.setScreen(new HomeScreen(this));
 	}
 

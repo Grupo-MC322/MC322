@@ -33,11 +33,11 @@ public class GameScreen extends AbstractScreen
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
 
-        // criação do board
+        // board creation
         board = new Board(creator.getSizeBoard());
         control.connectBoard(board);
 
-        // desenho inicial do board
+        // board initialization
         for(int vertical = 0; vertical < board.getSize(); vertical++)
         {
             for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
@@ -50,7 +50,7 @@ public class GameScreen extends AbstractScreen
         }
         stage.draw();
 		
-        // adicionando os dois primeiros blocos
+        // adding the first 2 blocks
         control.spawnBlock();
         control.spawnBlock();
     }
@@ -93,11 +93,11 @@ public class GameScreen extends AbstractScreen
     @Override
 	public void render(float delta)
     {
-		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definição da cor de fundo
+		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definition of background color
 
         camera.update();
         
-        // desenho do board
+        // board drawing
         for(int vertical = 0; vertical < board.getSize(); vertical++)
         {
             for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
@@ -122,7 +122,7 @@ public class GameScreen extends AbstractScreen
         stage.draw();
         stage.act();
 
-        // leitura da próxima jogada
+        // next turn
         readInput();
 	}
 }

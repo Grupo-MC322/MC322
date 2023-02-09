@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public interface IBlocks
 {
-    public Object getId(); // cada bloco tem o seu ID, algo que o identifique, podendo ser uma String, int, ...
+    public Object getId(); // each block has an ID, which can be a String, int, ...
     public Image getImage();
     public boolean getCombined();
     public void setCombined(boolean info);

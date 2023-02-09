@@ -41,11 +41,10 @@ public class SettingScreen extends AbstractScreen
         this.stage = creator.getStage();
         this.batch = creator.getBatch();
 
-        // configurações de camera
         camera = new OrthographicCamera();
 		camera.setToOrtho(false, 500, 500);
     
-        // setup inicial das txtrs
+        // textures configuration
         txtrBackgr = new Texture(Gdx.files.internal("backgrounds/settings.png"));
 
         txtr4x4 = new Texture(Gdx.files.internal("buttons/4x4.png"));
@@ -62,7 +61,7 @@ public class SettingScreen extends AbstractScreen
 
         txtrButtonMusic = new Texture(Gdx.files.internal("buttons/music.png"));
 
-        // setup inicial das opções de blocos
+        // block buttons
         control.setButtonSelected("bomb", true);
         control.setButtonSelected("del", true);
         control.setButtonSelected("time", true);
@@ -77,12 +76,12 @@ public class SettingScreen extends AbstractScreen
 
 		camera.update();
 
-        // configurações do batch
+        // conifuring batch
 		batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(txtrBackgr, 0, 0, camera.viewportWidth, camera.viewportHeight);
 
-        // createção e configuração do stage
+        // configuring stage
         createStage(batch, stage);
 
         batch.end();
@@ -90,21 +89,19 @@ public class SettingScreen extends AbstractScreen
 
     public void createStage(Batch batch, Stage stage)
     {
-        // adicionando os atores
-
-        // botões de tabuleiro
+        // board size buttons
         Image button4x4 = createButton(txtr4x4, 0.13, 0.65, 0.17, 0.17);
         Image button5x5 = createButton(txtr5x5, 0.32, 0.65, 0.17, 0.17);
         Image button6x6 = createButton(txtr6x6, 0.51, 0.65, 0.17, 0.17);
         Image button7x7 = createButton(txtr7x7, 0.70, 0.65, 0.17, 0.17);
 
-        // botões de blocos
+        // block buttons
         Image buttonBomb = createButton(txtrBomb, 0.13, 0.32, 0.17, 0.17);
         Image buttonDel = createButton(txtrDel, 0.32, 0.32, 0.17, 0.17);
         Image buttonTime = createButton(txtrTime, 0.51, 0.32, 0.17, 0.17);
         Image button2x = createButton(txtr2x, 0.70, 0.32, 0.17, 0.17);
 
-        // botão jogar
+        // play button
         Image buttonPlay = new Image(txtrPlay);
         buttonPlay.setX(500 / 2 - 0.37f * 500 / 2);
         buttonPlay.setY(0.1f * 500);
@@ -113,7 +110,7 @@ public class SettingScreen extends AbstractScreen
         buttonPlay.draw(batch, 1);
         stage.addActor(buttonPlay);
 
-        // botão voltar
+        // back button
         Texture txtrButtonBack = new Texture(Gdx.files.internal("buttons/back.png"));
         Image buttonBack = new Image(txtrButtonBack);
         buttonBack.setPosition(stage.getWidth() * 0.05f, stage.getHeight() * 0.85f);
@@ -121,14 +118,14 @@ public class SettingScreen extends AbstractScreen
         buttonBack.draw(batch, 1);
         stage.addActor(buttonBack);
 
-        // botão musica
+        // music button
         Image buttonMusic = new Image(txtrButtonMusic);
         buttonMusic.setPosition(stage.getWidth() * 0.85f, stage.getHeight() * 0.85f);
         buttonMusic.setSize(stage.getWidth() * 0.1f, stage.getHeight() * 0.1f);
         buttonMusic.draw(batch, 1);
         stage.addActor(buttonMusic);
 
-        // configurações de input dos botões
+        // configuring buttons
         button4x4.addListener(new ClickListener()
         {
             public void clicked(InputEvent event, float x, float y)
@@ -272,10 +269,10 @@ public class SettingScreen extends AbstractScreen
             }
         });
 
-        // conexão para o botão voltar inicializar a screen inicial
+        // back to home screen button
         addConnection(buttonBack, "start");
 
-        // conexão para o button jogar inicializar a screen creator
+        // play the game button
         addConnection(buttonPlay, "game");
     }
 

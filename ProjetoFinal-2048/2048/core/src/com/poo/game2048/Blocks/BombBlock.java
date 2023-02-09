@@ -20,11 +20,11 @@ public class BombBlock implements ILifeBlocks
     private boolean activated = false;
     
 
-    // para implementar o design pattern singleton, é necessário um construtor privado
+    // to implement the singleton design pattern a private constructor is needed
     private BombBlock()
     {}
     
-    // implementação do design pattern singleton, garantindo que só uma instância de bomb exista
+    // implementation of the singleton design pattern, ensuring that only one bomb instance exists
     public static ILifeBlocks getInstance()
     {
         if (instance == null)
@@ -101,7 +101,7 @@ public class BombBlock implements ILifeBlocks
         this.getImage().setHeight(size);
     }
 
-    // a bomb tem 3 lifes até explodir
+    // the bomb has 3 lives until it explodes
     public int getLife()
     {
         return life;
@@ -132,7 +132,7 @@ public class BombBlock implements ILifeBlocks
         this.horizontal = horizontal;
     }
 
-    // a bomb pode estar ativa, ou seja, participando do tabuleiro, ou não ativa
+    // the bomb can be actived (participating in the board) or not (waiting to return)
     public boolean getActivated()
     {
         return activated;
@@ -143,7 +143,7 @@ public class BombBlock implements ILifeBlocks
         activated = info;
     }
 
-    // depois da bomb explodir, seus atributos são renovados, esparando ser posta de volta ao tabuleiro.
+    // after the bomb explodes, its attributes are renewed
     public void reset()
     {
         setLife(3);

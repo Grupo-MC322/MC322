@@ -48,7 +48,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         timer = TimeBlock.getInstance();
     }
 
-    // Adiciona um block entre 1, 2, 4 ou especiais em alguma posição vazia do tabuleiro.
+    // Adds a block from [1, 2, 4 or specials] on an empty position on the board
     public void spawnBlock()
     {
         IBlocks blockSpawned = new NumBlock(0);
@@ -56,7 +56,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         int vertical = random.nextInt(board.getSize());
 		int horizontal = random.nextInt(board.getSize());
 
-        // definição das probabilidades de cada block ser adicionado
+        // probability of each block to be spawned
 		if (Objects.equals(board.getId(vertical, horizontal), 0))
 		{
 			int index = random.nextInt(100);
@@ -101,7 +101,6 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 spawnBlock();
             }
             
-            // adicionando o novo block ao tabuleiro e animatendo
             board.setBlock(vertical, horizontal, blockSpawned);
             board.getBlock(vertical, horizontal).getImage().setScale(.75f);
 			board.getBlock(vertical, horizontal).getImage().addAction(Actions.scaleTo(1, 1, .25f));
@@ -155,7 +154,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             }
         }
         
-        goThroughBoard();
+        checkWholeBoard();
         if(smthChanged)
         {
             updateLifes();
@@ -166,22 +165,30 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 
     private void checkViability(int vertical, int horizontal, char direction)
     {
-        if(!Objects.equals(board.getId(vertical, horizontal), 0) && board.getBlock(vertical, horizontal).getCombined() == false) // se não for 0 e se não juntou
+        // if it is not a void and it has not combined yet
+        if(!Objects.equals(board.getId(vertical, horizontal), 0) && !board.getBlock(vertical, horizontal).getCombined())
         {
             interpretInput(direction, vertical, horizontal, batch, stage);
         }
     }
-    
+
     public void interpretInput(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
     {
         planMove(direction, verticalIni, horizontalIni);
 
-        if(0 <= verticalEnd && verticalEnd < board.getSize() && 0 <= horizontalEnd && horizontalEnd < board.getSize()) // verifica se está dentro do tabuleiro
+        // if it fits inside the board
+        if(0 <= verticalEnd && verticalEnd < board.getSize() && 0 <= horizontalEnd && horizontalEnd < board.getSize())
         {
-            if (board.getBlock(verticalEnd, horizontalEnd).getCombined() == false)
+            // if the destination block has not been combined yet
+            if (!board.getBlock(verticalEnd, horizontalEnd).getCombined())
             {
-                if(board.getBlock(verticalIni, horizontalIni) instanceof ILifeBlocks && (Objects.equals(board.getId(verticalEnd, horizontalEnd), 0) || Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x")))
+                // if the initial block is a life block and the destination block is from [void, del or 2x]
+                if(board.getBlock(verticalIni, horizontalIni) instanceof ILifeBlocks && 
+                (Objects.equals(board.getId(verticalEnd, horizontalEnd), 0) || 
+                Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || 
+                Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x")))
                 {
+                    // then the destination blocks have no effect, they just vanish
                     ((ILifeBlocks) board.getBlock(verticalIni, horizontalIni)).setVertical(verticalEnd);
                     ((ILifeBlocks) board.getBlock(verticalIni, horizontalIni)).setHorizontal(horizontalEnd);
                 }
@@ -213,10 +220,9 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
     }
 
-    // Realiza a moveção de um block de uma posição inicial indicada para a posição final definida.
     private void move(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
     {
-        // animateção
+        // animation
         float posXBlock = ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * verticalEnd + (500 * 0.01f) * verticalEnd);
         float posYBlock = ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * horizontalEnd + (500 * 0.01f) * horizontalEnd);
         MoveToAction combineBlock = new MoveToAction();
@@ -226,7 +232,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         board.getBlock(verticalIni, horizontalIni).getImage().addAction(combineBlock);
         SequenceAction animateBlock = new SequenceAction(combineBlock, Actions.removeActor());
 
-        // quando está vazio na frente, livre para continuar se movendo
+        // when the destionation block is void, the initial block must keep moving
         if(Objects.equals(board.getId(verticalEnd, horizontalEnd), 0))
         {
             board.setBlock(verticalEnd, horizontalEnd, board.getBlock(verticalIni, horizontalIni));
@@ -236,21 +242,22 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             smthChanged = true;
         }
 
-        // quando ambos os blocks são iguais e podem se combiner
+        // when both blocks are the same, they combine
         else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), board.getId(verticalIni, horizontalIni)))
         {
             board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
+
+            // when they are number blocks, they double their value
             if(board.getBlock(verticalEnd, horizontalEnd) instanceof NumBlock)
-            {
                 ((NumBlock) board.getBlock(verticalEnd, horizontalEnd)).combineDouble();
-            }
+
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
             board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
             board.getBlock(verticalEnd, horizontalEnd).setCombined(true);
             smthChanged = true;
         }
 
-        // quando o block deleta deleta o outro: ou quando o deleta está na posição final ou na inicial
+        // the del block deletes others when it is on the initial or final position
         else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || Objects.equals(board.getId(verticalIni, horizontalIni), "del"))
         {
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
@@ -260,7 +267,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             smthChanged = true;
         }
 
-        // quando o block dobro (que está no destino do movimento) vai combineDoubler o outro 
+        // when the 2x block is on the destination, it doubles the value of the initial block 
         else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x"))
         {
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
@@ -276,7 +283,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             smthChanged = true;
         }
         
-        // quando o block dobro (que está na origem do movimento) vai combineDoubler o outro
+        // when the 2x block is on the initial position, it doubles the value of the initial block 
         else if(Objects.equals(board.getId(verticalIni, horizontalIni), "2x"))
         {
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
@@ -295,11 +302,10 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     {
         if (bomb.getActivated())
         {
-            // diminui 1
             bomb.setLife(-1);
             board.getBlock(bomb.getVertical(), bomb.getHorizontal()).getImage().addAction(Actions.removeActor());
 
-            // setup das imagens para identificação do estado do block
+            // image updates to show its lives
             if(bomb.getLife() == 2)
             {
                 bomb.setImage(new Image(new Texture(Gdx.files.internal("blocks/bomb_2:3.png"))));
@@ -311,11 +317,10 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
         if (timer.getActivated())
         {
-            // diminui 1
             timer.setLife(-1);
             board.getBlock(timer.getVertical(), timer.getHorizontal()).getImage().addAction(Actions.removeActor());
 
-            // setup das imagens para identificação do estado do block
+            // image updates to show its lives
             if(timer.getLife() == 3)
             {
                 timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_3:4.png"))));
@@ -383,7 +388,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
     }
 
-    public void goThroughBoard()
+    public void checkWholeBoard()
     {
         nonExistentVoid = true;
         for(int i = 0; i < board.getSize(); i++)
@@ -401,6 +406,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 board.getBlock(i, j).setCombined(false);
             }
         }
+        // if there is no void anymore, the player loses
         if(nonExistentVoid)
         {
             creator.setScreen(new LooseScreen(creator));
