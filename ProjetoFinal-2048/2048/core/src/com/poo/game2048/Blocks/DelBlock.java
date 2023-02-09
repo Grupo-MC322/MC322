@@ -19,7 +19,8 @@ public class DelBlock implements IBlocks
         return id;
     }
 
-    public Texture getTexture() {
+    public Texture getTexture()
+    {
         return txtr;
     }
 

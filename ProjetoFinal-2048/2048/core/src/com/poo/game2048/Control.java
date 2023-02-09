@@ -61,17 +61,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 		{
 			int index = random.nextInt(100);
             if(index < 10)
-            {
                 blockSpawned = new NumBlock(1);
-            }
             else if (index < 60)
-            {
                 blockSpawned = new NumBlock(2);
-            }
             else if (index < 80)
-            {
                 blockSpawned = new NumBlock(4);
-            }
             else if (index < 85 && bomb.getActivated() == false && getButtonSelected("bomb"))
             {
                 blockSpawned = bomb;
@@ -89,70 +83,38 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 timer.setHorizontal(horizontal);
             }
             else if (index < 95 && getButtonSelected("del"))
-            {
                 blockSpawned = new DelBlock();
-            }
             else if (index < 100 && getButtonSelected("2x"))
-            {
                 blockSpawned = new DoubleBlock();
-            }
             else
-            {
                 spawnBlock();
-            }
             
             board.setBlock(vertical, horizontal, blockSpawned);
             board.getBlock(vertical, horizontal).getImage().setScale(.75f);
 			board.getBlock(vertical, horizontal).getImage().addAction(Actions.scaleTo(1, 1, .25f));
 		}
 		else
-		{
 			spawnBlock();
-		}
     }
 
     public void transferInput(char direction)
 	{   
 		if(direction == 'w')
-        {
             for(int horizontal = board.getSize() - 1; horizontal >= 0; horizontal--)
-            {
                 for(int vertical = 0; vertical < board.getSize(); vertical++)
-                {
                     checkViability(vertical, horizontal, direction);
-                }
-            }
-        }
         else if(direction == 's')
-        {
             for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-            {
                 for(int vertical = board.getSize() - 1; vertical >= 0; vertical--)
-                {
                     checkViability(vertical, horizontal, direction);
-                }
-            }
-        }
         else if(direction == 'a')
-        {
             for(int vertical = 0; vertical < board.getSize(); vertical++)
-            {
                 for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-                {
                     checkViability(vertical, horizontal, direction);
-                }
-            }
-        }
         else if(direction == 'd')
-        {
             for(int vertical = board.getSize() - 1; vertical >= 0; vertical--)
-            {
                 for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-                {
                     checkViability(vertical, horizontal, direction);
-                }
-            }
-        }
         
         checkWholeBoard();
         if(smthChanged)
@@ -167,9 +129,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     {
         // if it is not a void and it has not combined yet
         if(!Objects.equals(board.getId(vertical, horizontal), 0) && !board.getBlock(vertical, horizontal).getCombined())
-        {
             interpretInput(direction, vertical, horizontal, batch, stage);
-        }
     }
 
     public void interpretInput(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
@@ -178,7 +138,6 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 
         // if it fits inside the board
         if(0 <= verticalEnd && verticalEnd < board.getSize() && 0 <= horizontalEnd && horizontalEnd < board.getSize())
-        {
             // if the destination block has not been combined yet
             if (!board.getBlock(verticalEnd, horizontalEnd).getCombined())
             {
@@ -194,7 +153,6 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 }
                 move(direction, verticalIni, horizontalIni, batch, stage);
             }
-        }
     }
 
     private void planMove(char direction, int verticalIni, int horizontalIni)
@@ -272,9 +230,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         {
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
             if(board.getBlock(verticalIni, horizontalIni) instanceof NumBlock)
-            {
                 ((NumBlock) board.getBlock(verticalIni, horizontalIni)).combineDouble();
-            }
             board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
             board.setBlock(verticalEnd, horizontalEnd, board.getBlock(verticalIni, horizontalIni));
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(Actions.removeActor());
@@ -290,9 +246,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
             board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
             if(board.getBlock(verticalEnd, horizontalEnd) instanceof NumBlock)
-            {
                 ((NumBlock) board.getBlock(verticalEnd, horizontalEnd)).combineDouble();
-            }
             board.getBlock(verticalEnd, horizontalEnd).setCombined(true);
             smthChanged = true;
         }
@@ -307,13 +261,9 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 
             // image updates to show its lives
             if(bomb.getLife() == 2)
-            {
                 bomb.setImage(new Image(new Texture(Gdx.files.internal("blocks/bomb_2:3.png"))));
-            }
             else if(bomb.getLife() == 1)
-            {
                 bomb.setImage(new Image(new Texture(Gdx.files.internal("blocks/bomb_3:3.png"))));
-            }
         }
         if (timer.getActivated())
         {
@@ -322,17 +272,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 
             // image updates to show its lives
             if(timer.getLife() == 3)
-            {
                 timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_3:4.png"))));
-            }
             else if(timer.getLife() == 2)
-            {
                 timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_2:4.png"))));
-            }
             else if(timer.getLife() == 1)
-            {
                 timer.setImage(new Image(new Texture(Gdx.files.internal("blocks/time_1:4.png"))));
-            }
         }
         if(bomb.getLife() == 0)
         {
@@ -392,25 +336,17 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     {
         nonExistentVoid = true;
         for(int i = 0; i < board.getSize(); i++)
-        {
             for(int j = 0; j < board.getSize(); j++)
             {
                 if(Objects.equals(board.getId(i, j), 2048))
-                {
                     win = true;
-                }
                 else if(Objects.equals(board.getId(i, j), 0))
-                {
                     nonExistentVoid = false;
-                }
                 board.getBlock(i, j).setCombined(false);
             }
-        }
         // if there is no void anymore, the player loses
         if(nonExistentVoid)
-        {
             creator.setScreen(new LooseScreen(creator));
-        }
     }
 
     public void setButtonSelected(String idButton, boolean selected)

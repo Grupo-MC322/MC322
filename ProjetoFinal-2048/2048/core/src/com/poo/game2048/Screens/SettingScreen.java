@@ -293,31 +293,25 @@ public class SettingScreen extends AbstractScreen
     private void addConnection(Image button, String screen)
     {
         if(screen.equals("start"))
-        {
             button.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
                     creator.setScreen(new HomeScreen(creator));
                 }
             });
-        } 
         else if(screen.equals("game"))
-        {
             button.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
                     creator.setScreen(new GameScreen(creator));
                 }
             });
-        }
         else if(screen.equals("instructions"))
-        {
             button.addListener(new ClickListener()
             {
                 public void clicked(InputEvent event, float x, float y) {
                     creator.setScreen(new InstructionScreen(creator));
                 }
             });
-        }
     }
 }

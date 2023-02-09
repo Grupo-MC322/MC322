@@ -13,12 +13,8 @@ public class Board implements IBoardControl
         this.size = size;
         matrix = new IBlocks[size][size];
         for(int vertical = 0; vertical < size; vertical++)
-        {
             for(int horizontal = 0; horizontal < size; horizontal++)
-            {
                 matrix[vertical][horizontal] = new NumBlock(0);
-            }
-        }
     }
 
     public int getSize()

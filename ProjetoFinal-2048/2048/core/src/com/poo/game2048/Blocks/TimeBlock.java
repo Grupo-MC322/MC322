@@ -22,16 +22,13 @@ public class TimeBlock implements ILifeBlocks
     
 
     // to implement the singleton design pattern, a private constructor is needed
-    private TimeBlock()
-    {}
+    private TimeBlock() {}
     
     // implementation of the singleton design pattern, ensuring that only one time instance exists
     public static ILifeBlocks getInstance()
     {
         if (instance == null)
-        {
             instance = new TimeBlock();
-        }
 
         return instance;
     }
@@ -41,11 +38,13 @@ public class TimeBlock implements ILifeBlocks
         return id;
     }
 
-    public Texture getTexture() {
+    public Texture getTexture()
+    {
         return txtr;
     }
 
-    public void setTexture(Texture txtr) {
+    public void setTexture(Texture txtr)
+    {
         this.txtr = txtr;
     }
 

@@ -106,7 +106,8 @@ public class NumBlock implements IBlocks
         this.getImage().setX(posX);
     }
 
-    public float getPosY() {
+    public float getPosY()
+    {
         return posY;
     }
 

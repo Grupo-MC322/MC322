@@ -33,19 +33,15 @@ public abstract class AbstractScreen extends Stage implements Screen
     }
 
 	@Override
-	public void show()
-    {}
+	public void show() {}
 
 	@Override
-	public void hide()
-    {}
+	public void hide() {}
 
     @Override
-	public void pause()
-    {}
+	public void pause() {}
 
 	@Override
-	public void resume()
-    {}
+	public void resume() {}
 
 }

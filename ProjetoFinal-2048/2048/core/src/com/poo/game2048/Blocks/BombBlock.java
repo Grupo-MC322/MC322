@@ -21,16 +21,13 @@ public class BombBlock implements ILifeBlocks
     
 
     // to implement the singleton design pattern a private constructor is needed
-    private BombBlock()
-    {}
+    private BombBlock() {}
     
     // implementation of the singleton design pattern, ensuring that only one bomb instance exists
     public static ILifeBlocks getInstance()
     {
         if (instance == null)
-        {
             instance = new BombBlock();
-        }
         return instance;
     }
     
@@ -39,11 +36,13 @@ public class BombBlock implements ILifeBlocks
         return id;
     }
 
-    public Texture getTexture() {
+    public Texture getTexture()
+    {
         return txtr;
     }
 
-    public void setTexture(Texture txtr) {
+    public void setTexture(Texture txtr)
+    {
         this.txtr = txtr;
     }
 

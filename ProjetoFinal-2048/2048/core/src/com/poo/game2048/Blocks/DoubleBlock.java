@@ -19,7 +19,8 @@ public class DoubleBlock implements IBlocks
         return id;
     }
     
-    public Texture getTexture() {
+    public Texture getTexture()
+    {
         return txtr;
     }
 

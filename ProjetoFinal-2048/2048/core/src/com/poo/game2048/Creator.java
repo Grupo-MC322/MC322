@@ -72,7 +72,8 @@ public class Creator extends Game implements ICreatorSettingScreen
 		return control;
 	}
 
-	public Music getMusic() {
+	public Music getMusic()
+	{
 		return music;
 	}
 }
