@@ -1,7 +1,5 @@
 package com.poo.game2048.Screens;
 
-import java.util.Objects;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -36,16 +34,6 @@ public class GameScreen extends AbstractScreen
         // board creation
         board = new Board(creator.getSizeBoard());
         control.connectBoard(board);
-
-        // board initialization
-        for(int vertical = 0; vertical < board.getSize(); vertical++)
-            // for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-            // {
-            //     board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
-            //     board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
-            //     board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
-            //     stage.addActor(board.getBlock(vertical, horizontal).getImage());
-            // }
         stage.draw();
 		
         // adding the first 2 blocks
@@ -96,15 +84,13 @@ public class GameScreen extends AbstractScreen
         camera.update();
         
         // board drawing
-        for(int vertical = 0; vertical < board.getSize(); vertical++)
-            for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
+        for(int vert = 0; vert < board.getSize(); vert++)
+            for(int hori = 0; hori < board.getSize(); hori++)
             {
-                board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
-                board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
-                board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
-                stage.addActor(board.getBlock(vertical, horizontal).getImage());
-                // if(!Objects.equals(board.getId(vertical, horizontal), 0))
-                    
+                board.getBlock(vert, hori).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vert + (camera.viewportWidth * 0.01) * vert));
+                board.getBlock(vert, hori).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * hori + (camera.viewportHeight * 0.01) * hori));
+                board.getBlock(vert, hori).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
+                stage.addActor(board.getBlock(vert, hori).getImage());        
             }
 
         if(control.getWin())

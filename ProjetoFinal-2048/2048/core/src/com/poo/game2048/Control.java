@@ -5,9 +5,7 @@ import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -18,8 +16,6 @@ import com.poo.game2048.Screens.LooseScreen;
 public class Control implements IControlGameScreen, IControlSettingScreen
 {
     private final Creator creator;
-    private Stage stage;
-    private SpriteBatch batch;
     private IBoardControl board;
 
     private boolean buttonBombSelected;
@@ -30,8 +26,10 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 
     private ILifeBlocks timer, bomb;
 
-    private int verticalEnd = 0;
-    private int horizontalEnd = 0;
+    private int vertEnd = 0;
+    private int horiEnd = 0;
+    private float vertPosEnd;
+    private float horiPosEnd;
 
     private boolean nonExistentVoid;
     private boolean smthChanged;
@@ -41,9 +39,6 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     public Control(final Creator creator)
     {
         this.creator = creator;
-        this.batch = creator.getBatch();
-        this.stage = creator.getStage();
-        
         bomb = BombBlock.getInstance();
         timer = TimeBlock.getInstance();
     }
@@ -53,11 +48,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     {
         IBlocks blockSpawned = new NumBlock(0);
         Random random = new Random();
-        int vertical = random.nextInt(board.getSize());
-		int horizontal = random.nextInt(board.getSize());
+        int vert = random.nextInt(board.getSize());
+		int hori = random.nextInt(board.getSize());
 
         // probability of each block to be spawned
-		if (Objects.equals(board.getId(vertical, horizontal), 0))
+		if (Objects.equals(board.getId(vert, hori), 0))
 		{
 			int index = random.nextInt(100);
             if(index < 0)
@@ -71,16 +66,16 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 blockSpawned = bomb;
                 
                 bomb.setActivated(true);
-                bomb.setVertical(vertical);
-                bomb.setHorizontal(horizontal);
+                bomb.setVertical(vert);
+                bomb.setHorizontal(hori);
             }
             else if (index < 90 && timer.getActivated() == false && getButtonSelected("time"))
             {
                 blockSpawned = timer;
 
                 timer.setActivated(true);
-                timer.setVertical(vertical);
-                timer.setHorizontal(horizontal);
+                timer.setVertical(vert);
+                timer.setHorizontal(hori);
             }
             else if (index < 95 && getButtonSelected("del"))
                 blockSpawned = new DelBlock();
@@ -89,9 +84,9 @@ public class Control implements IControlGameScreen, IControlSettingScreen
             else
                 spawnBlock();
             
-            board.setBlock(vertical, horizontal, blockSpawned);
-            board.getBlock(vertical, horizontal).getImage().setScale(.75f);
-			board.getBlock(vertical, horizontal).getImage().addAction(Actions.scaleTo(1, 1, .25f));
+            board.setBlock(vert, hori, blockSpawned);
+            board.getBlock(vert, hori).getImage().setScale(.75f);
+			board.getBlock(vert, hori).getImage().addAction(Actions.scaleTo(1, 1, .25f));
 		}
 		else
 			spawnBlock();
@@ -100,21 +95,21 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     public void transferInput(char direction)
 	{   
 		if(direction == 'w')
-            for(int horizontal = board.getSize() - 1; horizontal >= 0; horizontal--)
-                for(int vertical = 0; vertical < board.getSize(); vertical++)
-                    checkViability(vertical, horizontal, direction);
+            for(int hori = board.getSize() - 1; hori >= 0; hori--)
+                for(int vert = 0; vert < board.getSize(); vert++)
+                    checkViability(vert, hori, direction);
         else if(direction == 's')
-            for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-                for(int vertical = board.getSize() - 1; vertical >= 0; vertical--)
-                    checkViability(vertical, horizontal, direction);
+            for(int hori = 0; hori < board.getSize(); hori++)
+                for(int vert = board.getSize() - 1; vert >= 0; vert--)
+                    checkViability(vert, hori, direction);
         else if(direction == 'a')
-            for(int vertical = 0; vertical < board.getSize(); vertical++)
-                for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-                    checkViability(vertical, horizontal, direction);
+            for(int vert = 0; vert < board.getSize(); vert++)
+                for(int hori = 0; hori < board.getSize(); hori++)
+                    checkViability(vert, hori, direction);
         else if(direction == 'd')
-            for(int vertical = board.getSize() - 1; vertical >= 0; vertical--)
-                for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-                    checkViability(vertical, horizontal, direction);
+            for(int vert = board.getSize() - 1; vert >= 0; vert--)
+                for(int hori = 0; hori < board.getSize(); hori++)
+                    checkViability(vert, hori, direction);
         
         checkWholeBoard();
         if(smthChanged)
@@ -125,138 +120,142 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
 	}
 
-    private void checkViability(int vertical, int horizontal, char direction)
+    private void checkViability(int vert, int hori, char direction)
     {
         // if it is not a void and it has not combined yet
-        if(!Objects.equals(board.getId(vertical, horizontal), 0) && !board.getBlock(vertical, horizontal).getCombined())
-            interpretInput(direction, vertical, horizontal, batch, stage);
+        if(!Objects.equals(board.getId(vert, hori), 0) && !board.getBlock(vert, hori).getCombined())
+            interpretInput(direction, vert, hori);
     }
 
-    private void interpretInput(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
+    private void interpretInput(char direction, int vertIni, int horiIni)
     {
-        planMove(direction, verticalIni, horizontalIni);
+        planMove(direction, vertIni, horiIni);
 
         // if it fits inside the board
-        if(0 <= verticalEnd && verticalEnd < board.getSize() && 0 <= horizontalEnd && horizontalEnd < board.getSize())
+        if(0 <= vertEnd && vertEnd < board.getSize() && 0 <= horiEnd && horiEnd < board.getSize())
             // if the destination block has not been combined yet
-            if (!board.getBlock(verticalEnd, horizontalEnd).getCombined())
+            if (!board.getBlock(vertEnd, horiEnd).getCombined())
             {
                 // if the initial block is a life block and the destination block is from [void, del or 2x]
-                if(board.getBlock(verticalIni, horizontalIni) instanceof ILifeBlocks && 
-                (Objects.equals(board.getId(verticalEnd, horizontalEnd), 0) || 
-                Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || 
-                Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x")))
+                if(board.getBlock(vertIni, horiIni) instanceof ILifeBlocks && 
+                (Objects.equals(board.getId(vertEnd, horiEnd), 0) || 
+                Objects.equals(board.getId(vertEnd, horiEnd), "del") || 
+                Objects.equals(board.getId(vertEnd, horiEnd), "2x")))
                 {
                     // then the destination blocks have no effect, they just vanish
-                    ((ILifeBlocks) board.getBlock(verticalIni, horizontalIni)).setVertical(verticalEnd);
-                    ((ILifeBlocks) board.getBlock(verticalIni, horizontalIni)).setHorizontal(horizontalEnd);
+                    ((ILifeBlocks) board.getBlock(vertIni, horiIni)).setVertical(vertEnd);
+                    ((ILifeBlocks) board.getBlock(vertIni, horiIni)).setHorizontal(horiEnd);
                 }
-                move(direction, verticalIni, horizontalIni, batch, stage);
+                move(direction, vertIni, horiIni);
             }
     }
 
-    private void planMove(char direction, int verticalIni, int horizontalIni)
+    private void planMove(char direction, int vertIni, int horiIni)
     {
         switch (direction)
         {
             case 'w':
-                verticalEnd = verticalIni;
-                horizontalEnd = horizontalIni + 1;
+                vertEnd = vertIni;
+                horiEnd = horiIni + 1;
                 break;
             case 'a':
-                verticalEnd = verticalIni - 1;
-                horizontalEnd = horizontalIni;
+                vertEnd = vertIni - 1;
+                horiEnd = horiIni;
                 break;
             case 's':
-                verticalEnd = verticalIni;
-                horizontalEnd = horizontalIni - 1;
+                vertEnd = vertIni;
+                horiEnd = horiIni - 1;
                 break;
             case 'd':
-                verticalEnd = verticalIni + 1;
-                horizontalEnd = horizontalIni;
+                vertEnd = vertIni + 1;
+                horiEnd = horiIni;
                 break;
         }
     }
 
-    private void move(char direction, int verticalIni, int horizontalIni, SpriteBatch batch, Stage stage)
+    private float calculatePosition(int coord)
+    {
+        return ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * coord + (500 * 0.01f) * coord);
+    }
+
+    private void move(char direction, int vertIni, int horiIni)
     {
         // animation
-        float posXBlock = ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * verticalEnd + (500 * 0.01f) * verticalEnd);
-        float posYBlock = ((500 * 0.05f) + (500 * 0.87f / board.getSize()) * horizontalEnd + (500 * 0.01f) * horizontalEnd);
+        vertPosEnd = calculatePosition(vertIni);
+        horiPosEnd = calculatePosition(horiIni);
         MoveToAction combineBlock = new MoveToAction();
-        combineBlock.setPosition(posXBlock,posYBlock);
+        combineBlock.setPosition(vertPosEnd,horiPosEnd);
         combineBlock.setDuration(0.35f);
         combineBlock.setInterpolation(Interpolation.smooth);
-        // board.getBlock(verticalIni, horizontalIni).getImage().addAction(combineBlock);
         SequenceAction animateBlock = new SequenceAction(combineBlock, Actions.removeActor());
 
         // when the destionation block is void, the initial block must keep moving
-        if(Objects.equals(board.getId(verticalEnd, horizontalEnd), 0))
+        if(Objects.equals(board.getId(vertEnd, horiEnd), 0))
         {
-            board.setBlock(verticalEnd, horizontalEnd, board.getBlock(verticalIni, horizontalIni));
-            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
-            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
-            interpretInput(direction, verticalEnd, horizontalEnd, batch, stage);
+            board.setBlock(vertEnd, horiEnd, board.getBlock(vertIni, horiIni));
+            board.getBlock(vertIni, horiIni).getImage().addAction(animateBlock);
+            board.setBlock(vertIni, horiIni, new NumBlock(0));
+            interpretInput(direction, vertEnd, horiEnd);
             smthChanged = true;
         }
 
         // when both blocks are the same, they combine
-        else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), board.getId(verticalIni, horizontalIni)))
+        else if(Objects.equals(board.getId(vertEnd, horiEnd), board.getId(vertIni, horiIni)))
         {
-            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
+            board.getBlock(vertEnd, horiEnd).getImage().addAction(Actions.removeActor());
 
             // when they are number blocks, they double their value
-            if(board.getBlock(verticalEnd, horizontalEnd) instanceof NumBlock)
-                ((NumBlock) board.getBlock(verticalEnd, horizontalEnd)).combineDouble();
+            if(board.getBlock(vertEnd, horiEnd) instanceof NumBlock)
+                ((NumBlock) board.getBlock(vertEnd, horiEnd)).combineDouble();
 
-            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
-            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
-            board.getBlock(verticalEnd, horizontalEnd).setCombined(true);
+            board.getBlock(vertIni, horiIni).getImage().addAction(animateBlock);
+            board.setBlock(vertIni, horiIni, new NumBlock(0));
+            board.getBlock(vertEnd, horiEnd).setCombined(true);
             smthChanged = true;
         }
 
         // the del block deletes others when it is on the initial or final position
-        else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || Objects.equals(board.getId(verticalIni, horizontalIni), "del"))
+        else if(Objects.equals(board.getId(vertEnd, horiEnd), "del") || Objects.equals(board.getId(vertIni, horiIni), "del"))
         {
-            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
-            if (Objects.equals(board.getId(verticalEnd, horizontalEnd), "bomb") || Objects.equals(board.getId(verticalIni, horizontalIni), "bomb"))
+            board.getBlock(vertIni, horiIni).getImage().addAction(animateBlock);
+            if (Objects.equals(board.getId(vertEnd, horiEnd), "bomb") || Objects.equals(board.getId(vertIni, horiIni), "bomb"))
             {
                 bomb.reset();
             }
-            else if (Objects.equals(board.getId(verticalEnd, horizontalEnd), "time") || Objects.equals(board.getId(verticalIni, horizontalIni), "time"))
+            else if (Objects.equals(board.getId(vertEnd, horiEnd), "time") || Objects.equals(board.getId(vertIni, horiIni), "time"))
             {
                 timer.reset();
             }
             
-            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
-            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
-            board.setBlock(verticalEnd, horizontalEnd, new NumBlock(0));
+            board.setBlock(vertIni, horiIni, new NumBlock(0));
+            board.getBlock(vertEnd, horiEnd).getImage().addAction(Actions.removeActor());
+            board.setBlock(vertEnd, horiEnd, new NumBlock(0));
             smthChanged = true;
         }
 
         // when the 2x block is on the destination, it doubles the value of the initial block 
-        else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "2x"))
+        else if(Objects.equals(board.getId(vertEnd, horiEnd), "2x"))
         {
-            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
-            if(board.getBlock(verticalIni, horizontalIni) instanceof NumBlock)
-                ((NumBlock) board.getBlock(verticalIni, horizontalIni)).combineDouble();
-            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
-            board.setBlock(verticalEnd, horizontalEnd, board.getBlock(verticalIni, horizontalIni));
-            board.getBlock(verticalIni, horizontalIni).getImage().addAction(Actions.removeActor());
-            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
-            board.getBlock(verticalIni, horizontalIni).setCombined(true);
+            board.getBlock(vertIni, horiIni).getImage().addAction(animateBlock);
+            if(board.getBlock(vertIni, horiIni) instanceof NumBlock)
+                ((NumBlock) board.getBlock(vertIni, horiIni)).combineDouble();
+            board.getBlock(vertEnd, horiEnd).getImage().addAction(Actions.removeActor());
+            board.setBlock(vertEnd, horiEnd, board.getBlock(vertIni, horiIni));
+            board.getBlock(vertIni, horiIni).getImage().addAction(Actions.removeActor());
+            board.setBlock(vertIni, horiIni, new NumBlock(0));
+            board.getBlock(vertIni, horiIni).setCombined(true);
             smthChanged = true;
         }
         
         // when the 2x block is on the initial position, it doubles the value of the initial block 
-        else if(Objects.equals(board.getId(verticalIni, horizontalIni), "2x"))
+        else if(Objects.equals(board.getId(vertIni, horiIni), "2x"))
         {
-            board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
-            board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
-            board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
-            if(board.getBlock(verticalEnd, horizontalEnd) instanceof NumBlock)
-                ((NumBlock) board.getBlock(verticalEnd, horizontalEnd)).combineDouble();
-            board.getBlock(verticalEnd, horizontalEnd).setCombined(true);
+            board.getBlock(vertIni, horiIni).getImage().addAction(animateBlock);
+            board.setBlock(vertIni, horiIni, new NumBlock(0));
+            board.getBlock(vertEnd, horiEnd).getImage().addAction(Actions.removeActor());
+            if(board.getBlock(vertEnd, horiEnd) instanceof NumBlock)
+                ((NumBlock) board.getBlock(vertEnd, horiEnd)).combineDouble();
+            board.getBlock(vertEnd, horiEnd).setCombined(true);
             smthChanged = true;
         }
     }
@@ -301,43 +300,43 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
     }
 
-    private void aimNeighbors(int vertical, int horizontal)
+    private void aimNeighbors(int vert, int hori)
     {
-        explode(vertical, horizontal);
+        explode(vert, hori);
 
-        vertical--;
-        horizontal--;
-        explode(vertical, horizontal);
+        vert--;
+        hori--;
+        explode(vert, hori);
         
-        vertical++;
-        explode(vertical, horizontal);
+        vert++;
+        explode(vert, hori);
 
-        vertical++;
-        explode(vertical, horizontal);
+        vert++;
+        explode(vert, hori);
 
-        horizontal++;
-        explode(vertical, horizontal);
+        hori++;
+        explode(vert, hori);
 
-        horizontal++;
-        explode(vertical, horizontal);
+        hori++;
+        explode(vert, hori);
 
-        vertical--;
-        explode(vertical, horizontal);
+        vert--;
+        explode(vert, hori);
 
-        vertical--;
-        explode(vertical, horizontal);
+        vert--;
+        explode(vert, hori);
 
-        horizontal--;
-        explode(vertical, horizontal);
+        hori--;
+        explode(vert, hori);
     }
 
-    private void explode(int vertical, int horizontal)
+    private void explode(int vert, int hori)
     {
-        if(vertical >= 0 && vertical < board.getSize() && horizontal >= 0 && horizontal < board.getSize())
+        if(vert >= 0 && vert < board.getSize() && hori >= 0 && hori < board.getSize())
         {
             SequenceAction animateExplosion = new SequenceAction(Actions.scaleTo(0, 0, .25f), Actions.removeActor());
-            board.getBlock(vertical, horizontal).getImage().addAction(animateExplosion);
-            board.setBlock(vertical, horizontal, new NumBlock(0));
+            board.getBlock(vert, hori).getImage().addAction(animateExplosion);
+            board.setBlock(vert, hori, new NumBlock(0));
         }
     }
 
