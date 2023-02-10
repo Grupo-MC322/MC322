@@ -15,8 +15,8 @@ public class BombBlock implements ILifeBlocks
     private float posY;
     private float size;
     private int life = 3;
-    private int vertical;
-    private int horizontal;
+    private int vert;
+    private int hori;
     private boolean activated = false;
     
 
@@ -113,22 +113,22 @@ public class BombBlock implements ILifeBlocks
 
     public int getVertical()
     {
-        return vertical;
+        return vert;
     }
 
-    public void setVertical(int vertical)
+    public void setVertical(int vert)
     {
-        this.vertical = vertical;
+        this.vert = vert;
     }
 
     public int getHorizontal()
     {
-        return horizontal;
+        return hori;
     }
 
-    public void setHorizontal(int horizontal)
+    public void setHorizontal(int hori)
     {
-        this.horizontal = horizontal;
+        this.hori = hori;
     }
 
     // the bomb can be actived (participating in the board) or not (waiting to return)

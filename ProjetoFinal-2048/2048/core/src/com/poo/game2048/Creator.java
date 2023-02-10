@@ -41,7 +41,7 @@ public class Creator extends Game implements ICreatorSettingScreen
 		https://creativecommons.org/licenses/by/4.0/ 
 		*/
 		music.setLooping(true);
-		music.play();
+		// music.play();
  
 		// defining the first screen
 		this.setScreen(new HomeScreen(this));

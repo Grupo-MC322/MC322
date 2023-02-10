@@ -10,8 +10,8 @@ public interface ILifeBlocks extends IBlocks
     public boolean getActivated();
     public void setActivated(boolean info);
     public int getVertical();
-    public void setVertical(int vertical);
+    public void setVertical(int vert);
     public int getHorizontal();
-    public void setHorizontal(int horizontal);
+    public void setHorizontal(int hori);
     public void reset();
 }

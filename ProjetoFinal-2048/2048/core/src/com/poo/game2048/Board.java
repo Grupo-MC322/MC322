@@ -12,9 +12,9 @@ public class Board implements IBoardControl
     {
         this.size = size;
         matrix = new IBlocks[size][size];
-        for(int vertical = 0; vertical < size; vertical++)
-            for(int horizontal = 0; horizontal < size; horizontal++)
-                matrix[vertical][horizontal] = new NumBlock(0);
+        for(int vert = 0; vert < size; vert++)
+            for(int hori = 0; hori < size; hori++)
+                matrix[vert][hori] = new NumBlock(0);
     }
 
     public int getSize()
@@ -22,18 +22,18 @@ public class Board implements IBoardControl
         return size;
     }
 
-    public Object getId(int vertical, int horizontal)
+    public Object getId(int vert, int hori)
     {
-        return matrix[vertical][horizontal].getId();
+        return matrix[vert][hori].getId();
     }
 
-    public IBlocks getBlock(int vertical, int horizontal)
+    public IBlocks getBlock(int vert, int hori)
     {
-        return matrix[vertical][horizontal];
+        return matrix[vert][hori];
     }
 
-    public void setBlock(int vertical, int horizontal, IBlocks block)
+    public void setBlock(int vert, int hori, IBlocks block)
     {
-        matrix[vertical][horizontal] = block;
+        matrix[vert][hori] = block;
     }
 }
