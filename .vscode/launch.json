@@ -8,10 +8,9 @@
             "type": "java",
             "name": "Launch DesktopLauncher",
             "request": "launch",
+            "mainClass": "com.poo.game2048.DesktopLauncher",
             "vmArgs": "-XstartOnFirstThread",
-            "mainClass": "com.poo.jogo2048.DesktopLauncher",
-            "projectName": "2048-desktop",
-            
+            "projectName": "2048-desktop"
         }
     ]
 }

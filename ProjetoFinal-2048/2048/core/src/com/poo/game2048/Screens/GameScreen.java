@@ -39,13 +39,13 @@ public class GameScreen extends AbstractScreen
 
         // board initialization
         for(int vertical = 0; vertical < board.getSize(); vertical++)
-            for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
-            {
-                board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
-                board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
-                board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
-                stage.addActor(board.getBlock(vertical, horizontal).getImage());
-            }
+            // for(int horizontal = 0; horizontal < board.getSize(); horizontal++)
+            // {
+            //     board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
+            //     board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
+            //     board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
+            //     stage.addActor(board.getBlock(vertical, horizontal).getImage());
+            // }
         stage.draw();
 		
         // adding the first 2 blocks
@@ -102,9 +102,9 @@ public class GameScreen extends AbstractScreen
                 board.getBlock(vertical, horizontal).setPosX((float) ((camera.viewportWidth * 0.05) + (camera.viewportWidth * 0.87 / board.getSize()) * vertical + (camera.viewportWidth * 0.01) * vertical));
                 board.getBlock(vertical, horizontal).setPosY((float) ((camera.viewportHeight * 0.05) + (camera.viewportHeight * 0.87 / board.getSize()) * horizontal + (camera.viewportHeight * 0.01) * horizontal));
                 board.getBlock(vertical, horizontal).setSize((float) (camera.viewportHeight * 0.87 / board.getSize()));
-                
-                if(!Objects.equals(board.getId(vertical, horizontal), 0))
-                    stage.addActor(board.getBlock(vertical, horizontal).getImage());
+                stage.addActor(board.getBlock(vertical, horizontal).getImage());
+                // if(!Objects.equals(board.getId(vertical, horizontal), 0))
+                    
             }
 
         if(control.getWin())

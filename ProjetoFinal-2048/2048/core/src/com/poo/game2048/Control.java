@@ -60,11 +60,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 		if (Objects.equals(board.getId(vertical, horizontal), 0))
 		{
 			int index = random.nextInt(100);
-            if(index < 10)
+            if(index < 0)
                 blockSpawned = new NumBlock(1);
-            else if (index < 60)
+            else if (index < 10)
                 blockSpawned = new NumBlock(2);
-            else if (index < 80)
+            else if (index < 40)
                 blockSpawned = new NumBlock(4);
             else if (index < 85 && bomb.getActivated() == false && getButtonSelected("bomb"))
             {
@@ -187,7 +187,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         combineBlock.setPosition(posXBlock,posYBlock);
         combineBlock.setDuration(0.35f);
         combineBlock.setInterpolation(Interpolation.smooth);
-        board.getBlock(verticalIni, horizontalIni).getImage().addAction(combineBlock);
+        // board.getBlock(verticalIni, horizontalIni).getImage().addAction(combineBlock);
         SequenceAction animateBlock = new SequenceAction(combineBlock, Actions.removeActor());
 
         // when the destionation block is void, the initial block must keep moving
@@ -219,6 +219,15 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         else if(Objects.equals(board.getId(verticalEnd, horizontalEnd), "del") || Objects.equals(board.getId(verticalIni, horizontalIni), "del"))
         {
             board.getBlock(verticalIni, horizontalIni).getImage().addAction(animateBlock);
+            if (Objects.equals(board.getId(verticalEnd, horizontalEnd), "bomb") || Objects.equals(board.getId(verticalIni, horizontalIni), "bomb"))
+            {
+                bomb.reset();
+            }
+            else if (Objects.equals(board.getId(verticalEnd, horizontalEnd), "time") || Objects.equals(board.getId(verticalIni, horizontalIni), "time"))
+            {
+                timer.reset();
+            }
+            
             board.setBlock(verticalIni, horizontalIni, new NumBlock(0));
             board.getBlock(verticalEnd, horizontalEnd).getImage().addAction(Actions.removeActor());
             board.setBlock(verticalEnd, horizontalEnd, new NumBlock(0));
