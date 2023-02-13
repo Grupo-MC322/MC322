@@ -55,11 +55,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
 		if (Objects.equals(board.getId(vert, hori), 0))
 		{
 			int index = random.nextInt(100);
-            if(index < 0)
+            if(index < 35)
                 blockSpawned = new NumBlock(1);
-            else if (index < 10)
+            else if (index < 60)
                 blockSpawned = new NumBlock(2);
-            else if (index < 40)
+            else if (index < 80)
                 blockSpawned = new NumBlock(4);
             else if (index < 85 && bomb.getActivated() == false && getButtonSelected("bomb"))
             {
@@ -95,21 +95,21 @@ public class Control implements IControlGameScreen, IControlSettingScreen
     public void transferInput(char direction)
 	{   
 		if(direction == 'w')
-            for(int hori = board.getSize() - 1; hori >= 0; hori--)
-                for(int vert = 0; vert < board.getSize(); vert++)
-                    checkViability(vert, hori, direction);
+            for(int vert = 0; vert < board.getSize(); vert++)
+                for(int hori = board.getSize() - 1; hori >= 0; hori--)
+                    checkViability(direction, vert, hori);
         else if(direction == 's')
-            for(int hori = 0; hori < board.getSize(); hori++)
-                for(int vert = board.getSize() - 1; vert >= 0; vert--)
-                    checkViability(vert, hori, direction);
-        else if(direction == 'a')
             for(int vert = 0; vert < board.getSize(); vert++)
                 for(int hori = 0; hori < board.getSize(); hori++)
-                    checkViability(vert, hori, direction);
+                    checkViability(direction, vert, hori);
+        else if(direction == 'a')
+            for(int hori = 0; hori < board.getSize(); hori++)
+                for(int vert = 0; vert < board.getSize(); vert++)
+                    checkViability(direction, vert, hori);
         else if(direction == 'd')
-            for(int vert = board.getSize() - 1; vert >= 0; vert--)
-                for(int hori = 0; hori < board.getSize(); hori++)
-                    checkViability(vert, hori, direction);
+            for(int hori = 0; hori < board.getSize(); hori++)
+                for(int vert = board.getSize() - 1; vert >= 0; vert--)
+                    checkViability(direction, vert, hori);
         
         checkWholeBoard();
         if(smthChanged)
@@ -120,11 +120,11 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         }
 	}
 
-    private void checkViability(int vert, int hori, char direction)
+    private void checkViability(char direction, int vertIni, int horiIni)
     {
         // if it is not a void and it has not combined yet
-        if(!Objects.equals(board.getId(vert, hori), 0) && !board.getBlock(vert, hori).getCombined())
-            interpretInput(direction, vert, hori);
+        if(!Objects.equals(board.getId(vertIni, horiIni), 0) && !board.getBlock(vertIni, horiIni).getCombined())
+            interpretInput(direction, vertIni, horiIni);
     }
 
     private void interpretInput(char direction, int vertIni, int horiIni)
@@ -134,7 +134,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         // if it fits inside the board
         if(0 <= vertEnd && vertEnd < board.getSize() && 0 <= horiEnd && horiEnd < board.getSize())
             // if the destination block has not been combined yet
-            if (!board.getBlock(vertEnd, horiEnd).getCombined())
+            if (!board.getBlock(vertEnd, horiEnd).getCombined() && (vertIni != vertEnd || horiIni != horiEnd))
             {
                 // if the initial block is a life block and the destination block is from [void, del or 2x]
                 if(board.getBlock(vertIni, horiIni) instanceof ILifeBlocks && 
@@ -171,6 +171,15 @@ public class Control implements IControlGameScreen, IControlSettingScreen
                 horiEnd = horiIni;
                 break;
         }
+
+        if (vertEnd < 0)
+            vertEnd = 0;
+        else if (vertEnd == board.getSize())
+            vertEnd = board.getSize() - 1;
+        if (horiEnd < 0)
+            horiEnd = 0;
+        else if (horiEnd == board.getSize())
+            horiEnd = board.getSize() - 1;
     }
 
     private float calculatePosition(int coord)
@@ -185,7 +194,7 @@ public class Control implements IControlGameScreen, IControlSettingScreen
         horiPosEnd = calculatePosition(horiIni);
         MoveToAction combineBlock = new MoveToAction();
         combineBlock.setPosition(vertPosEnd,horiPosEnd);
-        combineBlock.setDuration(0.35f);
+        combineBlock.setDuration(0.25f);
         combineBlock.setInterpolation(Interpolation.smooth);
         SequenceAction animateBlock = new SequenceAction(combineBlock, Actions.removeActor());
 

@@ -82,6 +82,8 @@ public class GameScreen extends AbstractScreen
 		ScreenUtils.clear(0.32f, 0.41f, 0.42f, 1); // definition of background color
 
         camera.update();
+        stage.act(Gdx.graphics.getDeltaTime());
+        stage.draw();
         
         // board drawing
         for(int vert = 0; vert < board.getSize(); vert++)
